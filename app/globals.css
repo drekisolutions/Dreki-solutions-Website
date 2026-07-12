@@ -256,7 +256,7 @@ h3 {
   background: linear-gradient(90deg, transparent, var(--gold-bright), #fff2bd, var(--gold-bright), transparent);
   filter: blur(1px);
   box-shadow: 0 0 20px rgba(235, 202, 126, 0.72);
-  animation: header-glare 1.45s cubic-bezier(0.25, 0.72, 0.3, 1) 180ms both;
+  animation: header-glare 1.8125s cubic-bezier(0.25, 0.72, 0.3, 1) 180ms both;
 }
 
 .menu-toggle {
