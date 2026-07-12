@@ -12,23 +12,30 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <main className="page-main" id="main-content">
-      <section className="split-hero split-hero--industry" aria-labelledby="services-title">
-        <div className="split-hero__copy">
-          <p className="eyebrow">Service-industry agentic software</p>
-          <h1 id="services-title">Move the customer and operational work forward.</h1>
-          <p>
-            Custom agents handle defined, repeatable work across customer response,
-            reputation, content, intake, scheduling, handoffs, and administration.
-          </p>
-          <PageTurnLink className="button button-primary" href="/contact#consultation">
-            Schedule a Consultation
-          </PageTurnLink>
+      <section
+        className="page-section service-industry-section"
+        aria-labelledby="services-title"
+      >
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Service-industry agentic software</p>
+            <h1 id="services-title">Move the customer and operational work forward.</h1>
+          </div>
+          <div className="section-heading__support">
+            <p>
+              Custom agents handle defined, repeatable work across customer response,
+              reputation, content, intake, scheduling, handoffs, and administration.
+            </p>
+            <PageTurnLink className="button button-primary" href="/contact#consultation">
+              Schedule a Consultation
+            </PageTurnLink>
+          </div>
         </div>
-        <div className="compact-service-grid" aria-label="Service-industry services">
+        <div className="service-detail-grid" aria-label="Service-industry services">
           {serviceIndustryServices.map((service) => (
             <article key={service.index}>
               <span>{service.index}</span>
-              <h2>{service.title}</h2>
+              <h3>{service.title}</h3>
               <p>{service.copy}</p>
             </article>
           ))}
