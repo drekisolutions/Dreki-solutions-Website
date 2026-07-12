@@ -290,8 +290,9 @@ h3 {
   background: rgba(12, 12, 13, 0.98);
   opacity: 0;
   pointer-events: none;
+  visibility: hidden;
   transform: translateY(-16px);
-  transition: opacity 200ms ease, transform 200ms ease;
+  transition: opacity 200ms ease, transform 200ms ease, visibility 0s linear 200ms;
 }
 
 .mobile-menu a {
@@ -307,7 +308,7 @@ h3 {
 .mobile-menu a span {
   color: var(--gold-bright);
   font-family: var(--font-inter), sans-serif;
-  font-size: 0.58rem;
+  font-size: 0.72rem;
   letter-spacing: 0.1em;
 }
 
@@ -558,7 +559,7 @@ h3 {
   border: 1px solid var(--line);
   background: rgba(8, 8, 9, 0.82);
   color: var(--gold-pale);
-  font-size: 0.58rem;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -636,7 +637,7 @@ h3 {
 .service-detail-grid article > span,
 .process-grid > li > span {
   color: var(--gold-bright);
-  font-size: 0.62rem;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.12em;
 }
@@ -736,7 +737,7 @@ h3 {
 
 .compact-service-grid article > span {
   color: var(--gold-bright);
-  font-size: 0.58rem;
+  font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.1em;
 }
@@ -823,7 +824,7 @@ h3 {
 
 .product-card > div span,
 .product-card > div small {
-  font-size: 0.55rem;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -842,7 +843,7 @@ h3 {
 .product-card > p:nth-of-type(1) {
   margin: 24px 0 0;
   color: var(--gold-pale);
-  font-size: 0.58rem;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -927,7 +928,7 @@ h3 {
   border: 1px solid var(--line);
   background: rgba(8, 8, 9, 0.88);
   color: var(--gold-pale);
-  font-size: 0.58rem;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -1294,6 +1295,8 @@ html[data-page-transition="fallback"] .page-turn-curtain span {
     opacity: 1;
     pointer-events: auto;
     transform: translateY(0);
+    visibility: visible;
+    transition-delay: 0s;
   }
 
   .home-hero,

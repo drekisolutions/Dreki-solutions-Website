@@ -2,9 +2,10 @@ import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = ["", "services", "products", "about", "contact"];
+  const siteUrl = "https://dreki-solutions-ops.dreki-solutions.chatgpt.site";
 
   return routes.map((route, index) => ({
-    url: `https://dreki-solutions.com/${route}`,
+    url: `${siteUrl}/${route}`,
     changeFrequency: "monthly",
     priority: index === 0 ? 1 : 0.8,
   }));

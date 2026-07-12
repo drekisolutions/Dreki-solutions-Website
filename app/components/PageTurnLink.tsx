@@ -62,7 +62,22 @@ export default function PageTurnLink({
     }
 
     const destination = new URL(href, window.location.href);
-    if (destination.pathname === pathname) return;
+    const current = new URL(window.location.href);
+    const isExactCurrentLocation =
+      destination.pathname === current.pathname &&
+      destination.search === current.search &&
+      destination.hash === current.hash;
+
+    if (isExactCurrentLocation) {
+      event.preventDefault();
+      onNavigate?.();
+      return;
+    }
+
+    if (destination.pathname === pathname) {
+      onNavigate?.();
+      return;
+    }
 
     event.preventDefault();
     onNavigate?.();

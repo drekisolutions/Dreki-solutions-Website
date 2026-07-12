@@ -1,14 +1,19 @@
 "use client";
 
-import { type FormEvent } from "react";
+import { type FormEvent, useState } from "react";
 import { contact } from "../site-data";
 
 export default function ConsultationForm() {
+  const [contactMethod, setContactMethod] = useState("Email");
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const value = (name: string) => String(form.get(name) ?? "").trim();
     const body = [
+      `Name: ${value("fullName")}`,
+      `Email: ${value("email")}`,
+      `Phone: ${value("phone")}`,
       `Business name: ${value("businessName")}`,
       `Website: ${value("website")}`,
       `Industry: ${value("industry")}`,
@@ -34,6 +39,14 @@ export default function ConsultationForm() {
 
       <div className="form-grid">
         <label>
+          <span>Your name</span>
+          <input name="fullName" type="text" autoComplete="name" required />
+        </label>
+        <label>
+          <span>Email</span>
+          <input name="email" type="email" autoComplete="email" required />
+        </label>
+        <label>
           <span>Business name</span>
           <input name="businessName" type="text" autoComplete="organization" required />
         </label>
@@ -51,10 +64,24 @@ export default function ConsultationForm() {
         </label>
         <label>
           <span>Preferred contact method</span>
-          <select name="contactMethod" defaultValue="Email" required>
+          <select
+            name="contactMethod"
+            value={contactMethod}
+            onChange={(event) => setContactMethod(event.target.value)}
+            required
+          >
             <option>Email</option>
             <option>Phone</option>
           </select>
+        </label>
+        <label>
+          <span>Phone number{contactMethod === "Phone" ? " (required)" : ""}</span>
+          <input
+            name="phone"
+            type="tel"
+            autoComplete="tel"
+            required={contactMethod === "Phone"}
+          />
         </label>
         <label className="form-field-wide">
           <span>Workflow to optimize</span>

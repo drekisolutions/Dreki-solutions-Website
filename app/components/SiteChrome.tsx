@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import DrekiExperience from "../DrekiExperience";
 import { contact, navigation } from "../site-data";
 import PageTurnLink from "./PageTurnLink";
@@ -10,6 +10,20 @@ import PageTurnLink from "./PageTurnLink";
 export default function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setMenuOpen(false);
+      window.requestAnimationFrame(() => menuButtonRef.current?.focus());
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [menuOpen]);
 
   return (
     <>
@@ -46,6 +60,7 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
             Schedule a consultation
           </PageTurnLink>
           <button
+            ref={menuButtonRef}
             className="menu-toggle"
             type="button"
             aria-expanded={menuOpen}
@@ -67,6 +82,8 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
         className={`mobile-menu${menuOpen ? " is-open" : ""}`}
         id="mobile-menu"
         aria-label="Mobile navigation"
+        aria-hidden={!menuOpen}
+        inert={!menuOpen}
       >
         {navigation.map((item, index) => (
           <PageTurnLink

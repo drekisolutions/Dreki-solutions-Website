@@ -116,7 +116,16 @@ test("renders a consistent five-page menu and working contact actions", async ()
   assert.ok(hrefs.includes("tel:+16026775926"));
   assert.ok(hrefs.some((href) => href?.startsWith("mailto:Brett@dreki-solutions.com")));
   assert.match(markup, /<form\b/i);
-  for (const field of ["businessName", "website", "industry", "contactMethod", "workflow"]) {
+  for (const field of [
+    "fullName",
+    "email",
+    "phone",
+    "businessName",
+    "website",
+    "industry",
+    "contactMethod",
+    "workflow",
+  ]) {
     assert.match(markup, new RegExp(`\\bname=["']${field}["']`, "i"), `missing ${field} form field`);
   }
   assert.match(textContent(markup), /Optimization audit request/i);
@@ -187,8 +196,8 @@ test("ships route metadata, structured data, sitemap routes, and brand assets", 
 });
 
 test("ships the bespoke social card at the declared dimensions", async () => {
-  const image = await readFile(new URL("../public/og.png", import.meta.url));
+  const image = await readFile(new URL("../public/og-wide.png", import.meta.url));
   assert.equal(image.subarray(1, 4).toString("ascii"), "PNG");
-  assert.equal(image.readUInt32BE(16), 1536);
-  assert.equal(image.readUInt32BE(20), 1024);
+  assert.equal(image.readUInt32BE(16), 1200);
+  assert.equal(image.readUInt32BE(20), 630);
 });

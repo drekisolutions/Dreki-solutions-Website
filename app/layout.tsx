@@ -20,9 +20,10 @@ const inter = Inter({
 const defaultTitle = "Dreki Solutions | Custom Agentic Software";
 const defaultDescription =
   "Custom agentic software, services, and products for service businesses and aviation operations.";
+const siteUrl = "https://dreki-solutions-ops.dreki-solutions.chatgpt.site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://dreki-solutions.com"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: defaultTitle,
     template: "%s | Dreki Solutions",
@@ -40,9 +41,9 @@ export const metadata: Metadata = {
     description: defaultDescription,
     images: [
       {
-        url: "/og.png",
-        width: 1536,
-        height: 1024,
+        url: "/og-wide.png",
+        width: 1200,
+        height: 630,
         alt: "Dreki Solutions custom agent systems",
       },
     ],
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: defaultTitle,
     description: defaultDescription,
-    images: ["/og.png"],
+    images: ["/og-wide.png"],
   },
 };
 
@@ -67,8 +68,8 @@ const structuredData = [
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Dreki Solutions LLC",
-    url: "https://dreki-solutions.com/",
-    logo: "https://dreki-solutions.com/brand/dreki-icon-1024.webp",
+    url: `${siteUrl}/`,
+    logo: `${siteUrl}/brand/dreki-icon-1024.webp`,
     email: "Brett@dreki-solutions.com",
     telephone: "+1-602-677-5926",
     founder: { "@type": "Person", name: "Brett Moser" },

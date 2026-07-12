@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://dreki-solutions.com/sitemap.xml",
+    sitemap: "https://dreki-solutions-ops.dreki-solutions.chatgpt.site/sitemap.xml",
   };
 }
