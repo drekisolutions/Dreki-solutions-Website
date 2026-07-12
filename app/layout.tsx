@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Cinzel, Inter } from "next/font/google";
-import { headers } from "next/headers";
+import SiteChrome from "./components/SiteChrome";
 import "./globals.css";
 
 const cinzel = Cinzel({
@@ -17,69 +17,85 @@ const inter = Inter({
   display: "swap",
 });
 
-const title = "Dreki Solutions | Custom AI Agent Systems for Service Businesses";
-const description =
-  "Subscription-based AI agent systems that help service businesses improve customer response, reputation, content operations, and recurring workflows.";
+const defaultTitle = "Dreki Solutions | Custom Agentic Software";
+const defaultDescription =
+  "Custom agentic software, services, and products for service businesses and aviation operations.";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const host =
-    requestHeaders.get("x-forwarded-host") ??
-    requestHeaders.get("host") ??
-    "dreki-solutions.com";
-  const protocol = requestHeaders.get("x-forwarded-proto") ?? "https";
-  const baseUrl = `${protocol}://${host}`;
-
-  return {
-    title,
-    description,
-    alternates: {
-      canonical: "/",
-    },
-    icons: {
-      icon: "/favicon.png",
-      shortcut: "/favicon.png",
-      apple: "/favicon.png",
-    },
-    openGraph: {
-      type: "website",
-      url: baseUrl,
-      siteName: "Dreki Solutions",
-      title,
-      description,
-      images: [
-        {
-          url: `${baseUrl}/og.png`,
-          width: 1536,
-          height: 1024,
-          alt: "Dreki Solutions custom agent systems",
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [`${baseUrl}/og.png`],
-    },
-  };
-}
+export const metadata: Metadata = {
+  metadataBase: new URL("https://dreki-solutions.com"),
+  title: {
+    default: defaultTitle,
+    template: "%s | Dreki Solutions",
+  },
+  description: defaultDescription,
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
+  openGraph: {
+    type: "website",
+    siteName: "Dreki Solutions",
+    title: defaultTitle,
+    description: defaultDescription,
+    images: [
+      {
+        url: "/og.png",
+        width: 1536,
+        height: 1024,
+        alt: "Dreki Solutions custom agent systems",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: defaultTitle,
+    description: defaultDescription,
+    images: ["/og.png"],
+  },
+};
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#141414",
+  themeColor: "#0c0c0d",
   colorScheme: "dark",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Dreki Solutions LLC",
+    url: "https://dreki-solutions.com/",
+    logo: "https://dreki-solutions.com/brand/dreki-icon-1024.webp",
+    email: "Brett@dreki-solutions.com",
+    telephone: "+1-602-677-5926",
+    founder: { "@type": "Person", name: "Brett Moser" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Custom Agentic Software Services",
+    serviceType: "Agentic software design, deployment, and optimization",
+    provider: { "@type": "Organization", name: "Dreki Solutions LLC" },
+    audience: [
+      { "@type": "BusinessAudience", audienceType: "Service businesses" },
+      { "@type": "BusinessAudience", audienceType: "Aviation and charter operations" },
+    ],
+  },
+];
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body className={`${cinzel.variable} ${inter.variable}`}>{children}</body>
+    <html lang="en" className={`${cinzel.variable} ${inter.variable}`}>
+      <body>
+        <SiteChrome>{children}</SiteChrome>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+      </body>
     </html>
   );
 }
