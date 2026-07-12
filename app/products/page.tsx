@@ -12,24 +12,31 @@ export const metadata: Metadata = {
 export default function ProductsPage() {
   return (
     <main className="page-main" id="main-content">
-      <section className="split-hero split-hero--products" aria-labelledby="products-title">
-        <div className="split-hero__copy">
-          <p className="eyebrow">Service-industry products</p>
-          <h1 id="products-title">A product line shaped by real operating friction.</h1>
-          <p>
-            Six service-industry product positions are reserved while Dreki validates
-            the workflows, boundaries, and release scope behind each one.
-          </p>
-          <PageTurnLink className="button button-primary" href="/contact#consultation">
-            Schedule a Consultation
-          </PageTurnLink>
+      <section
+        className="page-section service-industry-section"
+        aria-labelledby="products-title"
+      >
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Service-industry products</p>
+            <h1 id="products-title">A product line shaped by real operating friction.</h1>
+          </div>
+          <div className="section-heading__support">
+            <p>
+              Six service-industry product positions are reserved while Dreki validates
+              the workflows, boundaries, and release scope behind each one.
+            </p>
+            <PageTurnLink className="button button-primary" href="/contact#consultation">
+              Schedule a Consultation
+            </PageTurnLink>
+          </div>
         </div>
-        <div className="product-registry" aria-label="Service-industry product positions">
+        <div className="product-grid" aria-label="Service-industry product positions">
           {serviceProducts.map((product) => (
             <article className="product-card" key={product.index}>
               <div><span>{product.index}</span><small>{product.status}</small></div>
               <p>{product.focus}</p>
-              <h2>{product.title}</h2>
+              <h3>{product.title}</h3>
               <p>{product.copy}</p>
             </article>
           ))}
