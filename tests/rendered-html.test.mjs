@@ -298,6 +298,12 @@ test("ships lightweight interactions without the removed intro", async () => {
     );
   }
 
+  assert.match(
+    styles,
+    /dreki-lattice-backdrop\.webp/,
+    "missing the approved lattice background behind the service dragon",
+  );
+
   const dependencyNames = Object.keys({
     ...packageJson.dependencies,
     ...packageJson.devDependencies,
