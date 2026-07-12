@@ -24,6 +24,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-height) + 24px);
+  overflow-x: clip;
   background: var(--obsidian);
 }
 
@@ -2087,8 +2088,9 @@ main,
   }
 
   .dreki-replay {
-    right: 8px;
-    bottom: 8px;
+    right: 12px;
+    bottom: 10px;
+    max-width: calc(100vw - 24px);
   }
 
   .dreki-intro::after {
