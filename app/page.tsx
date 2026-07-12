@@ -91,7 +91,7 @@ const structuredData = [
     url: "https://dreki-solutions.com/",
     logo: "https://dreki-solutions.com/brand/dreki-icon-1024.webp",
     email: "Brett@dreki-solutions.com",
-    telephone: "+1-517-246-5868",
+    telephone: "+1-602-677-5926",
     founder: {
       "@type": "Person",
       name: "Brett Moser",
@@ -356,14 +356,14 @@ export default function Home() {
             <a className="button button-primary" href={auditMailto}>
               Request an Optimization Audit
             </a>
-            <a className="button button-ghost" href="tel:+15172465868">
-              Call (517) 246-5868
+            <a className="button button-ghost" href="tel:+16026775926">
+              Call (602) 677-5926
             </a>
           </div>
           <div className="contact-details">
             <a href="mailto:Brett@dreki-solutions.com">Brett@dreki-solutions.com</a>
             <span aria-hidden="true">/</span>
-            <a href="tel:+15172465868">(517) 246-5868</a>
+            <a href="tel:+16026775926">(602) 677-5926</a>
           </div>
         </section>
       </main>
@@ -376,8 +376,14 @@ export default function Home() {
           height="231"
           unoptimized
         />
-        <p>Custom agent systems for service businesses.</p>
-        <a href="#top">Back to top ↑</a>
+        <div className="footer-copy">
+          <p>Custom agent systems for service businesses.</p>
+          <span>Built for service. Governed by people.</span>
+        </div>
+        <div className="footer-links">
+          <a href="mailto:Brett@dreki-solutions.com">Contact Brett</a>
+          <a href="#top">Back to top ↑</a>
+        </div>
       </footer>
 
       <script

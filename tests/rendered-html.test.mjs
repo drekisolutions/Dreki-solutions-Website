@@ -196,7 +196,7 @@ test("renders working section, email, and telephone links", async () => {
   ]) {
     assert.match(auditEmail.searchParams.get("body"), new RegExp(field, "i"));
   }
-  assert.ok(hrefs.includes("tel:+15172465868"), "missing functional phone link");
+  assert.ok(hrefs.includes("tel:+16026775926"), "missing functional phone link");
 
   assert.ok(
     hrefs.every((href) => !/^#audit(?:$|[/?#])/i.test(href)),
@@ -263,7 +263,7 @@ test("keeps prohibited positioning and unsupported claims out of public HTML", a
   }
 });
 
-test("ships the requested intro and animation safety guardrails", async () => {
+test("ships lightweight interactions without the removed intro", async () => {
   const [experience, styles, packageJson] = await Promise.all([
     readFile(new URL("../app/DrekiExperience.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
@@ -271,10 +271,7 @@ test("ships the requested intro and animation safety guardrails", async () => {
   ]);
 
   for (const expected of [
-    "AudioContext",
-    "Continue silently",
-    "Escape",
-    "sessionStorage",
+    "IntersectionObserver",
     "prefers-reduced-motion: reduce",
     "pointer: coarse",
     "saveData",
@@ -285,6 +282,19 @@ test("ships the requested intro and animation safety guardrails", async () => {
       `${experience}\n${styles}`,
       new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
       `missing ${expected} safeguard`,
+    );
+  }
+
+  for (const removedIntroArtifact of [
+    "dreki-intro",
+    "Replay Intro",
+    "AudioContext",
+    "sessionStorage",
+  ]) {
+    assert.doesNotMatch(
+      `${experience}\n${styles}`,
+      new RegExp(removedIntroArtifact, "i"),
+      `removed intro artifact remains: ${removedIntroArtifact}`,
     );
   }
 
