@@ -101,22 +101,48 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
       {children}
 
       <footer className="site-footer">
-        <PageTurnLink href="/" aria-label="Dreki Solutions home">
-          <Image
-            src="/brand/dreki-logo-horizontal-768.webp"
-            alt="Dreki Solutions"
-            width={768}
-            height={231}
-            unoptimized
-          />
-        </PageTurnLink>
-        <div className="footer-copy">
-          <p>Custom agent systems for service and aviation operations.</p>
-          <span>Built for service. Governed by people.</span>
+        <div className="footer-main">
+          <div className="footer-brand">
+            <PageTurnLink href="/" aria-label="Dreki Solutions home">
+              <Image
+                src="/brand/dreki-logo-horizontal-768.webp"
+                alt="Dreki Solutions"
+                width={768}
+                height={231}
+                unoptimized
+              />
+            </PageTurnLink>
+            <p>Custom agent systems for service and aviation operations.</p>
+            <span>Built for service. Governed by people.</span>
+          </div>
+
+          <nav className="footer-nav" aria-label="Footer navigation">
+            <p>Explore</p>
+            {navigation.map((item) => (
+              <PageTurnLink href={item.href} key={item.href}>
+                {item.label}
+              </PageTurnLink>
+            ))}
+          </nav>
+
+          <div className="footer-contact">
+            <p>Contact</p>
+            <a href={`mailto:${contact.email}`}>{contact.email}</a>
+            <a href={contact.phoneHref}>{contact.phoneDisplay}</a>
+            <PageTurnLink href="/contact#consultation">Schedule a consultation</PageTurnLink>
+          </div>
         </div>
-        <div className="footer-contact">
-          <a href={`mailto:${contact.email}`}>{contact.email}</a>
-          <a href={contact.phoneHref}>{contact.phoneDisplay}</a>
+
+        <div className="footer-legal">
+          <p>© 2026 Dreki Solutions LLC. All rights reserved.</p>
+          <p>
+            Dreki Solutions names, marks, original software concepts, and demonstration
+            materials are proprietary to Dreki Solutions LLC unless otherwise stated.
+            Unauthorized copying or redistribution is prohibited.
+          </p>
+          <p>
+            Site information is general in nature and does not create a professional-services relationship.
+          </p>
         </div>
       </footer>
 

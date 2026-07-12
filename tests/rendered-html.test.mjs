@@ -7,6 +7,7 @@ const routeExpectations = [
   { path: "/services", title: "Agentic Software Services | Dreki Solutions", h1: "Move the customer and operational work forward." },
   { path: "/products", title: "Agentic Software Products | Dreki Solutions", h1: "A product line shaped by real operating friction." },
   { path: "/about", title: "About | Dreki Solutions", h1: "Discipline for the work behind the work." },
+  { path: "/portfolio", title: "Project Portfolio | Dreki Solutions", h1: "See the systems behind the work." },
   { path: "/contact", title: "Contact | Dreki Solutions", h1: "Schedule a consultation." },
 ];
 
@@ -85,7 +86,7 @@ async function render(path) {
   return result;
 }
 
-test("server-renders all five public routes with route-specific content", async () => {
+test("server-renders all six public routes with route-specific content", async () => {
   for (const expected of routeExpectations) {
     const { status, contentType, html } = await render(expected.path);
     assert.equal(status, 200, `${expected.path} must return 200`);
@@ -99,7 +100,7 @@ test("server-renders all five public routes with route-specific content", async 
   }
 });
 
-test("renders a consistent five-page menu and working contact actions", async () => {
+test("renders a consistent six-page menu and working contact actions", async () => {
   const expectedRoutes = routeExpectations.map((route) => route.path);
   for (const route of routeExpectations) {
     const { html } = await render(route.path);
@@ -153,6 +154,19 @@ test("publishes six service and six aviation product positions", async () => {
   assert.equal((markup.match(/class="product-card/g) ?? []).length, 12);
 });
 
+test("publishes six portfolio demonstration spaces and complete footer notices", async () => {
+  const { html } = await render("/portfolio");
+  const markup = visibleMarkup(html);
+  const text = textContent(markup);
+  for (let index = 1; index <= 6; index += 1) {
+    assert.match(text, new RegExp(`Project Demo ${String(index).padStart(2, "0")}`));
+  }
+  assert.equal((markup.match(/portfolio-card/g) ?? []).length, 6);
+  assert.match(text, /All rights reserved/i);
+  assert.match(text, /proprietary to Dreki Solutions LLC/i);
+  assert.match(text, /does not create a professional-services relationship/i);
+});
+
 test("ships page-turn transitions, route glare, and the approved hero treatment", async () => {
   const [linkSource, chromeSource, styles, experience] = await Promise.all([
     readFile(new URL("../app/components/PageTurnLink.tsx", import.meta.url), "utf8"),
@@ -189,7 +203,7 @@ test("ships route metadata, structured data, sitemap routes, and brand assets", 
   assert.match(home.replace(/\\u002f/gi, "/"), /\/brand\/dreki-logo-horizontal-768\.webp/i);
   assert.match(home.replace(/\\u002f/gi, "/"), /\/brand\/dreki-icon-1024\.webp/i);
   const sitemap = await readFile(new URL("../app/sitemap.ts", import.meta.url), "utf8");
-  for (const route of ["services", "products", "about", "contact"]) assert.match(sitemap, new RegExp(route));
+  for (const route of ["services", "products", "about", "portfolio", "contact"]) assert.match(sitemap, new RegExp(route));
   const backdrop = await readFile(new URL("../public/brand/dreki-lattice-backdrop.webp", import.meta.url));
   assert.equal(backdrop.subarray(0, 4).toString("ascii"), "RIFF");
   assert.equal(backdrop.subarray(8, 12).toString("ascii"), "WEBP");

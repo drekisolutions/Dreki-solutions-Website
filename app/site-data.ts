@@ -9,6 +9,7 @@ export const navigation = [
   { href: "/services", label: "Services" },
   { href: "/products", label: "Products" },
   { href: "/about", label: "About" },
+  { href: "/portfolio", label: "Portfolio" },
   { href: "/contact", label: "Contact" },
 ] as const;
 
@@ -140,6 +141,51 @@ export const aviationProducts = [
     focus: "Operations intelligence",
     status: "Reserved",
     copy: "A reserved product position for organization-specific operational visibility and agent-assisted preparation.",
+  },
+] as const;
+
+export const portfolioProjects = [
+  {
+    index: "P-01",
+    title: "Project Demo 01",
+    focus: "Service operations",
+    status: "Demo slot",
+    copy: "Reserved for a customer-response or service-operations demonstration with approved project context.",
+  },
+  {
+    index: "P-02",
+    title: "Project Demo 02",
+    focus: "Workflow coordination",
+    status: "Demo slot",
+    copy: "Reserved for an agentic workflow demonstration covering handoffs, checkpoints, and human escalation.",
+  },
+  {
+    index: "P-03",
+    title: "Project Demo 03",
+    focus: "Intake and scheduling",
+    status: "Demo slot",
+    copy: "Reserved for an intake, preparation, or scheduling project once the demonstration is approved for display.",
+  },
+  {
+    index: "P-04",
+    title: "Project Demo 04",
+    focus: "Content and reputation",
+    status: "Demo slot",
+    copy: "Reserved for a content or reputation-operations demonstration with clear agent boundaries and approvals.",
+  },
+  {
+    index: "P-05",
+    title: "Project Demo 05",
+    focus: "Aviation operations",
+    status: "Demo slot",
+    copy: "Reserved for a specialized aviation workflow demonstration built around accountable human decisions.",
+  },
+  {
+    index: "P-06",
+    title: "Project Demo 06",
+    focus: "Custom agent system",
+    status: "Demo slot",
+    copy: "Reserved for a custom system demonstration that shows the operating problem, agent role, and human controls.",
   },
 ] as const;
 
