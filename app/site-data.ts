@@ -82,15 +82,6 @@ export const aviationServices = [
   },
 ] as const;
 
-const serviceProductFocus = [
-  "Customer response",
-  "Reputation operations",
-  "Content operations",
-  "Intake and scheduling",
-  "Workflow coordination",
-  "Recurring administration",
-] as const;
-
 export const serviceProducts = [
   {
     index: "S-01",
@@ -127,14 +118,14 @@ export const serviceProducts = [
     status: "In Development",
     copy: "Bifrost is productized MCP-server-as-a-service: design, build, host, secure, monitor, and maintain the vendor’s official branded MCP server on the 2026 canonical stack—streamable HTTP, OAuth 2.1 with audience binding, edge runtime, and one-click connector install. Subscription-priced and delivered in 30 days.",
   },
-  ...serviceProductFocus.slice(5).map((focus, index) => ({
-    index: `S-${String(index + 6).padStart(2, "0")}`,
-    title: `Service Product ${String(index + 6).padStart(2, "0")}`,
-    focus,
-    status: "Reserved",
-    copy: `A reserved product position for ${focus.toLowerCase()} workflows. Scope and release details will be published when approved.`,
-  })),
-];
+  {
+    index: "S-06",
+    title: "Asgard",
+    focus: "Owner oversight and audit trails",
+    status: "In Development",
+    copy: "Asgard is the owner’s console: inventory and spend, plain-English activity digests, flagged-conversation review, and exportable audit trails—“the performance review your AI employees never get.”",
+  },
+] as const;
 
 export const aviationProducts = [
   {
