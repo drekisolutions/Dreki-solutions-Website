@@ -148,7 +148,10 @@ test("publishes six service and six aviation product positions", async () => {
   assert.match(text, /In Development/);
   assert.match(text, /reconciles every line against the contractor’s price agreements/i);
   assert.match(text, /the agent never disputes autonomously/i);
-  for (let index = 2; index <= 6; index += 1) {
+  assert.match(text, /Second Swing/);
+  assert.match(text, /owner-voiced SMS\/email agent/i);
+  assert.match(text, /“Rehash” mode re-attacks estimates 30–365 days old/i);
+  for (let index = 3; index <= 6; index += 1) {
     assert.match(text, new RegExp(`Service Product ${String(index).padStart(2, "0")}`));
   }
   assert.match(text, /Valkyrie 135/);

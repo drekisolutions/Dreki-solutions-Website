@@ -99,9 +99,16 @@ export const serviceProducts = [
     status: "In Development",
     copy: "MarginHawk ingests supplier invoices, reconciles every line against the contractor’s price agreements and rolling price history, flags discrepancies, and drafts the dispute email. The owner approves; the agent never disputes autonomously.",
   },
-  ...serviceProductFocus.slice(1).map((focus, index) => ({
-    index: `S-${String(index + 2).padStart(2, "0")}`,
-    title: `Service Product ${String(index + 2).padStart(2, "0")}`,
+  {
+    index: "S-02",
+    title: "Second Swing",
+    focus: "Estimate follow-up and rehash",
+    status: "In Development",
+    copy: "SecondSwing imports open and aged estimates and runs a persistent, owner-voiced SMS/email agent that answers questions, handles objections within hard guardrails, and books the job. “Rehash” mode re-attacks estimates 30–365 days old.",
+  },
+  ...serviceProductFocus.slice(2).map((focus, index) => ({
+    index: `S-${String(index + 3).padStart(2, "0")}`,
+    title: `Service Product ${String(index + 3).padStart(2, "0")}`,
     focus,
     status: "Reserved",
     copy: `A reserved product position for ${focus.toLowerCase()} workflows. Scope and release details will be published when approved.`,
