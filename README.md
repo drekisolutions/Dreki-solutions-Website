@@ -4,7 +4,7 @@ Single-page Sites website for Dreki Solutions LLC, built with Vinext and Next.js
 
 ## Local development
 
-Requires Node.js `>=26.3.1`.
+Requires Node.js `24.x`.
 
 ```bash
 npm install
