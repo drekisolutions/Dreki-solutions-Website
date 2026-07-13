@@ -106,9 +106,16 @@ export const serviceProducts = [
     status: "In Development",
     copy: "SecondSwing imports open and aged estimates and runs a persistent, owner-voiced SMS/email agent that answers questions, handles objections within hard guardrails, and books the job. “Rehash” mode re-attacks estimates 30–365 days old.",
   },
-  ...serviceProductFocus.slice(2).map((focus, index) => ({
-    index: `S-${String(index + 3).padStart(2, "0")}`,
-    title: `Service Product ${String(index + 3).padStart(2, "0")}`,
+  {
+    index: "S-03",
+    title: "License Retention",
+    focus: "Compliance renewals and CE tracking",
+    status: "In Development",
+    copy: "Maintains the full compliance inventory and executes renewals: pre-fills forms, tracks CE requirements, prepares filing packets, and submits where portals allow—with the owner approving signatures and payments. Launch hard-capped at 2 states.",
+  },
+  ...serviceProductFocus.slice(3).map((focus, index) => ({
+    index: `S-${String(index + 4).padStart(2, "0")}`,
+    title: `Service Product ${String(index + 4).padStart(2, "0")}`,
     focus,
     status: "Reserved",
     copy: `A reserved product position for ${focus.toLowerCase()} workflows. Scope and release details will be published when approved.`,
