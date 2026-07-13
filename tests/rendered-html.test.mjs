@@ -174,7 +174,9 @@ test("publishes six service and six aviation product positions", async () => {
   for (let index = 3; index <= 6; index += 1) {
     assert.match(text, new RegExp(`Aviation Product ${String(index).padStart(2, "0")}`));
   }
-  assert.equal((markup.match(/class="product-card/g) ?? []).length, 12);
+  assert.match(markup, /href="https:\/\/valkyrie\.dreki-solutions\.com"/i);
+  assert.match(text, /valkyrie\.dreki-solutions\.com/i);
+  assert.equal((markup.match(/class="product-card(?:\s|")/g) ?? []).length, 12);
 });
 
 test("publishes six portfolio demonstration spaces and complete footer notices", async () => {

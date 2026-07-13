@@ -63,7 +63,20 @@ export default function ProductsPage() {
               <div><span>{product.index}</span><small>{product.status}</small></div>
               <p>{product.focus}</p>
               <h3>{product.title}</h3>
-              <p>{product.copy}</p>
+              <p>
+                {product.copy}
+                {"url" in product ? (
+                  <a
+                    aria-label="Visit the Valkyrie 135 website (opens in a new tab)"
+                    className="product-card__link"
+                    href={product.url}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    valkyrie.dreki-solutions.com <span aria-hidden="true">↗</span>
+                  </a>
+                ) : null}
+              </p>
             </article>
           ))}
         </div>
