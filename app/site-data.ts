@@ -166,10 +166,10 @@ export const aviationProducts = [
   },
   {
     index: "A-06",
-    title: "Aviation Product 06",
-    focus: "Operations intelligence",
-    status: "Reserved",
-    copy: "A reserved product position for organization-specific operational visibility and agent-assisted preparation.",
+    title: "Rotor Log",
+    focus: "Drone maintenance records",
+    status: "In Development",
+    copy: "RotorLog is aviation-grade maintenance records sized for drones, with an agentic layer that maps manufacturer bulletins to affected fleet aircraft—the drone world’s AD management, built by an A&P.",
   },
 ] as const;
 

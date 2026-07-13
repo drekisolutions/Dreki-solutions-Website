@@ -50,8 +50,8 @@ export default function ProductsPage() {
             <h2 id="aviation-products-title">Purpose-built for charter-industry workflows.</h2>
           </div>
           <p>
-            Valkyrie 135 leads a six-position aviation product registry. Reserved
-            positions remain clearly marked until their scope and release details are approved.
+            Six aviation products address charter operations, safety, maintenance,
+            trend reporting, empty-leg access, and drone fleet records.
           </p>
         </div>
         <div className="product-grid product-grid--aviation">

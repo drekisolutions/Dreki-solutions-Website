@@ -183,9 +183,11 @@ test("publishes six service and six aviation product positions", async () => {
   assert.match(text, /TurbineTells ingests whatever trend data/i);
   assert.match(text, /monthly trend report the DOM signs/i);
   assert.match(text, /not physics models or grounding calls/i);
-  for (let index = 6; index <= 6; index += 1) {
-    assert.match(text, new RegExp(`Aviation Product ${String(index).padStart(2, "0")}`));
-  }
+  assert.match(text, /Rotor Log/);
+  assert.match(text, /aviation-grade maintenance records sized for drones/i);
+  assert.match(text, /maps manufacturer bulletins to affected fleet aircraft/i);
+  assert.match(text, /built by an A&P/i);
+  assert.doesNotMatch(text, /Reserved positions remain clearly marked/i);
   assert.match(markup, /href="https:\/\/valkyrie\.dreki-solutions\.com"/i);
   assert.match(text, /valkyrie\.dreki-solutions\.com/i);
   assert.equal((markup.match(/class="product-card(?:\s|")/g) ?? []).length, 12);
