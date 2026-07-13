@@ -145,10 +145,10 @@ export const aviationProducts = [
   },
   {
     index: "A-03",
-    title: "Aviation Product 03",
-    focus: "Document flows",
-    status: "Reserved",
-    copy: "A reserved product position for recurring aviation document workflows and accountable review queues.",
+    title: "Declare Ready",
+    focus: "Agentic safety management",
+    status: "In Development",
+    copy: "DeclareReady is an agentic SMS: it drafts the policy, runs SRM on every hazard report, generates safety-assurance artifacts, keeps the promotion cadence, and maintains the evidence binder—the accountable executive approves.",
   },
   {
     index: "A-04",
