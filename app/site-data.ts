@@ -152,10 +152,10 @@ export const aviationProducts = [
   },
   {
     index: "A-04",
-    title: "Aviation Product 04",
-    focus: "Crew coordination",
-    status: "Reserved",
-    copy: "A reserved product position for crew coordination workflows. No release claims are being made at this stage.",
+    title: "Squawk Sheet AD",
+    focus: "Airworthiness directive reconciliation",
+    status: "In Development",
+    copy: "SquawkSheet AD reads photographed logbooks, pulls current ADs from FAA DRS, reconciles compliance history entry-by-entry, and outputs an IA-ready AD status report, recurring-AD due list, discrepancy list, and draft logbook entry. The IA reviews, corrects, and signs—research automated, authority human.",
   },
   {
     index: "A-05",

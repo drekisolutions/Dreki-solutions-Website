@@ -175,7 +175,11 @@ test("publishes six service and six aviation product positions", async () => {
   assert.match(text, /runs SRM on every hazard report/i);
   assert.match(text, /maintains the evidence binder/i);
   assert.match(text, /accountable executive approves/i);
-  for (let index = 4; index <= 6; index += 1) {
+  assert.match(text, /Squawk Sheet AD/);
+  assert.match(text, /pulls current ADs from FAA DRS/i);
+  assert.match(text, /IA-ready AD status report/i);
+  assert.match(text, /research automated, authority human/i);
+  for (let index = 5; index <= 6; index += 1) {
     assert.match(text, new RegExp(`Aviation Product ${String(index).padStart(2, "0")}`));
   }
   assert.match(markup, /href="https:\/\/valkyrie\.dreki-solutions\.com"/i);
