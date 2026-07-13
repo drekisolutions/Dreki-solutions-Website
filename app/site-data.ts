@@ -120,9 +120,16 @@ export const serviceProducts = [
     status: "In Development",
     copy: "More consumers are using AI to search for local trade contractors, and those assistants do not use the same search criteria. Visibility IQ solves this with (1) visibility measurement across assistants, (2) done-for-you agent-readiness fixes, and (3) a bookability endpoint—at local-business prices, plus a white-label tier for agencies.",
   },
-  ...serviceProductFocus.slice(4).map((focus, index) => ({
-    index: `S-${String(index + 5).padStart(2, "0")}`,
-    title: `Service Product ${String(index + 5).padStart(2, "0")}`,
+  {
+    index: "S-05",
+    title: "Bifrost",
+    focus: "Branded MCP server delivery",
+    status: "In Development",
+    copy: "Bifrost is productized MCP-server-as-a-service: design, build, host, secure, monitor, and maintain the vendor’s official branded MCP server on the 2026 canonical stack—streamable HTTP, OAuth 2.1 with audience binding, edge runtime, and one-click connector install. Subscription-priced and delivered in 30 days.",
+  },
+  ...serviceProductFocus.slice(5).map((focus, index) => ({
+    index: `S-${String(index + 6).padStart(2, "0")}`,
+    title: `Service Product ${String(index + 6).padStart(2, "0")}`,
     focus,
     status: "Reserved",
     copy: `A reserved product position for ${focus.toLowerCase()} workflows. Scope and release details will be published when approved.`,

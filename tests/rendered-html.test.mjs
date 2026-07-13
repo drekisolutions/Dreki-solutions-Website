@@ -159,7 +159,11 @@ test("publishes six service and six aviation product positions", async () => {
   assert.match(text, /visibility measurement across assistants/i);
   assert.match(text, /done-for-you agent-readiness fixes/i);
   assert.match(text, /white-label tier for agencies/i);
-  for (let index = 5; index <= 6; index += 1) {
+  assert.match(text, /Bifrost/);
+  assert.match(text, /MCP-server-as-a-service/i);
+  assert.match(text, /OAuth 2.1 with audience binding/i);
+  assert.match(text, /delivered in 30 days/i);
+  for (let index = 6; index <= 6; index += 1) {
     assert.match(text, new RegExp(`Service Product ${String(index).padStart(2, "0")}`));
   }
   assert.match(text, /Valkyrie 135/);
