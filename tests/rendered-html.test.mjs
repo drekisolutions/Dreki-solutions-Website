@@ -168,6 +168,7 @@ test("publishes six service and six aviation product positions", async () => {
   assert.match(text, /flagged-conversation review/i);
   assert.match(text, /performance review your AI employees never get/i);
   assert.match(text, /Valkyrie 135/);
+  assert.match(text, /Available for Testing/);
   assert.match(text, /Skyfar/);
   assert.match(text, /finds empty-leg trips on private jets/i);
   assert.match(text, /recover part of that cost/i);

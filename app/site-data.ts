@@ -132,7 +132,7 @@ export const aviationProducts = [
     index: "A-01",
     title: "Valkyrie 135",
     focus: "Charter operations tracking",
-    status: "In development",
+    status: "Available for Testing",
     copy: "Tracking software being developed for charter-industry workflows, with human ownership of operational and regulatory decisions.",
     url: "https://valkyrie.dreki-solutions.com",
   },
