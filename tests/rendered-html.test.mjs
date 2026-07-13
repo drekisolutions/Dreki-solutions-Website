@@ -155,7 +155,11 @@ test("publishes six service and six aviation product positions", async () => {
   assert.match(text, /tracks CE requirements/i);
   assert.match(text, /owner approving signatures and payments/i);
   assert.match(text, /Launch hard-capped at 2 states/i);
-  for (let index = 4; index <= 6; index += 1) {
+  assert.match(text, /Visibility IQ/);
+  assert.match(text, /visibility measurement across assistants/i);
+  assert.match(text, /done-for-you agent-readiness fixes/i);
+  assert.match(text, /white-label tier for agencies/i);
+  for (let index = 5; index <= 6; index += 1) {
     assert.match(text, new RegExp(`Service Product ${String(index).padStart(2, "0")}`));
   }
   assert.match(text, /Valkyrie 135/);

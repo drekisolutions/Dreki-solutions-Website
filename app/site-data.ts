@@ -113,9 +113,16 @@ export const serviceProducts = [
     status: "In Development",
     copy: "Maintains the full compliance inventory and executes renewals: pre-fills forms, tracks CE requirements, prepares filing packets, and submits where portals allow—with the owner approving signatures and payments. Launch hard-capped at 2 states.",
   },
-  ...serviceProductFocus.slice(3).map((focus, index) => ({
-    index: `S-${String(index + 4).padStart(2, "0")}`,
-    title: `Service Product ${String(index + 4).padStart(2, "0")}`,
+  {
+    index: "S-04",
+    title: "Visibility IQ",
+    focus: "AI assistant visibility and bookability",
+    status: "In Development",
+    copy: "More consumers are using AI to search for local trade contractors, and those assistants do not use the same search criteria. Visibility IQ solves this with (1) visibility measurement across assistants, (2) done-for-you agent-readiness fixes, and (3) a bookability endpoint—at local-business prices, plus a white-label tier for agencies.",
+  },
+  ...serviceProductFocus.slice(4).map((focus, index) => ({
+    index: `S-${String(index + 5).padStart(2, "0")}`,
+    title: `Service Product ${String(index + 5).padStart(2, "0")}`,
     focus,
     status: "Reserved",
     copy: `A reserved product position for ${focus.toLowerCase()} workflows. Scope and release details will be published when approved.`,
