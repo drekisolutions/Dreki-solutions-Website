@@ -159,10 +159,10 @@ export const aviationProducts = [
   },
   {
     index: "A-05",
-    title: "Aviation Product 05",
-    focus: "Customer communications",
-    status: "Reserved",
-    copy: "A reserved product position for approved charter customer communications and context continuity.",
+    title: "Trend Sentinel",
+    focus: "Engine trend monitoring and reporting",
+    status: "In Development",
+    copy: "TurbineTells ingests whatever trend data the fleet produces, normalizes it per engine, watches drift, and turns anomalies into plain-English draft advisories and the monthly trend report the DOM signs—vigilance and reporting, not physics models or grounding calls.",
   },
   {
     index: "A-06",
