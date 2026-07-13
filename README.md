@@ -13,6 +13,9 @@ npm run lint
 npm test
 ```
 
+`npm run build` creates the standard `.next` output used by Vercel. The
+Vinext/Sites build remains available through `npm run build:sites`.
+
 The release has no form backend, database, analytics, or visitor tracking. The
 primary contact action opens a prefilled email to Brett at Dreki Solutions.
 
