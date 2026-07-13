@@ -168,7 +168,10 @@ test("publishes six service and six aviation product positions", async () => {
   assert.match(text, /flagged-conversation review/i);
   assert.match(text, /performance review your AI employees never get/i);
   assert.match(text, /Valkyrie 135/);
-  for (let index = 2; index <= 6; index += 1) {
+  assert.match(text, /Skyfar/);
+  assert.match(text, /finds empty-leg trips on private jets/i);
+  assert.match(text, /recover part of that cost/i);
+  for (let index = 3; index <= 6; index += 1) {
     assert.match(text, new RegExp(`Aviation Product ${String(index).padStart(2, "0")}`));
   }
   assert.equal((markup.match(/class="product-card/g) ?? []).length, 12);

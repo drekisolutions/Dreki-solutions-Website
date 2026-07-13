@@ -137,10 +137,10 @@ export const aviationProducts = [
   },
   {
     index: "A-02",
-    title: "Aviation Product 02",
-    focus: "Trip readiness",
-    status: "Reserved",
-    copy: "A reserved product position for trip-readiness coordination. Scope and release details will follow approval.",
+    title: "Skyfar",
+    focus: "Empty-leg trip discovery",
+    status: "In Development",
+    copy: "Skyfar is a mobile application that finds empty-leg trips on private jets and offers them at a fraction of the normal cost. Empty legs are typically an expense to the operator; Skyfar helps operators recover part of that cost while giving travelers access to otherwise unused capacity.",
   },
   {
     index: "A-03",
