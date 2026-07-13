@@ -114,7 +114,7 @@ test("renders a consistent six-page menu and working contact actions", async () 
   const { html } = await render("/contact");
   const markup = visibleMarkup(html);
   const hrefs = tagsNamed(markup, "a").map((tag) => attributesFor(tag).get("href"));
-  assert.ok(hrefs.includes("tel:+16026775926"));
+  assert.ok(hrefs.includes("tel:+15172157573"));
   assert.ok(hrefs.some((href) => href?.startsWith("mailto:Brett@dreki-solutions.com")));
   assert.match(markup, /<form\b/i);
   for (const field of [

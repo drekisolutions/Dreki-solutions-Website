@@ -1,7 +1,7 @@
 export const contact = {
   email: "Brett@dreki-solutions.com",
-  phoneDisplay: "(602) 677-5926",
-  phoneHref: "tel:+16026775926",
+  phoneDisplay: "(517) 215-7573",
+  phoneHref: "tel:+15172157573",
 } as const;
 
 export const navigation = [
