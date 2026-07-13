@@ -144,7 +144,11 @@ test("publishes six service and six aviation product positions", async () => {
   const { html } = await render("/products");
   const markup = visibleMarkup(html);
   const text = textContent(markup);
-  for (let index = 1; index <= 6; index += 1) {
+  assert.match(text, /Margin Hawk/);
+  assert.match(text, /In Development/);
+  assert.match(text, /reconciles every line against the contractor’s price agreements/i);
+  assert.match(text, /the agent never disputes autonomously/i);
+  for (let index = 2; index <= 6; index += 1) {
     assert.match(text, new RegExp(`Service Product ${String(index).padStart(2, "0")}`));
   }
   assert.match(text, /Valkyrie 135/);

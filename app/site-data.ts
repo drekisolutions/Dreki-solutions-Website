@@ -91,13 +91,22 @@ const serviceProductFocus = [
   "Recurring administration",
 ] as const;
 
-export const serviceProducts = serviceProductFocus.map((focus, index) => ({
-  index: `S-${String(index + 1).padStart(2, "0")}`,
-  title: `Service Product ${String(index + 1).padStart(2, "0")}`,
-  focus,
-  status: "Reserved",
-  copy: `A reserved product position for ${focus.toLowerCase()} workflows. Scope and release details will be published when approved.`,
-}));
+export const serviceProducts = [
+  {
+    index: "S-01",
+    title: "Margin Hawk",
+    focus: "Supplier invoice reconciliation",
+    status: "In Development",
+    copy: "MarginHawk ingests supplier invoices, reconciles every line against the contractor’s price agreements and rolling price history, flags discrepancies, and drafts the dispute email. The owner approves; the agent never disputes autonomously.",
+  },
+  ...serviceProductFocus.slice(1).map((focus, index) => ({
+    index: `S-${String(index + 2).padStart(2, "0")}`,
+    title: `Service Product ${String(index + 2).padStart(2, "0")}`,
+    focus,
+    status: "Reserved",
+    copy: `A reserved product position for ${focus.toLowerCase()} workflows. Scope and release details will be published when approved.`,
+  })),
+];
 
 export const aviationProducts = [
   {

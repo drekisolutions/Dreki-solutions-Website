@@ -23,8 +23,8 @@ export default function ProductsPage() {
           </div>
           <div className="section-heading__support">
             <p>
-              Six service-industry product positions are reserved while Dreki validates
-              the workflows, boundaries, and release scope behind each one.
+              Dreki develops focused products around real service-business friction,
+              with clear operating boundaries and human approval where it matters.
             </p>
             <PageTurnLink className="button button-primary" href="/contact#consultation">
               Schedule a Consultation
