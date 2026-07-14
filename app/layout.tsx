@@ -70,7 +70,7 @@ const structuredData = [
     name: "Dreki Solutions LLC",
     url: `${siteUrl}/`,
     logo: `${siteUrl}/brand/dreki-icon-1024.webp`,
-    email: "Brett@dreki-solutions.com",
+    email: "brett@dreki-solutions.ai",
     telephone: "+1-517-215-7573",
     founder: { "@type": "Person", name: "Brett Moser" },
   },

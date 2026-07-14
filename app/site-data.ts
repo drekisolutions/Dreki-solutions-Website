@@ -1,5 +1,5 @@
 export const contact = {
-  email: "Brett@dreki-solutions.com",
+  email: "brett@dreki-solutions.ai",
   phoneDisplay: "(517) 215-7573",
   phoneHref: "tel:+15172157573",
 } as const;
@@ -14,7 +14,7 @@ export const navigation = [
 ] as const;
 
 export const consultationMailto =
-  "mailto:Brett@dreki-solutions.com?subject=Consultation%20and%20Optimization%20Audit%20Request&body=Business%20name%3A%0D%0AWebsite%3A%0D%0AIndustry%3A%0D%0AWorkflow%20to%20optimize%3A%0D%0APreferred%20contact%20method%3A%0D%0A";
+  "mailto:brett@dreki-solutions.ai?subject=Consultation%20and%20Optimization%20Audit%20Request&body=Business%20name%3A%0D%0AWebsite%3A%0D%0AIndustry%3A%0D%0AWorkflow%20to%20optimize%3A%0D%0APreferred%20contact%20method%3A%0D%0A";
 
 export const serviceIndustryServices = [
   {
