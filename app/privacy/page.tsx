@@ -16,7 +16,7 @@ export default function PrivacyPage() {
           <p className="legal-effective">Effective: July 22, 2026</p>
 
           <p>
-            Dreki Solutions LLC (&quot;we,&quot; &quot;us&quot;) operates dreki-solutions.com and related
+            Dreki Solutions LLC (&quot;we,&quot; &quot;us&quot;) operates dreki-solutions.ai and related
             internal software tools. This policy describes what information we handle and how.
           </p>
 
