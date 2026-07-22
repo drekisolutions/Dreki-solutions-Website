@@ -9,6 +9,7 @@ const routeExpectations = [
   { path: "/about", title: "About | Dreki Solutions", h1: "Discipline for the work behind the work." },
   { path: "/portfolio", title: "Project Portfolio | Dreki Solutions", h1: "See the systems behind the work." },
   { path: "/contact", title: "Contact | Dreki Solutions", h1: "Schedule a consultation." },
+  { path: "/privacy", title: "Privacy Policy | Dreki Solutions", h1: "Privacy Policy" },
 ];
 
 const forbiddenPublicTerms = [
@@ -86,7 +87,7 @@ async function render(path) {
   return result;
 }
 
-test("server-renders all six public routes with route-specific content", async () => {
+test("server-renders all seven public routes with route-specific content", async () => {
   for (const expected of routeExpectations) {
     const { status, contentType, html } = await render(expected.path);
     assert.equal(status, 200, `${expected.path} must return 200`);
@@ -100,7 +101,7 @@ test("server-renders all six public routes with route-specific content", async (
   }
 });
 
-test("renders a consistent six-page menu and working contact actions", async () => {
+test("renders a consistent public route menu and working contact actions", async () => {
   const expectedRoutes = routeExpectations.map((route) => route.path);
   for (const route of routeExpectations) {
     const { html } = await render(route.path);
@@ -243,7 +244,7 @@ test("ships route metadata, structured data, sitemap routes, and brand assets", 
   assert.match(home.replace(/\\u002f/gi, "/"), /\/brand\/dreki-logo-horizontal-768\.webp/i);
   assert.match(home.replace(/\\u002f/gi, "/"), /\/brand\/dreki-icon-1024\.webp/i);
   const sitemap = await readFile(new URL("../app/sitemap.ts", import.meta.url), "utf8");
-  for (const route of ["services", "products", "about", "portfolio", "contact"]) assert.match(sitemap, new RegExp(route));
+  for (const route of ["services", "products", "about", "portfolio", "contact", "privacy"]) assert.match(sitemap, new RegExp(route));
   const backdrop = await readFile(new URL("../public/brand/dreki-lattice-backdrop.webp", import.meta.url));
   assert.equal(backdrop.subarray(0, 4).toString("ascii"), "RIFF");
   assert.equal(backdrop.subarray(8, 12).toString("ascii"), "WEBP");

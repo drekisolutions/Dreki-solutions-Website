@@ -130,6 +130,7 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
             <a href={`mailto:${contact.email}`}>{contact.email}</a>
             <a href={contact.phoneHref}>{contact.phoneDisplay}</a>
             <PageTurnLink href="/contact#consultation">Schedule a consultation</PageTurnLink>
+            <PageTurnLink href="/privacy">Privacy Policy</PageTurnLink>
           </div>
         </div>
 
