@@ -91,17 +91,6 @@ export default function IndustriesPage() {
         </div>
       </LaunchSection>
 
-      <LaunchSection
-        id="specialized-product-work"
-        eyebrow="Additional product work"
-        title="Aviation remains visible in the product registry."
-        intro="Dreki maintains named aviation software work with explicit development or testing status. A dedicated industry landing page will not be published until its content and claims are separately validated."
-      >
-        <PageTurnLink className="button button-secondary" href="/products">
-          Review Product Statuses
-        </PageTurnLink>
-      </LaunchSection>
-
       <LaunchFinalCta
         title="Does your workflow have a clear normal path and exception owner?"
         copy="Bring one recurring process to a strategy call. Dreki will examine its rules, data boundary, human decisions, and practical next step before recommending a build."

@@ -939,19 +939,8 @@ p {
   font-size: clamp(1.42rem, 2vw, 1.95rem);
 }
 
-.product-card .text-link,
-.product-card__link {
+.product-card .text-link {
   margin-top: 28px;
-}
-
-.product-card__link {
-  display: inline-flex;
-  gap: 8px;
-  color: var(--copper-bright);
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .launch-hero {
@@ -1210,7 +1199,7 @@ p {
   font-size: 0.79rem;
 }
 
-.aviation-note {
+.boundary-note {
   padding: clamp(24px, 3vw, 38px);
   border-top: 1px solid var(--line-copper);
   border-right: 1px solid var(--line);
@@ -1219,7 +1208,7 @@ p {
   background: rgba(176, 83, 41, 0.06);
 }
 
-.aviation-note strong {
+.boundary-note strong {
   display: block;
   margin-bottom: 7px;
   color: var(--copper-bright);
@@ -1228,7 +1217,7 @@ p {
   text-transform: uppercase;
 }
 
-.aviation-note p {
+.boundary-note p {
   margin-bottom: 0;
 }
 

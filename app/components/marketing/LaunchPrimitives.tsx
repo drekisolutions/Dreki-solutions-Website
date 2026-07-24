@@ -201,7 +201,7 @@ export function LaunchFinalCta({
 
 export function InternalDemonstrationDisclosure() {
   return (
-    <aside className="aviation-note launch-proof-disclosure">
+    <aside className="boundary-note launch-proof-disclosure">
       <strong>Internal demonstration</strong>
       <p>
         This is a Dreki-designed operating scenario. It is not customer work, a

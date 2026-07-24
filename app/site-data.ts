@@ -126,52 +126,6 @@ export const serviceProducts = [
   },
 ] as const;
 
-export const aviationProducts = [
-  {
-    index: "A-01",
-    title: "Valkyrie 135",
-    focus: "Charter operations tracking",
-    status: "Available for Testing",
-    copy: "Tracking software being developed for charter-industry workflows, with human ownership of operational and regulatory decisions.",
-    url: "https://valkyrie.dreki-solutions.com",
-  },
-  {
-    index: "A-02",
-    title: "Skyfar",
-    focus: "Empty-leg trip discovery",
-    status: "In Development",
-    copy: "Skyfar is an in-development concept for surfacing operator-published empty-leg availability and helping travelers discover otherwise unused capacity. Operators retain control of availability, eligibility, pricing, and every trip commitment.",
-  },
-  {
-    index: "A-03",
-    title: "Declare Ready",
-    focus: "Agentic safety management",
-    status: "In Development",
-    copy: "Declare Ready is an in-development concept for preparing safety-management documents, organizing hazard reports, and maintaining draft assurance records. The accountable executive and qualified safety personnel verify the source material, make the decisions, and approve every official artifact.",
-  },
-  {
-    index: "A-04",
-    title: "Squawk Sheet AD",
-    focus: "Airworthiness directive reconciliation",
-    status: "In Development",
-    copy: "Squawk Sheet AD is an in-development concept for organizing photographed maintenance records and FAA DRS references into draft reconciliation aids. An appropriately authorized mechanic independently verifies the records and references and retains every maintenance and airworthiness determination.",
-  },
-  {
-    index: "A-05",
-    title: "Trend Sentinel",
-    focus: "Engine trend monitoring and reporting",
-    status: "In Development",
-    copy: "Trend Sentinel is an in-development concept for normalizing fleet-provided engine trend data and preparing plain-language anomaly notes and draft reports. Qualified maintenance personnel verify the data and retain all operational, diagnostic, and grounding decisions.",
-  },
-  {
-    index: "A-06",
-    title: "Rotor Log",
-    focus: "Drone maintenance records",
-    status: "In Development",
-    copy: "Rotor Log is an in-development concept for organizing drone maintenance records and mapping manufacturer bulletins to potentially affected aircraft. Qualified operators and maintainers verify applicability, compliance, and every return-to-service decision.",
-  },
-] as const;
-
 export const portfolioProjects = [
   {
     index: "P-01",

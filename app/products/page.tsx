@@ -5,15 +5,13 @@ import {
   LaunchSection,
 } from "../components/marketing/LaunchPrimitives";
 import { metadataFromRegistry } from "../content-registry";
-import { aviationProducts, serviceProducts } from "../site-data";
+import { serviceProducts } from "../site-data";
 
 export const metadata: Metadata = metadataFromRegistry("/products");
 
-type Product = (typeof serviceProducts)[number] | (typeof aviationProducts)[number];
+type Product = (typeof serviceProducts)[number];
 
 function ProductCard({ product }: { product: Product }) {
-  const productUrl = "url" in product ? product.url : null;
-
   return (
     <article className="product-card launch-product-card" role="listitem">
       <div>
@@ -23,17 +21,6 @@ function ProductCard({ product }: { product: Product }) {
       <p>{product.focus}</p>
       <h3>{product.title}</h3>
       <p>{product.copy}</p>
-      {productUrl ? (
-        <a
-          aria-label={`Visit the ${product.title} website (opens in a new tab)`}
-          className="product-card__link"
-          href={productUrl}
-          rel="noreferrer"
-          target="_blank"
-        >
-          Visit the product site <span aria-hidden="true">↗</span>
-        </a>
-      ) : null}
     </article>
   );
 }
@@ -44,7 +31,7 @@ export default function ProductsPage() {
       <LaunchHero
         eyebrow="Product registry"
         title="See exactly where each product stands."
-        lede="Dreki publishes development and testing status directly. A product description explains the intended job; it does not imply general availability or a guaranteed release date."
+        lede="Dreki publishes development status directly. A product description explains the intended job; it does not imply general availability or a guaranteed release date."
         primaryHref="/book"
         primaryLabel="Discuss Product Fit"
         secondaryHref="/agents"
@@ -54,10 +41,6 @@ export default function ProductsPage() {
           <div>
             <span>In Development</span>
             <p>Not generally available. Capability and timing may change.</p>
-          </div>
-          <div>
-            <span>Available for Testing</span>
-            <p>Testing conversations may be considered. This is not general availability.</p>
           </div>
         </div>
       </LaunchHero>
@@ -80,30 +63,13 @@ export default function ProductsPage() {
       </LaunchSection>
 
       <LaunchSection
-        id="aviation-products"
-        eyebrow="Aviation products"
-        title="Specialized software with current status visible."
-        intro="Aviation work preserves human ownership of operational, maintenance, safety, and regulatory decisions. Product status does not transfer that authority to software."
-        className="launch-section--contrast"
-      >
-        <div
-          className="product-grid product-grid--aviation launch-product-grid"
-          role="list"
-          aria-label="Aviation products"
-        >
-          {aviationProducts.map((product) => (
-            <ProductCard key={product.index} product={product} />
-          ))}
-        </div>
-      </LaunchSection>
-
-      <LaunchSection
         id="product-boundary"
         eyebrow="Availability boundary"
         title="A product conversation is not a purchase promise."
         intro="Dreki will confirm the current capability, testing fit, access conditions, and commercial scope directly. No public card on this page should be read as a guarantee of features, timing, savings, or business outcomes."
+        className="launch-section--contrast"
       >
-        <div className="aviation-note launch-boundary-note">
+        <div className="boundary-note launch-boundary-note">
           <strong>Scoped requests only</strong>
           <p>
             There is no public checkout or one-size-fits-all product price on this

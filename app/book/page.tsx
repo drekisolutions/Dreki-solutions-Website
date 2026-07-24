@@ -116,7 +116,7 @@ export default function BookPage() {
         title="Leave with a clearer next decision."
         intro="The call may lead to a workflow audit, a scoped custom build, a request for better source material, or a conclusion that the workflow is not a good automation fit."
       >
-        <div className="aviation-note launch-boundary-note">
+        <div className="boundary-note launch-boundary-note">
           <strong>No automatic proposal</strong>
           <p>
             Dreki prepares a scoped estimate only after the workflow, access, human

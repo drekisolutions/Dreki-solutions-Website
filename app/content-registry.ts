@@ -197,7 +197,7 @@ export const contentRegistry = [
     slug: "products",
     title: "Agentic Software Product Registry",
     description:
-      "Review the current development and testing status of Dreki Solutions service-business and aviation software products.",
+      "Review the current development status of Dreki Solutions software products for service businesses.",
     publicationStatus: "published",
     indexingStatus: "index",
     pageType: "product",

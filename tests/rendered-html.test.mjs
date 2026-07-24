@@ -148,6 +148,12 @@ const retiredPublicTerms = [
   "LeadpulseAI",
   "ReviewShield",
   "SocialPulse",
+  "Valkyrie 135",
+  "Skyfar",
+  "Declare Ready",
+  "Squawk Sheet AD",
+  "Trend Sentinel",
+  "Rotor Log",
 ];
 
 let workerPromise;
@@ -420,7 +426,7 @@ test("labels all proof as internal demonstration and makes the evidence boundary
   assert.doesNotMatch(cards.map(textContent).join(" "), /\b\d+(?:\.\d+)?%\b/);
 });
 
-test("publishes twelve products with a truthful status on every card", async () => {
+test("publishes only service-business products with a truthful status on every card", async () => {
   const markup = visibleMarkup((await fetchBuilt("/products")).body);
   const cards = articleBlocksWithClass(markup, "launch-product-card");
   const expectedProducts = new Map([
@@ -430,12 +436,6 @@ test("publishes twelve products with a truthful status on every card", async () 
     ["Visibility IQ", "In Development"],
     ["Bifrost", "In Development"],
     ["Asgard", "In Development"],
-    ["Valkyrie 135", "Available for Testing"],
-    ["Skyfar", "In Development"],
-    ["Declare Ready", "In Development"],
-    ["Squawk Sheet AD", "In Development"],
-    ["Trend Sentinel", "In Development"],
-    ["Rotor Log", "In Development"],
   ]);
 
   assert.equal(cards.length, expectedProducts.size);
@@ -447,10 +447,12 @@ test("publishes twelve products with a truthful status on every card", async () 
 
   const text = textContent(markup);
   assert.match(text, /Not generally available\. Capability and timing may change\./i);
-  assert.match(text, /This is not general availability\./i);
   assert.match(text, /There is no public checkout or one-size-fits-all product price/i);
   assert.doesNotMatch(text, /\bBuy now\b|\bAdd to cart\b/i);
-  assert.match(markup, /href="https:\/\/valkyrie\.dreki-solutions\.com"/i);
+  assert.doesNotMatch(
+    text,
+    /Aviation products|Valkyrie 135|Skyfar|Declare Ready|Squawk Sheet AD|Trend Sentinel|Rotor Log/i,
+  );
 });
 
 test("ships Guardian Circuit as a progressive Three.js enhancement with a complete fallback", async () => {
