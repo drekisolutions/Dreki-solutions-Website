@@ -19,7 +19,7 @@
   width: 7rem;
   height: 1px;
   content: "";
-  background: var(--gold-bright, #d0a654);
+  background: var(--gold-bright, #d8b15a);
 }
 
 .heading {
@@ -34,7 +34,7 @@
 .eyebrow,
 .statusCode {
   margin: 0 0 0.8rem;
-  color: var(--gold-pale, #ebca7e);
+  color: var(--gold-pale, #f3d78c);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 0.68rem;
   font-weight: 700;
@@ -118,7 +118,7 @@
 .field input:focus-visible,
 .field select:focus-visible,
 .field textarea:focus-visible {
-  border-color: var(--gold-bright, #d0a654);
+  border-color: var(--gold-bright, #d8b15a);
   background: rgba(12, 12, 13, 0.94);
   box-shadow: 0 0 0 3px rgba(208, 166, 84, 0.13);
 }
@@ -150,7 +150,7 @@
 .permissions legend {
   margin-left: 1rem;
   padding-inline: 0.45rem;
-  color: var(--gold-pale, #ebca7e);
+  color: var(--gold-pale, #f3d78c);
 }
 
 .checkRow {
@@ -176,7 +176,7 @@
 }
 
 .checkRow a {
-  color: var(--gold-pale, #ebca7e);
+  color: var(--gold-pale, #f3d78c);
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
@@ -225,8 +225,8 @@
   justify-content: center;
   min-height: 3.15rem;
   padding: 0.85rem 1.25rem;
-  border: 1px solid var(--gold-bright, #d0a654);
-  background: var(--gold-bright, #d0a654);
+  border: 1px solid var(--gold-bright, #d8b15a);
+  background: var(--gold-bright, #d8b15a);
   color: var(--obsidian-deep, #080809);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 0.7rem;
@@ -244,7 +244,7 @@
 .submit:hover:not(:disabled),
 .primaryAction:hover {
   background: transparent;
-  color: var(--gold-pale, #ebca7e);
+  color: var(--gold-pale, #f3d78c);
   transform: translateY(-2px);
 }
 
@@ -269,7 +269,7 @@
 .fallback a,
 .secondaryAction,
 .formStatus a {
-  color: var(--gold-pale, #ebca7e);
+  color: var(--gold-pale, #f3d78c);
   text-decoration: underline;
   text-underline-offset: 0.25em;
 }

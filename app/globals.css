@@ -14,12 +14,13 @@
   --glacial: #a7e0f3;
   --glacial-bright: #d9f5ff;
   --glacial-muted: #629bb0;
-  --gold-bright: var(--copper-bright);
-  --gold-pale: #f2c2a2;
+  --gold-bright: #d8b15a;
+  --gold-pale: #f3d78c;
   --ember: var(--copper);
   --line: rgba(168, 224, 244, 0.19);
   --line-soft: rgba(168, 224, 244, 0.09);
   --line-copper: rgba(220, 139, 87, 0.32);
+  --line-gold: rgba(216, 177, 90, 0.42);
   --shadow-deep: 0 30px 90px rgba(0, 0, 0, 0.38);
   --shell: min(1440px, calc(100vw - clamp(32px, 7vw, 112px)));
   --measure: 72ch;
@@ -211,9 +212,9 @@ address {
   align-items: center;
   justify-content: center;
   padding: 10px 16px;
-  border: 1px solid var(--line-copper);
-  background: rgba(200, 121, 73, 0.08);
-  color: var(--copper-bright);
+  border: 1px solid var(--line-gold);
+  background: rgba(216, 177, 90, 0.08);
+  color: var(--gold-pale);
   font-size: 0.67rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -226,8 +227,8 @@ address {
 }
 
 .header-cta:hover {
-  border-color: var(--copper-bright);
-  background: var(--copper-bright);
+  border-color: var(--gold-bright);
+  background: var(--gold-bright);
   color: var(--obsidian-deep);
 }
 
@@ -238,9 +239,9 @@ address {
   place-content: center;
   gap: 7px;
   padding: 0;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-gold);
   background: transparent;
-  color: var(--ivory);
+  color: var(--gold-pale);
   cursor: pointer;
 }
 
@@ -471,28 +472,29 @@ p {
 }
 
 .button-primary {
-  border-color: var(--copper-bright);
-  background: var(--copper-bright);
+  border-color: var(--gold-bright);
+  background: var(--gold-bright);
   color: var(--obsidian-deep);
-  box-shadow: 0 12px 34px rgba(177, 88, 45, 0.16);
+  box-shadow: 0 12px 34px rgba(216, 177, 90, 0.18);
 }
 
 .button-primary:hover {
   background: transparent;
-  color: var(--copper-bright);
+  color: var(--gold-pale);
 }
 
 .button-secondary,
 .button-ghost {
-  border-color: var(--line);
-  background: rgba(156, 222, 245, 0.025);
-  color: var(--ivory);
+  border-color: var(--line-gold);
+  background: rgba(216, 177, 90, 0.035);
+  color: var(--gold-pale);
 }
 
 .button-secondary:hover,
 .button-ghost:hover {
-  border-color: var(--glacial-muted);
-  background: rgba(156, 222, 245, 0.08);
+  border-color: var(--gold-bright);
+  background: rgba(216, 177, 90, 0.12);
+  color: var(--gold-pale);
 }
 
 .text-link {

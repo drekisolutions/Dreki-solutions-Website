@@ -548,6 +548,27 @@ test("ships Guardian Circuit as a progressive Three.js enhancement with a comple
   }
 });
 
+test("uses the gold palette for primary and secondary buttons", async () => {
+  const styles = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(styles, /--gold-bright:\s*#d8b15a;/i);
+  assert.match(
+    styles,
+    /\.button-primary\s*\{[^}]*background:\s*var\(--gold-bright\);/is,
+  );
+  assert.match(
+    styles,
+    /\.button-secondary,\s*\.button-ghost\s*\{[^}]*border-color:\s*var\(--line-gold\);/is,
+  );
+  assert.match(
+    styles,
+    /\.header-cta\s*\{[^}]*color:\s*var\(--gold-pale\);/is,
+  );
+});
+
 test("publishes only indexable routes in sitemap and protects utility paths in robots", async () => {
   const sitemap = await fetchBuilt("/sitemap.xml");
   assert.equal(sitemap.status, 200);
