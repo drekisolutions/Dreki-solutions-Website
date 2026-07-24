@@ -3,26 +3,63 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { type ReactNode, useEffect, useRef, useState } from "react";
-import DrekiExperience from "../DrekiExperience";
 import { contact, navigation } from "../site-data";
+import { siteConfig } from "../site-config";
 import PageTurnLink from "./PageTurnLink";
 
 export default function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (!menuOpen) return;
 
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-      setMenuOpen(false);
-      window.requestAnimationFrame(() => menuButtonRef.current?.focus());
+    const handleMenuKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        window.requestAnimationFrame(() => menuButtonRef.current?.focus());
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+
+      const menuLinks = Array.from(
+        menuRef.current?.querySelectorAll<HTMLAnchorElement>("a[href]") ?? [],
+      );
+      const focusable = menuButtonRef.current
+        ? [menuButtonRef.current, ...menuLinks]
+        : menuLinks;
+
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+
+      if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
+      } else if (!focusable.some((element) => element === active)) {
+        event.preventDefault();
+        first.focus();
+      }
     };
 
-    document.addEventListener("keydown", handleEscape);
-    return () => document.removeEventListener("keydown", handleEscape);
+    document.addEventListener("keydown", handleMenuKeyDown);
+    document.body.dataset.menuOpen = "true";
+    window.requestAnimationFrame(() => {
+      menuRef.current?.querySelector<HTMLAnchorElement>("a[href]")?.focus();
+    });
+
+    return () => {
+      document.removeEventListener("keydown", handleMenuKeyDown);
+      delete document.body.dataset.menuOpen;
+    };
   }, [menuOpen]);
 
   return (
@@ -30,7 +67,6 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
       <a className="skip-link" href="#main-content">
         Skip to main content
       </a>
-      <DrekiExperience />
 
       <header className="site-header" aria-label="Primary">
         <PageTurnLink className="brand-link" href="/" aria-label="Dreki Solutions home">
@@ -56,8 +92,8 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
               </PageTurnLink>
             ))}
           </nav>
-          <PageTurnLink className="header-cta" href="/contact#consultation">
-            Schedule a consultation
+          <PageTurnLink className="header-cta" href={siteConfig.primaryAction.href}>
+            {siteConfig.primaryAction.label}
           </PageTurnLink>
           <button
             ref={menuButtonRef}
@@ -79,6 +115,7 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
       </header>
 
       <nav
+        ref={menuRef}
         className={`mobile-menu${menuOpen ? " is-open" : ""}`}
         id="mobile-menu"
         aria-label="Mobile navigation"
@@ -100,6 +137,13 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
 
       {children}
 
+      <PageTurnLink
+        className="mobile-sticky-cta"
+        href={siteConfig.primaryAction.href}
+      >
+        {siteConfig.primaryAction.label}
+      </PageTurnLink>
+
       <footer className="site-footer">
         <div className="footer-main">
           <div className="footer-brand">
@@ -112,12 +156,12 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
                 unoptimized
               />
             </PageTurnLink>
-            <p>Custom agent systems for service and aviation operations.</p>
-            <span>Built for service. Governed by people.</span>
+            <p>Governed AI agents for service-business operations.</p>
+            <span>Systems move the work. People retain authority.</span>
           </div>
 
           <nav className="footer-nav" aria-label="Footer navigation">
-            <p>Explore</p>
+            <p>Capabilities</p>
             {navigation.map((item) => (
               <PageTurnLink href={item.href} key={item.href}>
                 {item.label}
@@ -125,12 +169,21 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
             ))}
           </nav>
 
+          <nav className="footer-nav" aria-label="Company navigation">
+            <p>Company</p>
+            <PageTurnLink href="/about">About</PageTurnLink>
+            <PageTurnLink href="/engagements">Engagements</PageTurnLink>
+            <PageTurnLink href="/contact">Contact</PageTurnLink>
+            <PageTurnLink href="/privacy">Privacy</PageTurnLink>
+          </nav>
+
           <div className="footer-contact">
-            <p>Contact</p>
+            <p>Start a conversation</p>
             <a href={`mailto:${contact.email}`}>{contact.email}</a>
             <a href={contact.phoneHref}>{contact.phoneDisplay}</a>
-            <PageTurnLink href="/contact#consultation">Schedule a consultation</PageTurnLink>
-            <PageTurnLink href="/privacy">Privacy Policy</PageTurnLink>
+            <PageTurnLink href={siteConfig.primaryAction.href}>
+              {siteConfig.primaryAction.label}
+            </PageTurnLink>
           </div>
         </div>
 

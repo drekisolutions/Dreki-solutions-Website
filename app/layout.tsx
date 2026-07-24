@@ -1,34 +1,27 @@
 import type { Metadata, Viewport } from "next";
-import { Cinzel, Inter } from "next/font/google";
+import Script from "next/script";
 import SiteChrome from "./components/SiteChrome";
+import { absoluteUrl, siteConfig } from "./site-config";
+import "@fontsource-variable/cinzel/wght.css";
+import "@fontsource-variable/inter/wght.css";
 import "./globals.css";
 
-const cinzel = Cinzel({
-  variable: "--font-cinzel",
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  display: "swap",
-});
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["400", "600"],
-  display: "swap",
-});
-
-const defaultTitle = "Dreki Solutions | Custom Agentic Software";
+const defaultTitle = "Dreki Solutions | Governed AI Agents for Service Businesses";
 const defaultDescription =
-  "Custom agentic software, services, and products for service businesses and aviation operations.";
-const siteUrl = "https://dreki-solutions-ops.dreki-solutions.chatgpt.site";
+  "Dreki Solutions designs governed AI agents for customer response, intake and scheduling, and workflow coordination.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(siteConfig.siteUrl),
   title: {
     default: defaultTitle,
     template: "%s | Dreki Solutions",
   },
   description: defaultDescription,
+  applicationName: siteConfig.name,
+  authors: [{ name: "Dreki Solutions LLC", url: siteConfig.siteUrl }],
+  creator: "Dreki Solutions LLC",
+  publisher: "Dreki Solutions LLC",
+  category: "Business automation",
   icons: {
     icon: "/favicon.png",
     shortcut: "/favicon.png",
@@ -41,10 +34,10 @@ export const metadata: Metadata = {
     description: defaultDescription,
     images: [
       {
-        url: "/og-wide.png",
+        url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Dreki Solutions custom agent systems",
+        alt: "Dreki Solutions governed agent control path",
       },
     ],
   },
@@ -52,50 +45,53 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: defaultTitle,
     description: defaultDescription,
-    images: ["/og-wide.png"],
+    images: ["/og.png"],
   },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0c0c0d",
+  themeColor: "#07090b",
   colorScheme: "dark",
 };
 
-const structuredData = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Dreki Solutions LLC",
-    url: `${siteUrl}/`,
-    logo: `${siteUrl}/brand/dreki-icon-1024.webp`,
-    email: "brett@dreki-solutions.ai",
-    telephone: "+1-517-215-7573",
-    founder: { "@type": "Person", name: "Brett Moser" },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: "Custom Agentic Software Services",
-    serviceType: "Agentic software design, deployment, and optimization",
-    provider: { "@type": "Organization", name: "Dreki Solutions LLC" },
-    audience: [
-      { "@type": "BusinessAudience", audienceType: "Service businesses" },
-      { "@type": "BusinessAudience", audienceType: "Aviation and charter operations" },
-    ],
-  },
-];
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: siteConfig.legalName,
+  url: absoluteUrl("/"),
+  logo: absoluteUrl("/brand/dreki-icon-1024.webp"),
+  email: "brett@dreki-solutions.ai",
+  telephone: "+1-517-215-7573",
+  founder: { "@type": "Person", name: "Brett Moser" },
+};
+
+const serializedStructuredData = JSON.stringify(structuredData).replace(
+  /</g,
+  "\\u003c",
+);
+
+const analyticsToken =
+  process.env.NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN?.trim();
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${cinzel.variable} ${inter.variable}`}>
+    <html lang="en">
       <body>
         <SiteChrome>{children}</SiteChrome>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+          dangerouslySetInnerHTML={{ __html: serializedStructuredData }}
         />
+        {analyticsToken ? (
+          <Script
+            id="cloudflare-web-analytics"
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: analyticsToken })}
+            strategy="afterInteractive"
+          />
+        ) : null}
       </body>
     </html>
   );

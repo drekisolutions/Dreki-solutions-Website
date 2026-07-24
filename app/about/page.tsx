@@ -1,27 +1,42 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import PageTurnLink from "../components/PageTurnLink";
+import {
+  LaunchFinalCta,
+  LaunchSection,
+  LaunchWorkflow,
+} from "../components/marketing/LaunchPrimitives";
+import { metadataFromRegistry } from "../content-registry";
 import { processSteps } from "../site-data";
 
-export const metadata: Metadata = {
-  title: "About",
-  description:
-    "Learn how U.S. Army veteran Brett Moser founded Dreki Solutions to build disciplined agentic software around real operational work.",
-  alternates: { canonical: "/about" },
-};
+export const metadata: Metadata = metadataFromRegistry("/about");
 
 const principles = [
-  { title: "Service before software", copy: "Start with the people, responsibility, and operating reality before choosing the technology." },
-  { title: "Boundaries by design", copy: "Define what an agent may prepare, what it may never decide, and when a person must take over." },
-  { title: "Results over reports", copy: "Judge the system by whether the workflow moves with less friction and clearer ownership." },
+  {
+    title: "Service before software",
+    copy: "Start with the people, responsibility, and operating reality before choosing the technology.",
+  },
+  {
+    title: "Boundaries by design",
+    copy: "Define what an agent may prepare, what it may never decide, and when a person must take over.",
+  },
+  {
+    title: "Evidence before expansion",
+    copy: "Review real exceptions and operating results before widening an agent’s responsibility.",
+  },
 ] as const;
 
 export default function AboutPage() {
   return (
-    <main className="page-main" id="main-content">
-      <section className="about-hero" aria-labelledby="about-title">
+    <main className="page-main launch-page" id="main-content">
+      <section className="about-hero launch-about-hero" aria-labelledby="about-title">
         <div className="about-portrait" aria-hidden="true">
-          <Image src="/brand/dreki-icon-1024.webp" alt="" width={1024} height={1024} unoptimized />
+          <Image
+            src="/brand/dreki-icon-1024.webp"
+            alt=""
+            width={1024}
+            height={1024}
+            unoptimized
+          />
           <span>Built in service</span>
         </div>
         <div className="about-hero__copy">
@@ -37,23 +52,18 @@ export default function AboutPage() {
             prepares, coordinates, and escalates; the team retains authority over
             relationships, exceptions, strategy, and final approvals.
           </p>
-          <PageTurnLink className="button button-primary" href="/contact#consultation">
-            Schedule a Consultation
-          </PageTurnLink>
+          <a className="button button-primary" href="/book">
+            Book a Strategy Call
+          </a>
         </div>
       </section>
 
-      <section className="page-section" aria-labelledby="principles-title">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">Operating principles</p>
-            <h2 id="principles-title">Built with accountability intact.</h2>
-          </div>
-          <p>
-            Useful automation is not a mystery box. It has a narrow job, trusted
-            inputs, visible checkpoints, and a known person responsible for the decision.
-          </p>
-        </div>
+      <LaunchSection
+        id="about-principles"
+        eyebrow="Operating principles"
+        title="Accountability stays visible."
+        intro="Useful automation is not a mystery box. It has a narrow job, trusted inputs, reviewable outputs, known stop conditions, and a person responsible for the decision."
+      >
         <div className="feature-grid feature-grid--three">
           {principles.map((principle, index) => (
             <article className="feature-card" key={principle.title}>
@@ -63,21 +73,48 @@ export default function AboutPage() {
             </article>
           ))}
         </div>
-      </section>
+      </LaunchSection>
 
-      <section className="page-section process-section" aria-labelledby="about-process-title">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">How Dreki works</p>
-            <h2 id="about-process-title">A deliberate path from friction to system.</h2>
-          </div>
+      <LaunchSection
+        id="about-human-model"
+        eyebrow="Human-accountability model"
+        title="Software prepares. People remain answerable."
+        intro="Dreki separates the repeatable preparation from the consequential decision so teams can gain leverage without pretending responsibility disappeared."
+        className="launch-section--contrast"
+      >
+        <div className="launch-before-after">
+          <article>
+            <span>Agent responsibility</span>
+            <h3>Prepare, check, organize, and escalate.</h3>
+            <p>
+              An agent works from approved sources, follows the defined path, produces
+              a reviewable output, and stops when the situation crosses its boundary.
+            </p>
+          </article>
+          <article>
+            <span>Human responsibility</span>
+            <h3>Judge, approve, resolve, and remain accountable.</h3>
+            <p>
+              People own relationships, policy, exceptions, commercial commitments,
+              safety, compliance, and any other decision that requires human authority.
+            </p>
+          </article>
         </div>
-        <ol className="process-grid">
-          {processSteps.map((step) => (
-            <li key={step.title}><span>{step.index}</span><h3>{step.title}</h3><p>{step.copy}</p></li>
-          ))}
-        </ol>
-      </section>
+      </LaunchSection>
+
+      <LaunchSection
+        id="about-process"
+        eyebrow="How Dreki works"
+        title="A deliberate path from friction to system."
+        intro="The work begins with operating reality and expands only through explicit approval."
+      >
+        <LaunchWorkflow label="Dreki delivery process" steps={processSteps} />
+      </LaunchSection>
+
+      <LaunchFinalCta
+        title="Bring the operating problem, not a polished specification."
+        copy="Dreki will help identify the agent job, source truth, human gates, and practical scope before recommending a system."
+      />
     </main>
   );
 }

@@ -5,12 +5,11 @@ export const contact = {
 } as const;
 
 export const navigation = [
-  { href: "/", label: "Home" },
+  { href: "/agents", label: "Agents" },
+  { href: "/industries", label: "Industries" },
   { href: "/services", label: "Services" },
   { href: "/products", label: "Products" },
-  { href: "/about", label: "About" },
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/contact", label: "Contact" },
+  { href: "/portfolio", label: "Proof" },
 ] as const;
 
 export const consultationMailto =
@@ -116,7 +115,7 @@ export const serviceProducts = [
     title: "Bifrost",
     focus: "Branded MCP server delivery",
     status: "In Development",
-    copy: "Bifrost is productized MCP-server-as-a-service: design, build, host, secure, monitor, and maintain the vendor’s official branded MCP server on the 2026 canonical stack—streamable HTTP, OAuth 2.1 with audience binding, edge runtime, and one-click connector install. Subscription-priced and delivered in 30 days.",
+    copy: "Bifrost is an in-development MCP-server-as-a-service concept for designing, building, hosting, securing, monitoring, and maintaining a vendor’s branded MCP server. Its intended operating shape includes streamable HTTP, OAuth with audience binding, edge delivery, and a connector installation path; scope and timing remain subject to validation.",
   },
   {
     index: "S-06",
@@ -141,35 +140,35 @@ export const aviationProducts = [
     title: "Skyfar",
     focus: "Empty-leg trip discovery",
     status: "In Development",
-    copy: "Skyfar is a mobile application that finds empty-leg trips on private jets and offers them at a fraction of the normal cost. Empty legs are typically an expense to the operator; Skyfar helps operators recover part of that cost while giving travelers access to otherwise unused capacity.",
+    copy: "Skyfar is an in-development concept for surfacing operator-published empty-leg availability and helping travelers discover otherwise unused capacity. Operators retain control of availability, eligibility, pricing, and every trip commitment.",
   },
   {
     index: "A-03",
     title: "Declare Ready",
     focus: "Agentic safety management",
     status: "In Development",
-    copy: "DeclareReady is an agentic SMS: it drafts the policy, runs SRM on every hazard report, generates safety-assurance artifacts, keeps the promotion cadence, and maintains the evidence binder—the accountable executive approves.",
+    copy: "Declare Ready is an in-development concept for preparing safety-management documents, organizing hazard reports, and maintaining draft assurance records. The accountable executive and qualified safety personnel verify the source material, make the decisions, and approve every official artifact.",
   },
   {
     index: "A-04",
     title: "Squawk Sheet AD",
     focus: "Airworthiness directive reconciliation",
     status: "In Development",
-    copy: "SquawkSheet AD reads photographed logbooks, pulls current ADs from FAA DRS, reconciles compliance history entry-by-entry, and outputs an IA-ready AD status report, recurring-AD due list, discrepancy list, and draft logbook entry. The IA reviews, corrects, and signs—research automated, authority human.",
+    copy: "Squawk Sheet AD is an in-development concept for organizing photographed maintenance records and FAA DRS references into draft reconciliation aids. An appropriately authorized mechanic independently verifies the records and references and retains every maintenance and airworthiness determination.",
   },
   {
     index: "A-05",
     title: "Trend Sentinel",
     focus: "Engine trend monitoring and reporting",
     status: "In Development",
-    copy: "TurbineTells ingests whatever trend data the fleet produces, normalizes it per engine, watches drift, and turns anomalies into plain-English draft advisories and the monthly trend report the DOM signs—vigilance and reporting, not physics models or grounding calls.",
+    copy: "Trend Sentinel is an in-development concept for normalizing fleet-provided engine trend data and preparing plain-language anomaly notes and draft reports. Qualified maintenance personnel verify the data and retain all operational, diagnostic, and grounding decisions.",
   },
   {
     index: "A-06",
     title: "Rotor Log",
     focus: "Drone maintenance records",
     status: "In Development",
-    copy: "RotorLog is aviation-grade maintenance records sized for drones, with an agentic layer that maps manufacturer bulletins to affected fleet aircraft—the drone world’s AD management, built by an A&P.",
+    copy: "Rotor Log is an in-development concept for organizing drone maintenance records and mapping manufacturer bulletins to potentially affected aircraft. Qualified operators and maintainers verify applicability, compliance, and every return-to-service decision.",
   },
 ] as const;
 

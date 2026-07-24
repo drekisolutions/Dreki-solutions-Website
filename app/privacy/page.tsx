@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
+import { metadataFromRegistry } from "../content-registry";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description: "Privacy Policy for Dreki Solutions LLC and its related internal software tools.",
-  alternates: { canonical: "/privacy" },
-};
+export const metadata: Metadata = metadataFromRegistry("/privacy");
 
 export default function PrivacyPage() {
   return (
@@ -13,19 +10,90 @@ export default function PrivacyPage() {
         <article className="legal-document">
           <p className="eyebrow">Dreki Solutions LLC</p>
           <h1 id="privacy-title">Privacy Policy</h1>
-          <p className="legal-effective">Effective: July 22, 2026</p>
+          <p className="legal-effective">Effective: July 23, 2026</p>
 
           <p>
             Dreki Solutions LLC (&quot;we,&quot; &quot;us&quot;) operates dreki-solutions.ai and related
-            internal software tools. This policy describes what information we handle and how.
+            internal software tools. This policy describes the information we
+            handle, why we handle it, and the choices available to you.
           </p>
 
           <section aria-labelledby="privacy-website-title">
-            <h2 id="privacy-website-title">Website</h2>
+            <h2 id="privacy-website-title">Website inquiries</h2>
             <p>
-              We collect only the information you voluntarily submit (such as contact details
-              in a form or email) and use it solely to respond and conduct business. We do not
-              sell personal information.
+              When the online inquiry form is active, we collect the information
+              you choose to submit, including your name, work email, company,
+              industry, area of interest, workflow description, timeline,
+              optional phone number, and consent choices. We may also process the
+              source page, limited campaign parameters in the page address, and
+              your IP address as submission context and for abuse prevention.
+            </p>
+            <p>
+              We use inquiry information to respond, evaluate whether Dreki may
+              be a fit, arrange a strategy call, maintain business records, and
+              protect the form. We use contact information for marketing only
+              when you separately choose that option. We do not sell personal
+              information.
+            </p>
+          </section>
+
+          <section aria-labelledby="privacy-processors-title">
+            <h2 id="privacy-processors-title">Form service providers</h2>
+            <p>
+              Dreki uses HubSpot to receive and manage online inquiries. HubSpot
+              processes submitted information on Dreki&apos;s behalf. Review the{" "}
+              <a
+                href="https://legal.hubspot.com/privacy-policy"
+                rel="noreferrer"
+                target="_blank"
+              >
+                HubSpot Privacy Policy
+              </a>
+              .
+            </p>
+            <p>
+              Dreki uses Cloudflare Turnstile to distinguish ordinary visitors
+              from automated abuse. Turnstile processes technical signals for
+              that security purpose. Review the{" "}
+              <a
+                href="https://www.cloudflare.com/turnstile-privacy-policy/"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Cloudflare Turnstile Privacy Addendum
+              </a>
+              .
+            </p>
+          </section>
+
+          <section aria-labelledby="privacy-analytics-title">
+            <h2 id="privacy-analytics-title">Website analytics</h2>
+            <p>
+              When configured, Dreki uses Cloudflare Web Analytics for aggregate
+              page-traffic and performance measurement. The service is designed
+              without cookies or cross-site visitor tracking and does not
+              receive information entered in the inquiry form. Review the{" "}
+              <a
+                href="https://www.cloudflare.com/policies/privacy/"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Cloudflare Privacy Policy
+              </a>
+              .
+            </p>
+          </section>
+
+          <section aria-labelledby="privacy-retention-title">
+            <h2 id="privacy-retention-title">Retention and requests</h2>
+            <p>
+              We keep inquiry and business records only as long as reasonably
+              needed to respond, manage a potential or active business
+              relationship, meet legal obligations, and resolve disputes. You
+              may ask to access, correct, or delete information you submitted by
+              using the contact address below. Some records may be retained when
+              required for legal, security, or legitimate business-record
+              purposes.
             </p>
           </section>
 
@@ -39,8 +107,8 @@ export default function PrivacyPage() {
                 YouTube Terms of Service
               </a>
               . The{" "}
-              <a href="http://www.google.com/policies/privacy" rel="noreferrer" target="_blank">
-              Google Privacy Policy
+              <a href="https://policies.google.com/privacy" rel="noreferrer" target="_blank">
+                Google Privacy Policy
               </a>{" "}
               applies to Google&apos;s handling of that data.
             </p>

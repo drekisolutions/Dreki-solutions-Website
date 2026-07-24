@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import PageTurnLink from "./components/PageTurnLink";
+
+export const metadata: Metadata = {
+  title: { absolute: "Page Not Found | Dreki Solutions" },
+  robots: { index: false, follow: false },
+};
 
 export default function NotFound() {
   return (

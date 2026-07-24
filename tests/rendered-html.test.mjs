@@ -2,45 +2,192 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
+const ORIGIN = "https://www.dreki-solutions.ai";
+
 const routeExpectations = [
-  { path: "/", title: "Custom Agentic Software | Dreki Solutions", h1: "Give the repetitive work to an agent." },
-  { path: "/services", title: "Agentic Software Services | Dreki Solutions", h1: "Move the customer and operational work forward." },
-  { path: "/products", title: "Agentic Software Products | Dreki Solutions", h1: "A product line shaped by real operating friction." },
-  { path: "/about", title: "About | Dreki Solutions", h1: "Discipline for the work behind the work." },
-  { path: "/portfolio", title: "Project Portfolio | Dreki Solutions", h1: "See the systems behind the work." },
-  { path: "/contact", title: "Contact | Dreki Solutions", h1: "Schedule a consultation." },
-  { path: "/privacy", title: "Privacy Policy | Dreki Solutions", h1: "Privacy Policy" },
+  {
+    path: "/",
+    title: "Agentic Systems for Service Businesses | Dreki Solutions",
+    h1: "Let agents move the work. Keep people in command.",
+    indexable: true,
+    socialImage: true,
+  },
+  {
+    path: "/agents",
+    title: "AI Agents for Service Operations | Dreki Solutions",
+    h1: "Give the repeatable work a clear owner.",
+    indexable: true,
+    socialImage: true,
+  },
+  {
+    path: "/agents/customer-response",
+    title: "Customer Response Agent | Dreki Solutions",
+    h1: "Customer Response Agent",
+    indexable: true,
+    socialImage: true,
+  },
+  {
+    path: "/agents/intake-and-scheduling",
+    title: "Intake and Scheduling Agent | Dreki Solutions",
+    h1: "Intake and Scheduling Agent",
+    indexable: true,
+    socialImage: true,
+  },
+  {
+    path: "/agents/workflow-coordination",
+    title: "Workflow Coordination Agent | Dreki Solutions",
+    h1: "Workflow Coordination Agent",
+    indexable: true,
+    socialImage: true,
+  },
+  {
+    path: "/industries",
+    title: "Agentic Systems by Industry | Dreki Solutions",
+    h1: "Build around the way the work actually moves.",
+    indexable: true,
+    socialImage: true,
+  },
+  {
+    path: "/industries/service-businesses",
+    title: "AI Agents for Service Businesses | Dreki Solutions",
+    h1: "Keep the customer journey moving while your team does the work.",
+    indexable: true,
+    socialImage: true,
+  },
+  {
+    path: "/services",
+    title: "Custom Agentic Software Services | Dreki Solutions",
+    h1: "Turn one recurring workflow into a controlled system.",
+    indexable: true,
+    socialImage: true,
+  },
+  {
+    path: "/products",
+    title: "Agentic Software Product Registry | Dreki Solutions",
+    h1: "See exactly where each product stands.",
+    indexable: true,
+    socialImage: true,
+  },
+  {
+    path: "/portfolio",
+    title: "Internal Workflow Demonstrations | Dreki Solutions",
+    h1: "Inspect the operating logic before trusting the promise.",
+    indexable: true,
+    socialImage: true,
+  },
+  {
+    path: "/about",
+    title: "About | Dreki Solutions",
+    h1: "Discipline for the work behind the work.",
+    indexable: true,
+    socialImage: true,
+  },
+  {
+    path: "/engagements",
+    title: "Agentic Software Engagements | Dreki Solutions",
+    h1: "Scope the workflow before pricing the system.",
+    indexable: true,
+    socialImage: true,
+  },
+  {
+    path: "/contact",
+    title: "Contact | Dreki Solutions",
+    h1: "Bring one workflow worth improving.",
+    indexable: true,
+    socialImage: true,
+  },
+  {
+    path: "/book",
+    title: "Book a Strategy Call | Dreki Solutions",
+    h1: "Bring one workflow worth improving.",
+    indexable: true,
+    socialImage: true,
+  },
+  {
+    path: "/thank-you",
+    title: "Thank You | Dreki Solutions",
+    h1: "Thank you for sharing the workflow.",
+    indexable: false,
+    socialImage: false,
+  },
+  {
+    path: "/privacy",
+    title: "Privacy Policy | Dreki Solutions",
+    h1: "Privacy Policy",
+    indexable: true,
+    socialImage: true,
+  },
 ];
 
-const forbiddenPublicTerms = [
-  "lead generation",
-  "LeadpulseAI",
-  "ReviewShield",
-  "SocialPulse",
+const primaryNavigation = [
+  "/agents",
+  "/industries",
+  "/services",
+  "/products",
+  "/portfolio",
+];
+
+const forbiddenPublicClaims = [
   "guaranteed results",
   "guaranteed rankings",
   "guaranteed savings",
-  "Google partner",
-  "Google partnership",
-  "Google certified",
-  "Google endorsement",
-  "Google affiliation",
+  "trusted by",
+  "proven roi",
+  "customer success story",
+  "customers include",
+  "our clients have",
+  "google partner",
+  "google partnership",
+  "google certified",
+  "google endorsement",
+  "google affiliation",
+  "delivered in 30 days",
+];
+
+const retiredPublicTerms = [
+  "LeadpulseAI",
+  "ReviewShield",
+  "SocialPulse",
 ];
 
 let workerPromise;
-const renderedPages = new Map();
+const responses = new Map();
 
 function decodeHtml(value) {
+  const namedEntities = {
+    amp: "&",
+    apos: "'",
+    gt: ">",
+    hellip: "…",
+    ldquo: "“",
+    lt: "<",
+    mdash: "—",
+    middot: "·",
+    nbsp: " ",
+    ndash: "–",
+    quot: '"',
+    rdquo: "”",
+    rsquo: "’",
+  };
+
   return value
-    .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCodePoint(Number.parseInt(code, 16)))
-    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number.parseInt(code, 10)))
-    .replace(/&(amp|quot|apos|lt|gt|nbsp);/gi, (_, entity) => ({
-      amp: "&", quot: '"', apos: "'", lt: "<", gt: ">", nbsp: " ",
-    })[entity.toLowerCase()]);
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) =>
+      String.fromCodePoint(Number.parseInt(code, 16)),
+    )
+    .replace(/&#(\d+);/g, (_, code) =>
+      String.fromCodePoint(Number.parseInt(code, 10)),
+    )
+    .replace(/&([a-z]+);/gi, (entity, name) =>
+      Object.hasOwn(namedEntities, name.toLowerCase())
+        ? namedEntities[name.toLowerCase()]
+        : entity,
+    );
 }
 
 function textContent(markup) {
-  return decodeHtml(markup.replace(/<[^>]*>/g, " ")).replace(/\s+/g, " ").trim();
+  return decodeHtml(markup.replace(/<[^>]*>/g, " "))
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function visibleMarkup(html) {
@@ -53,18 +200,39 @@ function visibleMarkup(html) {
 function attributesFor(tag) {
   const attributes = new Map();
   const pattern = /([^\s=/>]+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/g;
+
   for (const match of tag.matchAll(pattern)) {
-    attributes.set(match[1].toLowerCase(), decodeHtml(match[2] ?? match[3] ?? match[4] ?? ""));
+    attributes.set(
+      match[1].toLowerCase(),
+      decodeHtml(match[2] ?? match[3] ?? match[4] ?? ""),
+    );
   }
+
   return attributes;
 }
 
 function tagsNamed(html, name) {
-  return [...html.matchAll(new RegExp(`<${name}\\b[^>]*>`, "gi"))].map((match) => match[0]);
+  return [...html.matchAll(new RegExp(`<${name}\\b[^>]*>`, "gi"))].map(
+    (match) => match[0],
+  );
 }
 
-async function render(path) {
-  if (renderedPages.has(path)) return renderedPages.get(path);
+function articleBlocksWithClass(html, className) {
+  return [...html.matchAll(/<article\b([^>]*)>([\s\S]*?)<\/article>/gi)]
+    .filter((match) => {
+      const attributes = attributesFor(`<article ${match[1]}>`);
+      return (attributes.get("class") ?? "").split(/\s+/).includes(className);
+    })
+    .map((match) => match[2]);
+}
+
+function canonicalFor(path) {
+  return new URL(path, `${ORIGIN}/`).toString();
+}
+
+async function fetchBuilt(path) {
+  if (responses.has(path)) return responses.get(path);
+
   if (!workerPromise) {
     workerPromise = (async () => {
       const workerUrl = new URL("../dist/server/index.js", import.meta.url);
@@ -72,187 +240,427 @@ async function render(path) {
       return (await import(workerUrl.href)).default;
     })();
   }
+
   const worker = await workerPromise;
   const response = await worker.fetch(
-    new Request(`http://localhost${path}`, { headers: { accept: "text/html" } }),
+    new Request(`http://localhost${path}`, {
+      headers: { accept: path.endsWith(".xml") ? "application/xml" : "*/*" },
+    }),
     { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
     { waitUntil() {}, passThroughOnException() {} },
   );
   const result = {
     status: response.status,
     contentType: response.headers.get("content-type") ?? "",
-    html: await response.text(),
+    body: await response.text(),
   };
-  renderedPages.set(path, result);
+  responses.set(path, result);
   return result;
 }
 
-test("server-renders all seven public routes with route-specific content", async () => {
+test("server-renders every published route with one specific H1 and canonical URL", async () => {
   for (const expected of routeExpectations) {
-    const { status, contentType, html } = await render(expected.path);
+    const { status, contentType, body } = await fetchBuilt(expected.path);
     assert.equal(status, 200, `${expected.path} must return 200`);
-    assert.match(contentType, /^text\/html\b/i);
-    assert.match(html, /<main\b/i);
-    const title = html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i);
+    assert.match(contentType, /^text\/html\b/i, `${expected.path} must return HTML`);
+    assert.match(body, /<main\b/i, `${expected.path} must render a main landmark`);
+
+    const title = body.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i);
     assert.equal(textContent(title?.[1] ?? ""), expected.title);
-    const h1 = html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i);
-    assert.equal(textContent(h1?.[1] ?? ""), expected.h1);
-    assert.ok(textContent(visibleMarkup(html)).split(/\s+/).length >= 70, `${expected.path} needs meaningful SSR copy`);
+
+    const h1s = [...body.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)];
+    assert.equal(h1s.length, 1, `${expected.path} must render exactly one H1`);
+    assert.equal(textContent(h1s[0]?.[1] ?? ""), expected.h1);
+
+    const canonicalLinks = tagsNamed(body, "link")
+      .map(attributesFor)
+      .filter((attributes) => attributes.get("rel") === "canonical")
+      .map((attributes) => attributes.get("href"));
+    assert.deepEqual(
+      canonicalLinks,
+      [canonicalFor(expected.path)],
+      `${expected.path} must declare its production www canonical once`,
+    );
+
+    const wordCount = textContent(visibleMarkup(body)).split(/\s+/).length;
+    assert.ok(
+      wordCount >= 120,
+      `${expected.path} needs meaningful server-rendered copy; found ${wordCount} words`,
+    );
   }
 });
 
-test("renders a consistent public route menu and working contact actions", async () => {
-  const expectedRoutes = routeExpectations.map((route) => route.path);
-  for (const route of routeExpectations) {
-    const { html } = await render(route.path);
-    const hrefs = tagsNamed(visibleMarkup(html), "a").map((tag) => attributesFor(tag).get("href"));
-    for (const expectedRoute of expectedRoutes) {
-      assert.ok(hrefs.includes(expectedRoute), `${route.path} is missing navigation to ${expectedRoute}`);
+test("keeps primary navigation focused and makes the strategy-call path available", async () => {
+  for (const expected of routeExpectations) {
+    const markup = visibleMarkup((await fetchBuilt(expected.path)).body);
+    const hrefs = tagsNamed(markup, "a").map(
+      (tag) => attributesFor(tag).get("href"),
+    );
+
+    for (const route of primaryNavigation) {
+      assert.ok(hrefs.includes(route), `${expected.path} is missing ${route}`);
     }
-    assert.ok(hrefs.includes("/contact#consultation"), `${route.path} is missing consultation CTA`);
+
+    assert.ok(
+      hrefs.includes("/contact#consultation"),
+      `${expected.path} is missing the primary strategy-call action`,
+    );
   }
 
-  const { html } = await render("/contact");
-  const markup = visibleMarkup(html);
-  const hrefs = tagsNamed(markup, "a").map((tag) => attributesFor(tag).get("href"));
+  const homeHrefs = tagsNamed(
+    visibleMarkup((await fetchBuilt("/")).body),
+    "a",
+  ).map((tag) => attributesFor(tag).get("href"));
+  assert.equal(
+    homeHrefs.includes("/terms"),
+    false,
+    "draft website terms must not appear in published navigation",
+  );
+});
+
+test("renders exact contact details and preserves the complete governed lead form", async () => {
+  const markup = visibleMarkup((await fetchBuilt("/contact")).body);
+  const text = textContent(markup);
+  const hrefs = tagsNamed(markup, "a").map(
+    (tag) => attributesFor(tag).get("href"),
+  );
+  const leadFormSource = await readFile(
+    new URL("../app/components/lead-form/LeadForm.tsx", import.meta.url),
+    "utf8",
+  );
+
   assert.ok(hrefs.includes("tel:+15172157573"));
-  assert.ok(hrefs.some((href) => href?.startsWith("mailto:brett@dreki-solutions.ai")));
-  assert.match(markup, /<form\b/i);
-  for (const field of [
-    "fullName",
+  assert.ok(hrefs.includes("mailto:brett@dreki-solutions.ai"));
+  assert.match(text, /\(517\) 215-7573/);
+  assert.match(text, /brett@dreki-solutions\.ai/);
+
+  const sourceFieldNames = [
+    ...tagsNamed(leadFormSource, "input"),
+    ...tagsNamed(leadFormSource, "select"),
+    ...tagsNamed(leadFormSource, "textarea"),
+  ]
+    .map((tag) => attributesFor(tag).get("name"))
+    .filter(Boolean)
+    .sort();
+  const expectedFieldNames = [
+    "areaOfInterest",
+    "company",
+    "contactWebsite",
     "email",
-    "phone",
-    "businessName",
-    "website",
+    "fullName",
     "industry",
+    "marketingConsent",
+    "phone",
+    "processingAcknowledgment",
+    "timeline",
+    "workflowChallenge",
+  ].sort();
+
+  assert.deepEqual(sourceFieldNames, expectedFieldNames);
+  for (const retiredField of [
+    "businessName",
     "contactMethod",
+    "website",
     "workflow",
   ]) {
-    assert.match(markup, new RegExp(`\\bname=["']${field}["']`, "i"), `missing ${field} form field`);
+    assert.equal(
+      sourceFieldNames.includes(retiredField),
+      false,
+      `retired form field ${retiredField} must not return`,
+    );
   }
-  assert.match(textContent(markup), /Optimization audit request/i);
-  assert.match(textContent(markup), /Schedule a Consultation/i);
-});
+  assert.match(
+    leadFormSource,
+    /\bname="contactWebsite"[\s\S]*?\btabIndex=\{-1\}/i,
+  );
 
-test("positions service-industry offerings before aviation offerings", async () => {
-  const servicesText = textContent(visibleMarkup((await render("/services")).html));
-  assert.ok(servicesText.indexOf("Service-industry agentic software") < servicesText.indexOf("Aviation agentic software services"));
-  assert.match(servicesText, /Specialized systems for charter operations/i);
-  assert.match(servicesText, /human control of operational and regulatory decisions/i);
-});
-
-test("publishes six service and six aviation product positions", async () => {
-  const { html } = await render("/products");
-  const markup = visibleMarkup(html);
-  const text = textContent(markup);
-  assert.match(text, /Margin Hawk/);
-  assert.match(text, /In Development/);
-  assert.match(text, /reconciles every line against the contractor’s price agreements/i);
-  assert.match(text, /the agent never disputes autonomously/i);
-  assert.match(text, /Second Swing/);
-  assert.match(text, /owner-voiced SMS\/email agent/i);
-  assert.match(text, /“Rehash” mode re-attacks estimates 30–365 days old/i);
-  assert.match(text, /License Retention/);
-  assert.match(text, /tracks CE requirements/i);
-  assert.match(text, /owner approving signatures and payments/i);
-  assert.match(text, /Launch hard-capped at 2 states/i);
-  assert.match(text, /Visibility IQ/);
-  assert.match(text, /visibility measurement across assistants/i);
-  assert.match(text, /done-for-you agent-readiness fixes/i);
-  assert.match(text, /white-label tier for agencies/i);
-  assert.match(text, /Bifrost/);
-  assert.match(text, /MCP-server-as-a-service/i);
-  assert.match(text, /OAuth 2.1 with audience binding/i);
-  assert.match(text, /delivered in 30 days/i);
-  assert.match(text, /Asgard/);
-  assert.match(text, /plain-English activity digests/i);
-  assert.match(text, /flagged-conversation review/i);
-  assert.match(text, /performance review your AI employees never get/i);
-  assert.match(text, /Valkyrie 135/);
-  assert.match(text, /Available for Testing/);
-  assert.match(text, /Skyfar/);
-  assert.match(text, /finds empty-leg trips on private jets/i);
-  assert.match(text, /recover part of that cost/i);
-  assert.match(text, /Declare Ready/);
-  assert.match(text, /runs SRM on every hazard report/i);
-  assert.match(text, /maintains the evidence binder/i);
-  assert.match(text, /accountable executive approves/i);
-  assert.match(text, /Squawk Sheet AD/);
-  assert.match(text, /pulls current ADs from FAA DRS/i);
-  assert.match(text, /IA-ready AD status report/i);
-  assert.match(text, /research automated, authority human/i);
-  assert.match(text, /Trend Sentinel/);
-  assert.match(text, /TurbineTells ingests whatever trend data/i);
-  assert.match(text, /monthly trend report the DOM signs/i);
-  assert.match(text, /not physics models or grounding calls/i);
-  assert.match(text, /Rotor Log/);
-  assert.match(text, /aviation-grade maintenance records sized for drones/i);
-  assert.match(text, /maps manufacturer bulletins to affected fleet aircraft/i);
-  assert.match(text, /built by an A&P/i);
-  assert.doesNotMatch(text, /Reserved positions remain clearly marked/i);
-  assert.match(markup, /href="https:\/\/valkyrie\.dreki-solutions\.com"/i);
-  assert.match(text, /valkyrie\.dreki-solutions\.com/i);
-  assert.equal((markup.match(/class="product-card(?:\s|")/g) ?? []).length, 12);
-});
-
-test("publishes six portfolio demonstration spaces and complete footer notices", async () => {
-  const { html } = await render("/portfolio");
-  const markup = visibleMarkup(html);
-  const text = textContent(markup);
-  for (let index = 1; index <= 6; index += 1) {
-    assert.match(text, new RegExp(`Project Demo ${String(index).padStart(2, "0")}`));
+  if (/<form\b/i.test(markup)) {
+    const renderedFieldNames = [
+      ...tagsNamed(markup, "input"),
+      ...tagsNamed(markup, "select"),
+      ...tagsNamed(markup, "textarea"),
+    ]
+      .map((tag) => attributesFor(tag).get("name"))
+      .filter(Boolean)
+      .sort();
+    assert.deepEqual(renderedFieldNames, expectedFieldNames);
+    assert.match(markup, /\bname="contactWebsite"[^>]*\btabindex="-1"/i);
+  } else {
+    assert.match(text, /The secure online intake is not active yet\./i);
+    assert.match(text, /Dreki will arrange the strategy call directly\./i);
+    assert.ok(
+      hrefs.includes(
+        "mailto:brett@dreki-solutions.ai?subject=Strategy%20call%20request",
+      ),
+      "unconfigured lead capture must retain a direct request path",
+    );
   }
-  assert.equal((markup.match(/portfolio-card/g) ?? []).length, 6);
-  assert.match(text, /All rights reserved/i);
-  assert.match(text, /proprietary to Dreki Solutions LLC/i);
-  assert.match(text, /does not create a professional-services relationship/i);
 });
 
-test("ships page-turn transitions, route glare, and the approved hero treatment", async () => {
-  const [linkSource, chromeSource, styles, experience] = await Promise.all([
-    readFile(new URL("../app/components/PageTurnLink.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../app/components/SiteChrome.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
-    readFile(new URL("../app/DrekiExperience.tsx", import.meta.url), "utf8"),
+test("labels all proof as internal demonstration and makes the evidence boundary explicit", async () => {
+  const markup = visibleMarkup((await fetchBuilt("/portfolio")).body);
+  const text = textContent(markup);
+  const cards = articleBlocksWithClass(markup, "launch-demo-card");
+
+  assert.equal(cards.length, 3);
+  for (const title of ["Response Relay", "Intake Gate", "Handoff Ledger"]) {
+    const card = cards.find((candidate) => textContent(candidate).includes(title));
+    assert.ok(card, `missing ${title} demonstration`);
+    assert.match(textContent(card), /Internal demonstration/i);
+    assert.match(textContent(card), /Human gate/i);
+  }
+
+  assert.match(
+    text,
+    /None represents a named customer, testimonial, deployed customer system, or measured result\./i,
+  );
+  assert.match(text, /No customer identity or endorsement/i);
+  assert.match(text, /No measured customer outcome/i);
+  assert.match(text, /No guarantee of savings, speed, or revenue/i);
+  assert.doesNotMatch(cards.map(textContent).join(" "), /\b\d+(?:\.\d+)?%\b/);
+});
+
+test("publishes twelve products with a truthful status on every card", async () => {
+  const markup = visibleMarkup((await fetchBuilt("/products")).body);
+  const cards = articleBlocksWithClass(markup, "launch-product-card");
+  const expectedProducts = new Map([
+    ["Margin Hawk", "In Development"],
+    ["Second Swing", "In Development"],
+    ["License Retention", "In Development"],
+    ["Visibility IQ", "In Development"],
+    ["Bifrost", "In Development"],
+    ["Asgard", "In Development"],
+    ["Valkyrie 135", "Available for Testing"],
+    ["Skyfar", "In Development"],
+    ["Declare Ready", "In Development"],
+    ["Squawk Sheet AD", "In Development"],
+    ["Trend Sentinel", "In Development"],
+    ["Rotor Log", "In Development"],
   ]);
-  assert.match(linkSource, /startViewTransition/);
-  assert.match(styles, /page-fold-old/);
-  assert.match(styles, /fallback-page-turn/);
-  assert.match(chromeSource, /header-divider__glare/);
-  assert.match(styles, /header-glare/);
-  assert.match(styles, /obsidian-scales/);
-  assert.match(styles, /hex-border-glare/);
-  assert.match(styles, /dreki-lattice-backdrop\.webp/);
-  for (const safeguard of ["prefers-reduced-motion: reduce", "pointer: coarse", "saveData", "visibilityState", "cancelAnimationFrame"]) {
-    assert.match(`${styles}\n${experience}`, new RegExp(safeguard.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+
+  assert.equal(cards.length, expectedProducts.size);
+  for (const [title, status] of expectedProducts) {
+    const card = cards.find((candidate) => textContent(candidate).includes(title));
+    assert.ok(card, `missing product card for ${title}`);
+    assert.match(textContent(card), new RegExp(`\\b${status}\\b`, "i"));
   }
-  assert.doesNotMatch(`${styles}\n${experience}`, /dreki-intro|Replay Intro|AudioContext/i);
+
+  const text = textContent(markup);
+  assert.match(text, /Not generally available\. Capability and timing may change\./i);
+  assert.match(text, /This is not general availability\./i);
+  assert.match(text, /There is no public checkout or one-size-fits-all product price/i);
+  assert.doesNotMatch(text, /\bBuy now\b|\bAdd to cart\b/i);
+  assert.match(markup, /href="https:\/\/valkyrie\.dreki-solutions\.com"/i);
 });
 
-test("keeps unsupported claims and retired product names out of every route", async () => {
-  for (const route of routeExpectations) {
-    const html = (await render(route.path)).html.toLowerCase();
-    for (const term of forbiddenPublicTerms) {
-      assert.equal(html.includes(term.toLowerCase()), false, `${route.path} contains ${term}`);
+test("ships Guardian Circuit as a progressive Three.js enhancement with a complete fallback", async () => {
+  const [component, client, runtime, stages, styles] = await Promise.all([
+    readFile(
+      new URL("../app/components/guardian-circuit/GuardianCircuit.tsx", import.meta.url),
+      "utf8",
+    ),
+    readFile(
+      new URL(
+        "../app/components/guardian-circuit/GuardianCircuitClient.tsx",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+    readFile(
+      new URL(
+        "../app/components/guardian-circuit/guardianCircuitRuntime.ts",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+    readFile(
+      new URL("../app/components/guardian-circuit/stages.ts", import.meta.url),
+      "utf8",
+    ),
+    readFile(
+      new URL(
+        "../app/components/guardian-circuit/guardian-circuit.module.css",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+  ]);
+  const source = `${component}\n${client}\n${runtime}\n${stages}\n${styles}`;
+
+  assert.match(client, /await import\(["']three["']\)/);
+  assert.match(client, /getContext\(["']webgl2["']/);
+  assert.doesNotMatch(client, /import\s+[^(\n]+\s+from\s+["']three["']/);
+
+  for (const safeguard of [
+    "prefers-reduced-motion: reduce",
+    "pointer: coarse",
+    "saveData",
+    "document.visibilityState",
+    "IntersectionObserver",
+    "webglcontextlost",
+    "failIfMajorPerformanceCaveat",
+    "powerPreference: \"low-power\"",
+  ]) {
+    assert.match(
+      source,
+      new RegExp(safeguard.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
+      `Guardian Circuit is missing ${safeguard}`,
+    );
+  }
+
+  for (const runtimeControl of [
+    "MAX_BUFFER_PIXELS",
+    "MAX_DPR",
+    "window.devicePixelRatio",
+    "ResizeObserver",
+    "cancelAnimationFrame",
+    "disposeScene(scene)",
+    "renderer.renderLists.dispose()",
+    "renderer.dispose()",
+    "renderer.forceContextLoss()",
+  ]) {
+    assert.match(
+      runtime,
+      new RegExp(runtimeControl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
+      `Guardian Circuit runtime is missing ${runtimeControl}`,
+    );
+  }
+
+  assert.match(component, /<GuardianCircuitClient stages=\{guardianCircuitStages\}/);
+  assert.match(component, /className=\{styles\.fallback\}/);
+  assert.match(styles, /\.client\[data-state="ready"\] \+ \.fallback/);
+  assert.doesNotMatch(component, /<svg\b/i);
+
+  const homeText = textContent(
+    visibleMarkup((await fetchBuilt("/")).body),
+  );
+  for (const stage of [
+    "Trigger",
+    "Agent prepares",
+    "Policy check",
+    "Human approval",
+    "System action",
+    "Audit record",
+  ]) {
+    assert.match(homeText, new RegExp(stage, "i"), `fallback is missing ${stage}`);
+  }
+});
+
+test("publishes only indexable routes in sitemap and protects utility paths in robots", async () => {
+  const sitemap = await fetchBuilt("/sitemap.xml");
+  assert.equal(sitemap.status, 200);
+  assert.match(sitemap.contentType, /(?:application|text)\/xml/i);
+
+  for (const expected of routeExpectations) {
+    const escapedUrl = canonicalFor(expected.path).replace(
+      /[.*+?^${}()|[\]\\]/g,
+      "\\$&",
+    );
+    if (expected.indexable) {
+      assert.match(sitemap.body, new RegExp(`<loc>${escapedUrl}</loc>`));
+    } else {
+      assert.doesNotMatch(sitemap.body, new RegExp(`<loc>${escapedUrl}</loc>`));
     }
   }
+  assert.doesNotMatch(
+    sitemap.body,
+    /<loc>https:\/\/www\.dreki-solutions\.ai\/terms<\/loc>/i,
+  );
+  assert.doesNotMatch(sitemap.body, /https:\/\/dreki-solutions\.ai/i);
+
+  const robots = await fetchBuilt("/robots.txt");
+  assert.equal(robots.status, 200);
+  assert.match(robots.contentType, /^text\/plain\b/i);
+  assert.match(robots.body, /^User-Agent: \*/m);
+  assert.match(robots.body, /^Allow: \/$/m);
+  assert.match(robots.body, /^Disallow: \/api\/$/m);
+  assert.doesNotMatch(
+    robots.body,
+    /^Disallow: \/thank-you$/m,
+    "the crawler must be able to read thank-you's noindex directive",
+  );
+  assert.match(
+    robots.body,
+    /^Sitemap: https:\/\/www\.dreki-solutions\.ai\/sitemap\.xml$/m,
+  );
+  assert.match(
+    robots.body,
+    /^Host: https:\/\/www\.dreki-solutions\.ai\/$/m,
+  );
+
+  const thankYouHtml = (await fetchBuilt("/thank-you")).body;
+  const thankYouRobots = tagsNamed(thankYouHtml, "meta")
+    .map(attributesFor)
+    .filter((attributes) => attributes.get("name") === "robots")
+    .map((attributes) => attributes.get("content")?.toLowerCase() ?? "");
+  assert.ok(
+    thankYouRobots.some(
+      (content) => content.includes("noindex") && content.includes("nofollow"),
+    ),
+    "/thank-you must be noindex, nofollow",
+  );
+
+  const terms = await fetchBuilt("/terms");
+  assert.equal(terms.status, 404, "draft website terms must stay unpublished");
+  const termsRobots = tagsNamed(terms.body, "meta")
+    .map(attributesFor)
+    .filter((attributes) => attributes.get("name") === "robots")
+    .map((attributes) => attributes.get("content")?.toLowerCase() ?? "");
+  assert.ok(
+    termsRobots.some((content) => content.includes("noindex")),
+    "the hidden terms route must return a noindex 404",
+  );
 });
 
-test("ships route metadata, structured data, sitemap routes, and brand assets", async () => {
-  const home = (await render("/")).html;
-  assert.match(home, /application\/ld\+json/i);
-  assert.match(home.replace(/\\u002f/gi, "/"), /\/brand\/dreki-logo-horizontal-768\.webp/i);
-  assert.match(home.replace(/\\u002f/gi, "/"), /\/brand\/dreki-icon-1024\.webp/i);
-  const sitemap = await readFile(new URL("../app/sitemap.ts", import.meta.url), "utf8");
-  for (const route of ["services", "products", "about", "portfolio", "contact", "privacy"]) assert.match(sitemap, new RegExp(route));
-  const backdrop = await readFile(new URL("../public/brand/dreki-lattice-backdrop.webp", import.meta.url));
-  assert.equal(backdrop.subarray(0, 4).toString("ascii"), "RIFF");
-  assert.equal(backdrop.subarray(8, 12).toString("ascii"), "WEBP");
-});
-
-test("ships the bespoke social card at the declared dimensions", async () => {
-  const image = await readFile(new URL("../public/og-wide.png", import.meta.url));
+test("serves the production social card at 1200x630", async () => {
+  const image = await readFile(new URL("../public/og.png", import.meta.url));
   assert.equal(image.subarray(1, 4).toString("ascii"), "PNG");
   assert.equal(image.readUInt32BE(16), 1200);
   assert.equal(image.readUInt32BE(20), 630);
+});
+
+test("references the production social card from every marketing route", async () => {
+  for (const expected of routeExpectations.filter((route) => route.socialImage)) {
+    const html = (await fetchBuilt(expected.path)).body;
+    const metadataImages = tagsNamed(html, "meta")
+      .map(attributesFor)
+      .filter((attributes) =>
+        ["og:image", "twitter:image"].includes(
+          attributes.get("property") ?? attributes.get("name") ?? "",
+        ),
+      )
+      .map((attributes) => attributes.get("content"));
+    assert.ok(
+      metadataImages.includes(`${ORIGIN}/og.png`),
+      `${expected.path} must reference the production social card`,
+    );
+    assert.equal(
+      metadataImages.some((value) => value?.includes("/og-wide.png")),
+      false,
+      `${expected.path} must not reference the retired social card`,
+    );
+  }
+});
+
+test("keeps unsupported claims and retired product names out of public copy", async () => {
+  for (const expected of routeExpectations) {
+    const text = textContent(
+      visibleMarkup((await fetchBuilt(expected.path)).body),
+    ).toLowerCase();
+
+    for (const claim of forbiddenPublicClaims) {
+      assert.equal(
+        text.includes(claim),
+        false,
+        `${expected.path} contains unsupported public claim: ${claim}`,
+      );
+    }
+    for (const term of retiredPublicTerms) {
+      assert.equal(
+        text.includes(term.toLowerCase()),
+        false,
+        `${expected.path} contains retired product name: ${term}`,
+      );
+    }
+  }
 });
