@@ -5,11 +5,10 @@ export const contact = {
 } as const;
 
 export const navigation = [
-  { href: "/agents", label: "Agents" },
-  { href: "/industries", label: "Industries" },
-  { href: "/services", label: "Services" },
-  { href: "/products", label: "Products" },
-  { href: "/portfolio", label: "Proof" },
+  { href: "/#systems", label: "Solutions" },
+  { href: "/#work", label: "Our work" },
+  { href: "/#journal", label: "Field notes" },
+  { href: "/about", label: "About" },
 ] as const;
 
 export const consultationMailto =

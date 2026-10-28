@@ -40,8 +40,8 @@ export default function ServicesPage() {
         eyebrow="Custom agentic software services"
         title="Turn one recurring workflow into a controlled system."
         lede="Dreki audits, designs, deploys, and improves bounded agents for service-business response, intake, scheduling preparation, and coordination."
-        primaryHref="/book"
-        primaryLabel="Discuss a Workflow"
+        primaryHref="/free-audit"
+        primaryLabel="Get My Free Audit"
         secondaryHref="/agents"
         secondaryLabel="Explore Featured Agents"
       >
@@ -141,10 +141,7 @@ export default function ServicesPage() {
         </div>
       </LaunchSection>
 
-      <LaunchFinalCta
-        title="Scope the operating responsibility, not a generic feature list."
-        copy="Bring one recurring workflow and the people who own its exceptions. If the work is a fit, Dreki will prepare a scoped estimate after the strategy call."
-      />
+      <LaunchFinalCta />
     </main>
   );
 }

@@ -28,10 +28,10 @@ export const siteConfig = {
   siteUrl: normalizeSiteUrl(
     process.env.SITE_URL ?? process.env.NEXT_PUBLIC_SITE_URL,
   ),
-  primaryAudience: "Service businesses",
+  primaryAudience: "Trades and service businesses",
   primaryAction: {
-    label: "Book a Strategy Call",
-    href: "/contact#consultation",
+    label: "Get My Free Audit",
+    href: "/free-audit",
   },
   meetingUrl: normalizeMeetingUrl(
     process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL?.trim(),

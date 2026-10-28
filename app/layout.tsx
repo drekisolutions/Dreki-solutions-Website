@@ -1,14 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import SiteChrome from "./components/SiteChrome";
+import ForgeAtmosphere from "./components/ForgeAtmosphere";
 import { absoluteUrl, siteConfig } from "./site-config";
 import "@fontsource-variable/cinzel/wght.css";
 import "@fontsource-variable/inter/wght.css";
 import "./globals.css";
+import "./forge-theme.css";
 
-const defaultTitle = "Dreki Solutions | Governed AI Agents for Service Businesses";
+const defaultTitle = "Dreki Solutions | Automation Built for the Trades";
 const defaultDescription =
-  "Dreki Solutions designs governed AI agents for customer response, intake and scheduling, and workflow coordination.";
+  "Dreki builds automation solutions for the trades, from missed-call follow-up and lead intake to scheduling, estimates, and invoicing.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -52,7 +54,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#07090b",
+  themeColor: "#090909",
   colorScheme: "dark",
 };
 
@@ -78,8 +80,21 @@ const analyticsToken =
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="dreki-forge">
         <SiteChrome>{children}</SiteChrome>
+        <ForgeAtmosphere />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-9NPJ7GQ70H"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-9NPJ7GQ70H');
+          `}
+        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: serializedStructuredData }}

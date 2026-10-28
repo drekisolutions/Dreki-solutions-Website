@@ -32,8 +32,8 @@ export default function ProductsPage() {
         eyebrow="Product registry"
         title="See exactly where each product stands."
         lede="Dreki publishes development status directly. A product description explains the intended job; it does not imply general availability or a guaranteed release date."
-        primaryHref="/book"
-        primaryLabel="Discuss Product Fit"
+        primaryHref="/free-audit"
+        primaryLabel="Get My Free Audit"
         secondaryHref="/agents"
         secondaryLabel="Explore Custom Agents"
       >
@@ -78,10 +78,7 @@ export default function ProductsPage() {
         </div>
       </LaunchSection>
 
-      <LaunchFinalCta
-        title="Ask about the current product, not a future assumption."
-        copy="Dreki will clarify present status, practical fit, and the next available step. Any estimate or testing arrangement is scoped directly."
-      />
+      <LaunchFinalCta />
     </main>
   );
 }

@@ -23,8 +23,8 @@ export default function AgentDetailPage({ agent, sequence }: AgentDetailPageProp
         eyebrow={`${sequence} / Featured agent`}
         title={agent.name}
         lede={agent.shortJob}
-        primaryHref="/book"
-        primaryLabel="Discuss This Workflow"
+        primaryHref="/free-audit"
+        primaryLabel="Get My Free Audit"
         secondaryHref="/portfolio"
         secondaryLabel="View Internal Demos"
       >
@@ -171,10 +171,7 @@ export default function AgentDetailPage({ agent, sequence }: AgentDetailPageProp
         />
       </section>
 
-      <LaunchFinalCta
-        title="Bring one workflow worth examining."
-        copy="Dreki will map the current handoffs, identify the decisions that must stay human, and determine whether a bounded agent is a practical fit. Estimates are scoped after that conversation."
-      />
+      <LaunchFinalCta />
     </main>
   );
 }

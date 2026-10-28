@@ -1,9 +1,11 @@
 import type { MetadataRoute } from "next";
 import { contentRegistry } from "./content-registry";
 import { absoluteUrl } from "./site-config";
+import { publishedPosts } from "@/lib/blog/store";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  return contentRegistry
+export const dynamic = "force-dynamic";
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const pages = contentRegistry
     .filter(
       (entry) =>
         entry.publicationStatus === "published" &&
@@ -25,4 +27,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
             ? 0.9
             : 0.8,
     }));
+  const posts = await publishedPosts().catch(() => []);
+  return [...pages, ...posts.map(post => ({ url: absoluteUrl(`/blog/${post.slug}`), lastModified: new Date(post.publishedAt), changeFrequency: "monthly" as const, priority: 0.7 }))];
 }

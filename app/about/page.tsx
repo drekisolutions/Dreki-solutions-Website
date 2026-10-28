@@ -52,8 +52,8 @@ export default function AboutPage() {
             prepares, coordinates, and escalates; the team retains authority over
             relationships, exceptions, strategy, and final approvals.
           </p>
-          <a className="button button-primary" href="/book">
-            Book a Strategy Call
+          <a className="button button-primary" href="/free-audit">
+            Get My Free Audit
           </a>
         </div>
       </section>
@@ -111,10 +111,7 @@ export default function AboutPage() {
         <LaunchWorkflow label="Dreki delivery process" steps={processSteps} />
       </LaunchSection>
 
-      <LaunchFinalCta
-        title="Bring the operating problem, not a polished specification."
-        copy="Dreki will help identify the agent job, source truth, human gates, and practical scope before recommending a system."
-      />
+      <LaunchFinalCta />
     </main>
   );
 }

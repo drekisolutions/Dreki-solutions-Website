@@ -21,6 +21,9 @@ export default function ContactPage() {
             operating boundary, the decisions that must stay human, and the
             smallest useful place to begin.
           </p>
+          <a className="button button-primary" href="/free-audit">
+            Request a Free Digital Presence Audit
+          </a>
         </div>
         <address className="contact-card">
           <span>Direct contact</span>

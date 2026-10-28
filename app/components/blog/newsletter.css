@@ -1,0 +1,231 @@
+.newsie-dialog {
+  border: 0;
+  padding: 0;
+  max-width: min(470px, calc(100vw - 40px));
+  width: 470px;
+  max-height: calc(100svh - 40px);
+  overflow: visible;
+  background: transparent;
+  color: #151515;
+}
+.newsie-dialog::backdrop {
+  background: #000b;
+  backdrop-filter: blur(7px);
+}
+.newsie-paper {
+  position: relative;
+  padding: 27px 36px 21px;
+  background:
+    repeating-linear-gradient(0deg, #00000002 0 1px, transparent 1px 3px),
+    #f0eee6;
+  border: 1px solid #c3c0b5;
+  box-shadow: 0 35px 100px #0009;
+  color: #151515;
+  max-height: calc(100svh - 40px);
+  overflow: auto;
+  text-align: center;
+  font-family: Georgia, "Times New Roman", serif;
+}
+.newsie-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: 0;
+  background: none;
+  color: #222;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+}
+.newsie-extra {
+  font-family: var(--font-inter);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+}
+.newsie-masthead {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.05;
+  margin: 10px 0 14px;
+}
+.newsie-masthead > span {
+  font-size: 66px;
+  font-weight: 900;
+  letter-spacing: -0.075em;
+}
+.newsie-edition {
+  display: flex;
+  justify-content: space-between;
+  border-block: 2px solid #222;
+  padding: 7px 0;
+  font: 8px var(--font-inter);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+.newsie-paper h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 43px;
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+  color: #111;
+  margin: 22px 0 14px;
+}
+.newsie-lede {
+  font-size: 17px;
+  font-style: italic;
+  margin: 0 0 12px;
+}
+.newsie-copy {
+  font-size: 13px;
+  line-height: 1.6;
+  max-width: 300px;
+  margin: 0 auto 20px;
+}
+.newsie-email-label {
+  display: grid;
+  gap: 7px;
+  text-align: left;
+  font: 10px var(--font-inter);
+  font-weight: 600;
+}
+.newsie-email-label input {
+  width: 100%;
+  height: 45px;
+  background: #fffcf5;
+  color: #111;
+  border: 1px solid #222;
+  border-radius: 0;
+  padding: 11px 12px;
+  font: 13px var(--font-inter);
+}
+.newsie-consent {
+  display: flex;
+  gap: 8px;
+  align-items: start;
+  margin: 12px 0;
+  font: 9px var(--font-inter);
+  line-height: 1.6;
+  text-align: left;
+  color: #333;
+}
+.newsie-consent input {
+  width: 15px;
+  height: 15px;
+  accent-color: #111;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.newsie-consent a {
+  text-decoration: underline;
+}
+.newsie-subscribe,
+.newsie-success > button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  width: 100%;
+  background: #151515;
+  color: #f5f2e8;
+  border: 1px solid #111;
+  padding: 13px 17px;
+  font: 11px var(--font-inter);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition:
+    background 0.4s ease,
+    transform 0.4s ease;
+}
+.newsie-subscribe:hover {
+  background: #333;
+}
+.newsie-subscribe:active {
+  transform: scale(0.98);
+}
+.newsie-subscribe:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+.newsie-later {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid #222;
+  padding: 2px 0;
+  margin: 15px auto 20px;
+  font: 10px var(--font-inter);
+  cursor: pointer;
+  color: #333;
+}
+.newsie-bottom {
+  padding-top: 12px;
+  border-top: 1px solid #222;
+  font: 7px var(--font-inter);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+.newsie-honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+.newsie-success {
+  padding: 30px 0;
+  text-align: center;
+}
+.newsie-success > svg {
+  margin: auto;
+}
+.newsie-success h2 {
+  font-size: 37px;
+}
+.newsie-success p {
+  font-size: 15px;
+  margin-bottom: 25px;
+}
+.newsie-error {
+  font: 11px var(--font-inter);
+  color: #111;
+  padding: 10px;
+  border: 1px dashed #222;
+}
+.newsie-paper :focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 3px;
+}
+@media (max-width: 500px) {
+  .newsie-paper {
+    padding: 25px 23px 18px;
+  }
+  .newsie-masthead > span {
+    font-size: 59px;
+  }
+  .newsie-paper h2 {
+    font-size: 37px;
+  }
+  .newsie-copy {
+    font-size: 12px;
+  }
+  .newsie-lede {
+    font-size: 15px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .newsie-subscribe {
+    transition: none;
+  }
+}
+.forge-home .newsie-paper h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 900;
+}
+.newsie-paper .newsie-copy,
+.newsie-paper .newsie-lede {
+  color: #333;
+}

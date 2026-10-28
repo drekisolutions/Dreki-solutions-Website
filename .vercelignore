@@ -1,0 +1,16 @@
+.git
+.next
+.vinext
+.wrangler
+.codex
+.codex-tmp
+.agents
+.openai
+node_modules
+dist
+work
+outputs
+.env*
+*.sqlite*
+*.log
+A2P-REVIEW-FOR-BOSS.md

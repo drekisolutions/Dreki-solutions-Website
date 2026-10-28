@@ -69,7 +69,9 @@ export default function PageTurnLink({
       destination.hash === current.hash;
 
     if (isExactCurrentLocation) {
-      event.preventDefault();
+      // Let repeated section links scroll back to their anchor after the
+      // visitor has moved away, even when the URL already has that hash.
+      if (!destination.hash) event.preventDefault();
       onNavigate?.();
       return;
     }
@@ -100,7 +102,7 @@ export default function PageTurnLink({
           new Promise<void>((resolve) => {
             resolveRouteRef.current = resolve;
             router.push(href);
-            timeoutRef.current = window.setTimeout(resolve, 1200);
+            timeoutRef.current = window.setTimeout(resolve, 2400);
           }),
       );
       void transition.finished.finally(() => {
@@ -112,8 +114,8 @@ export default function PageTurnLink({
     }
 
     root.dataset.pageTransition = "fallback";
-    timeoutRef.current = window.setTimeout(() => router.push(href), 280);
-    window.setTimeout(() => root.removeAttribute("data-page-transition"), 760);
+    timeoutRef.current = window.setTimeout(() => router.push(href), 560);
+    window.setTimeout(() => root.removeAttribute("data-page-transition"), 1520);
   };
 
   return (

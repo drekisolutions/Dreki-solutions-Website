@@ -65,8 +65,8 @@ export default function ServiceBusinessesPage() {
         eyebrow="Industry / Service businesses"
         title="Keep the customer journey moving while your team does the work."
         lede="Dreki designs bounded agents around the response, intake, scheduling preparation, and handoffs that surround service delivery."
-        primaryHref="/book"
-        primaryLabel="Book a Strategy Call"
+        primaryHref="/free-audit"
+        primaryLabel="Get My Free Audit"
         secondaryHref="/agents"
         secondaryLabel="Compare Featured Agents"
       >
@@ -206,10 +206,7 @@ export default function ServiceBusinessesPage() {
         <LaunchFaq items={faq} />
       </LaunchSection>
 
-      <LaunchFinalCta
-        title="Map one workflow from first signal to final owner."
-        copy="A strategy call starts with the current process, not a software pitch. Dreki will identify the repeatable work, the human gates, and what must be true before a scoped estimate makes sense."
-      />
+      <LaunchFinalCta />
     </main>
   );
 }

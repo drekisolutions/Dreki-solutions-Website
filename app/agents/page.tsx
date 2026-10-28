@@ -32,8 +32,8 @@ export default function AgentsPage() {
         eyebrow="Bounded agent systems"
         title="Give the repeatable work a clear owner."
         lede="Dreki designs agents for narrow operational jobs. Each system prepares work from approved inputs, shows its reasoning checkpoints, and hands consequential decisions back to a person."
-        primaryHref="/book"
-        primaryLabel="Book a Strategy Call"
+        primaryHref="/free-audit"
+        primaryLabel="Get My Free Audit"
         secondaryHref="/industries/service-businesses"
         secondaryLabel="Explore Service Businesses"
       >
@@ -135,10 +135,7 @@ export default function AgentsPage() {
         />
       </section>
 
-      <LaunchFinalCta
-        title="Start with one recurring operational drag."
-        copy="Bring the workflow, its source information, and the decisions your team must retain. Dreki will determine whether one of these agent patterns is a practical starting point."
-      />
+      <LaunchFinalCta />
     </main>
   );
 }

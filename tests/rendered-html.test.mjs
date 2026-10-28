@@ -1,14 +1,29 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { journalTopics } from "../app/components/trades/content.ts";
 
 const ORIGIN = "https://www.dreki-solutions.ai";
 
 const routeExpectations = [
   {
+    path: "/terms",
+    title: "Terms and Conditions | Dreki Solutions",
+    h1: "Terms and Conditions",
+    indexable: true,
+    socialImage: true,
+  },
+  {
+    path: "/free-audit",
+    title: "Free Digital Presence Business Audit | Dreki Solutions",
+    h1: "See your business the way customers do.",
+    indexable: true,
+    socialImage: true,
+  },
+  {
     path: "/",
-    title: "Agentic Systems for Service Businesses | Dreki Solutions",
-    h1: "Let agents move the work. Keep people in command.",
+    title: "Automation Built for the Trades | Dreki Solutions",
+    h1: "You build. We connect the rest.",
     indexable: true,
     socialImage: true,
   },
@@ -70,8 +85,8 @@ const routeExpectations = [
   },
   {
     path: "/portfolio",
-    title: "Internal Workflow Demonstrations | Dreki Solutions",
-    h1: "Inspect the operating logic before trusting the promise.",
+    title: "Client Projects and Dreki Products | Dreki Solutions",
+    h1: "Built to do real work.",
     indexable: true,
     socialImage: true,
   },
@@ -119,13 +134,7 @@ const routeExpectations = [
   },
 ];
 
-const primaryNavigation = [
-  "/agents",
-  "/industries",
-  "/services",
-  "/products",
-  "/portfolio",
-];
+const primaryNavigation = ["/#systems", "/#work", "/#journal", "/about"];
 
 const forbiddenPublicClaims = [
   "guaranteed results",
@@ -252,7 +261,9 @@ async function fetchBuilt(path) {
     new Request(`http://localhost${path}`, {
       headers: { accept: path.endsWith(".xml") ? "application/xml" : "*/*" },
     }),
-    { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
+    {
+      ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) },
+    },
     { waitUntil() {}, passThroughOnException() {} },
   );
   const result = {
@@ -268,8 +279,16 @@ test("server-renders every published route with one specific H1 and canonical UR
   for (const expected of routeExpectations) {
     const { status, contentType, body } = await fetchBuilt(expected.path);
     assert.equal(status, 200, `${expected.path} must return 200`);
-    assert.match(contentType, /^text\/html\b/i, `${expected.path} must return HTML`);
-    assert.match(body, /<main\b/i, `${expected.path} must render a main landmark`);
+    assert.match(
+      contentType,
+      /^text\/html\b/i,
+      `${expected.path} must return HTML`,
+    );
+    assert.match(
+      body,
+      /<main\b/i,
+      `${expected.path} must render a main landmark`,
+    );
 
     const title = body.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i);
     assert.equal(textContent(title?.[1] ?? ""), expected.title);
@@ -296,11 +315,11 @@ test("server-renders every published route with one specific H1 and canonical UR
   }
 });
 
-test("keeps primary navigation focused and makes the strategy-call path available", async () => {
+test("keeps primary navigation focused and makes the free audit the main action", async () => {
   for (const expected of routeExpectations) {
     const markup = visibleMarkup((await fetchBuilt(expected.path)).body);
-    const hrefs = tagsNamed(markup, "a").map(
-      (tag) => attributesFor(tag).get("href"),
+    const hrefs = tagsNamed(markup, "a").map((tag) =>
+      attributesFor(tag).get("href"),
     );
 
     for (const route of primaryNavigation) {
@@ -308,8 +327,8 @@ test("keeps primary navigation focused and makes the strategy-call path availabl
     }
 
     assert.ok(
-      hrefs.includes("/contact#consultation"),
-      `${expected.path} is missing the primary strategy-call action`,
+      hrefs.includes("/free-audit"),
+      `${expected.path} is missing the primary free-audit action`,
     );
   }
 
@@ -319,16 +338,16 @@ test("keeps primary navigation focused and makes the strategy-call path availabl
   ).map((tag) => attributesFor(tag).get("href"));
   assert.equal(
     homeHrefs.includes("/terms"),
-    false,
-    "draft website terms must not appear in published navigation",
+    true,
+    "published terms must be available from site navigation",
   );
 });
 
 test("renders exact contact details and preserves the complete governed lead form", async () => {
   const markup = visibleMarkup((await fetchBuilt("/contact")).body);
   const text = textContent(markup);
-  const hrefs = tagsNamed(markup, "a").map(
-    (tag) => attributesFor(tag).get("href"),
+  const hrefs = tagsNamed(markup, "a").map((tag) =>
+    attributesFor(tag).get("href"),
   );
   const leadFormSource = await readFile(
     new URL("../app/components/lead-form/LeadForm.tsx", import.meta.url),
@@ -403,29 +422,31 @@ test("renders exact contact details and preserves the complete governed lead for
   }
 });
 
-test("labels all proof as internal demonstration and makes the evidence boundary explicit", async () => {
+test("distinguishes client projects from Dreki products and preserves approved destinations", async () => {
   const markup = visibleMarkup((await fetchBuilt("/portfolio")).body);
-  const text = textContent(markup);
-  const cards = articleBlocksWithClass(markup, "launch-demo-card");
-
-  assert.equal(cards.length, 3);
-  for (const title of ["Response Relay", "Intake Gate", "Handoff Ledger"]) {
-    const card = cards.find((candidate) => textContent(candidate).includes(title));
-    assert.ok(card, `missing ${title} demonstration`);
-    assert.match(textContent(card), /Internal demonstration/i);
-    assert.match(textContent(card), /Human gate/i);
+  const cards = articleBlocksWithClass(markup, "forge-project-card");
+  assert.equal(cards.length, 5);
+  for (const title of ["Old Dog Sauce & Spice", "Sea Wolf Cove"]) {
+    const card = cards.find((candidate) =>
+      textContent(candidate).includes(title),
+    );
+    assert.ok(card, `missing ${title}`);
+    assert.match(textContent(card), /Client project/);
   }
-
-  assert.match(
-    text,
-    /None represents a named customer, testimonial, deployed customer system, or measured result\./i,
-  );
-  assert.match(text, /No customer identity or endorsement/i);
-  assert.match(text, /No measured customer outcome/i);
-  assert.match(text, /No guarantee of savings, speed, or revenue/i);
-  assert.doesNotMatch(cards.map(textContent).join(" "), /\b\d+(?:\.\d+)?%\b/);
+  for (const url of [
+    "https://roofbid.dreki-solutions.ai",
+    "https://www.hookandclip.com",
+    "https://deskhand-foreman.vercel.app/deskhand",
+  ]) {
+    const link = tagsNamed(markup, "a")
+      .map(attributesFor)
+      .find((a) => a.get("href") === url);
+    assert.ok(link, `missing approved link ${url}`);
+    assert.equal(link.get("target"), "_blank");
+    assert.match(link.get("rel"), /noopener/);
+  }
+  assert.match(textContent(markup), /View offer sheet/);
 });
-
 test("publishes only service-business products with a truthful status on every card", async () => {
   const markup = visibleMarkup((await fetchBuilt("/products")).body);
   const cards = articleBlocksWithClass(markup, "launch-product-card");
@@ -440,14 +461,22 @@ test("publishes only service-business products with a truthful status on every c
 
   assert.equal(cards.length, expectedProducts.size);
   for (const [title, status] of expectedProducts) {
-    const card = cards.find((candidate) => textContent(candidate).includes(title));
+    const card = cards.find((candidate) =>
+      textContent(candidate).includes(title),
+    );
     assert.ok(card, `missing product card for ${title}`);
     assert.match(textContent(card), new RegExp(`\\b${status}\\b`, "i"));
   }
 
   const text = textContent(markup);
-  assert.match(text, /Not generally available\. Capability and timing may change\./i);
-  assert.match(text, /There is no public checkout or one-size-fits-all product price/i);
+  assert.match(
+    text,
+    /Not generally available\. Capability and timing may change\./i,
+  );
+  assert.match(
+    text,
+    /There is no public checkout or one-size-fits-all product price/i,
+  );
   assert.doesNotMatch(text, /\bBuy now\b|\bAdd to cart\b/i);
   assert.doesNotMatch(
     text,
@@ -458,7 +487,10 @@ test("publishes only service-business products with a truthful status on every c
 test("ships Guardian Circuit as a progressive Three.js enhancement with a complete fallback", async () => {
   const [component, client, runtime, stages, styles] = await Promise.all([
     readFile(
-      new URL("../app/components/guardian-circuit/GuardianCircuit.tsx", import.meta.url),
+      new URL(
+        "../app/components/guardian-circuit/GuardianCircuit.tsx",
+        import.meta.url,
+      ),
       "utf8",
     ),
     readFile(
@@ -501,7 +533,7 @@ test("ships Guardian Circuit as a progressive Three.js enhancement with a comple
     "IntersectionObserver",
     "webglcontextlost",
     "failIfMajorPerformanceCaveat",
-    "powerPreference: \"low-power\"",
+    'powerPreference: "low-power"',
   ]) {
     assert.match(
       source,
@@ -528,47 +560,86 @@ test("ships Guardian Circuit as a progressive Three.js enhancement with a comple
     );
   }
 
-  assert.match(component, /<GuardianCircuitClient stages=\{guardianCircuitStages\}/);
+  assert.match(
+    component,
+    /<GuardianCircuitClient stages=\{guardianCircuitStages\}/,
+  );
   assert.match(component, /className=\{styles\.fallback\}/);
   assert.match(styles, /\.client\[data-state="ready"\] \+ \.fallback/);
   assert.doesNotMatch(component, /<svg\b/i);
-
-  const homeText = textContent(
-    visibleMarkup((await fetchBuilt("/")).body),
-  );
-  for (const stage of [
-    "Trigger",
-    "Agent prepares",
-    "Policy check",
-    "Human approval",
-    "System action",
-    "Audit record",
-  ]) {
-    assert.match(homeText, new RegExp(stage, "i"), `fallback is missing ${stage}`);
-  }
 });
 
-test("uses the gold palette for primary and secondary buttons", async () => {
+test("renders the connected trades experience, real audit fields, and honest unpublished articles", async () => {
+  const markup = visibleMarkup((await fetchBuilt("/")).body);
+  const text = textContent(markup);
+  for (const workflow of [
+    "Missed calls",
+    "Lead intake",
+    "Scheduling",
+    "Estimates",
+    "Invoicing",
+  ])
+    assert.ok(text.includes(workflow));
+  assert.match(markup, /dreki-network-mark\.webp/);
+  for (const name of [
+    "firstName",
+    "lastName",
+    "email",
+    "phone",
+    "company",
+    "city",
+    "state",
+    "termsAccepted",
+    "smsConsent",
+  ]) {
+    assert.ok(
+      [...tagsNamed(markup, "input"), ...tagsNamed(markup, "select")].some(
+        (tag) => attributesFor(tag).get("name") === name,
+      ),
+      `missing audit field ${name}`,
+    );
+  }
+  const journal = articleBlocksWithClass(markup, "forge-journal-card");
+  assert.equal(journal.length, journalTopics.length);
+  for (const topic of journalTopics) {
+    const card = journal.find((candidate) =>
+      textContent(candidate).includes(topic.title),
+    );
+    assert.ok(card, `missing blog card: ${topic.title}`);
+    const links = tagsNamed(card, "a").map(attributesFor);
+    if (topic.href) {
+      assert.match(textContent(card), /Read article/);
+      assert.ok(links.some((link) => link.get("href") === topic.href));
+    } else {
+      assert.match(textContent(card), /Coming soon/);
+      assert.equal(
+        links.length,
+        0,
+        "unpublished posts must not link to fake articles",
+      );
+    }
+  }
+  assert.ok(
+    tagsNamed(markup, "a").some(
+      (tag) => attributesFor(tag).get("href") === "#free-audit",
+    ),
+  );
+});
+
+test("uses the requested ember actions and foil styling", async () => {
   const styles = await readFile(
     new URL("../app/globals.css", import.meta.url),
     "utf8",
   );
-
-  assert.match(styles, /--gold-bright:\s*#d8b15a;/i);
-  assert.match(
-    styles,
-    /\.button-primary\s*\{[^}]*background:\s*var\(--gold-bright\);/is,
+  const trades = await readFile(
+    new URL("../app/components/trades/trades.css", import.meta.url),
+    "utf8",
   );
-  assert.match(
-    styles,
-    /\.button-secondary,\s*\.button-ghost\s*\{[^}]*border-color:\s*var\(--line-gold\);/is,
-  );
-  assert.match(
-    styles,
-    /\.header-cta\s*\{[^}]*color:\s*var\(--gold-pale\);/is,
-  );
+  assert.match(styles, /--ember:\s*#b6532b/i);
+  assert.match(styles, /\.button-primary\s*\{[^}]*background:var\(--ember\)/is);
+  assert.match(trades, /\.forge-foil[^}]*background-clip:\s*text/is);
+  assert.match(trades, /prefers-reduced-motion:\s*reduce/);
 });
-
 test("publishes only indexable routes in sitemap and protects utility paths in robots", async () => {
   const sitemap = await fetchBuilt("/sitemap.xml");
   assert.equal(sitemap.status, 200);
@@ -585,7 +656,7 @@ test("publishes only indexable routes in sitemap and protects utility paths in r
       assert.doesNotMatch(sitemap.body, new RegExp(`<loc>${escapedUrl}</loc>`));
     }
   }
-  assert.doesNotMatch(
+  assert.match(
     sitemap.body,
     /<loc>https:\/\/www\.dreki-solutions\.ai\/terms<\/loc>/i,
   );
@@ -606,10 +677,7 @@ test("publishes only indexable routes in sitemap and protects utility paths in r
     robots.body,
     /^Sitemap: https:\/\/www\.dreki-solutions\.ai\/sitemap\.xml$/m,
   );
-  assert.match(
-    robots.body,
-    /^Host: https:\/\/www\.dreki-solutions\.ai\/$/m,
-  );
+  assert.match(robots.body, /^Host: https:\/\/www\.dreki-solutions\.ai\/$/m);
 
   const thankYouHtml = (await fetchBuilt("/thank-you")).body;
   const thankYouRobots = tagsNamed(thankYouHtml, "meta")
@@ -624,14 +692,18 @@ test("publishes only indexable routes in sitemap and protects utility paths in r
   );
 
   const terms = await fetchBuilt("/terms");
-  assert.equal(terms.status, 404, "draft website terms must stay unpublished");
+  assert.equal(
+    terms.status,
+    200,
+    "messaging terms must be publicly accessible",
+  );
   const termsRobots = tagsNamed(terms.body, "meta")
     .map(attributesFor)
     .filter((attributes) => attributes.get("name") === "robots")
     .map((attributes) => attributes.get("content")?.toLowerCase() ?? "");
   assert.ok(
-    termsRobots.some((content) => content.includes("noindex")),
-    "the hidden terms route must return a noindex 404",
+    termsRobots.every((content) => !content.includes("noindex")),
+    "published terms must be indexable",
   );
 });
 
@@ -643,7 +715,9 @@ test("serves the production social card at 1200x630", async () => {
 });
 
 test("references the production social card from every marketing route", async () => {
-  for (const expected of routeExpectations.filter((route) => route.socialImage)) {
+  for (const expected of routeExpectations.filter(
+    (route) => route.socialImage,
+  )) {
     const html = (await fetchBuilt(expected.path)).body;
     const metadataImages = tagsNamed(html, "meta")
       .map(attributesFor)
@@ -685,5 +759,48 @@ test("keeps unsupported claims and retired product names out of public copy", as
         `${expected.path} contains retired product name: ${term}`,
       );
     }
+  }
+});
+
+test("audit opt-in displays disclosures and separates SMS from required policy agreement", async () => {
+  const markup = visibleMarkup((await fetchBuilt("/free-audit")).body);
+  const text = textContent(markup);
+  for (const phrase of [
+    "opt-in confirmations",
+    "appointment reminders",
+    "order and waitlist updates",
+    "client project updates",
+    "No marketing or promotional texts.",
+    "Message frequency varies.",
+    "Msg & data rates may apply.",
+    "Reply HELP for help.",
+    "Reply STOP to opt out.",
+    "Consent is optional and not a condition of purchase.",
+  ]) {
+    assert.ok(text.includes(phrase), `Missing audit disclosure: ${phrase}`);
+  }
+  const inputs = tagsNamed(markup, "input").map(attributesFor);
+  const sms = inputs.find((attrs) => attrs.get("name") === "smsConsent");
+  const terms = inputs.find((attrs) => attrs.get("name") === "termsAccepted");
+  assert.equal(sms.get("type"), "checkbox");
+  assert.equal(terms.get("type"), "checkbox");
+  const smsTag = tagsNamed(markup, "input").find((tag) =>
+    tag.includes('name="smsConsent"'),
+  );
+  const termsTag = tagsNamed(markup, "input").find((tag) =>
+    tag.includes('name="termsAccepted"'),
+  );
+  assert.doesNotMatch(smsTag, /\b(?:required|checked)(?:[\s=>])/);
+  assert.match(termsTag, /\brequired(?:[\s=>])/);
+  assert.doesNotMatch(termsTag, /\bchecked(?:[\s=>])/);
+  for (const href of ["/terms", "/privacy"]) {
+    assert.ok(
+      tagsNamed(markup, "a")
+        .map(attributesFor)
+        .some(
+          (attrs) =>
+            attrs.get("href") === href && attrs.get("target") === "_blank",
+        ),
+    );
   }
 });

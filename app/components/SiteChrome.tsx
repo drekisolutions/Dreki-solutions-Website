@@ -6,12 +6,25 @@ import { type ReactNode, useEffect, useRef, useState } from "react";
 import { contact, navigation } from "../site-data";
 import { siteConfig } from "../site-config";
 import PageTurnLink from "./PageTurnLink";
+import { ForgeMotionControl } from "./ForgeAtmosphere";
 
 export default function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [auditVisible, setAuditVisible] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const form = document.getElementById("audit-request");
+    if (!form) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setAuditVisible(entry.isIntersecting),
+      { threshold: 0.15 },
+    );
+    observer.observe(form);
+    return () => observer.disconnect();
+  }, [pathname]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -62,6 +75,17 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
     };
   }, [menuOpen]);
 
+  if (pathname.startsWith("/admin"))
+    return (
+      <>
+        <a className="skip-link" href="#main-content">
+          Skip to editor
+        </a>
+        <div className="editor-motion-bar"><ForgeMotionControl /></div>
+        {children}
+      </>
+    );
+
   return (
     <>
       <a className="skip-link" href="#main-content">
@@ -69,7 +93,11 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
       </a>
 
       <header className="site-header" aria-label="Primary">
-        <PageTurnLink className="brand-link" href="/" aria-label="Dreki Solutions home">
+        <PageTurnLink
+          className="brand-link"
+          href="/"
+          aria-label="Dreki Solutions home"
+        >
           <Image
             src="/brand/dreki-logo-horizontal-768.webp"
             alt="Dreki Solutions"
@@ -92,9 +120,15 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
               </PageTurnLink>
             ))}
           </nav>
-          <PageTurnLink className="header-cta" href={siteConfig.primaryAction.href}>
+          <PageTurnLink
+            className="header-cta"
+            href={
+              pathname === "/" ? "#free-audit" : siteConfig.primaryAction.href
+            }
+          >
             {siteConfig.primaryAction.label}
           </PageTurnLink>
+          <ForgeMotionControl />
           <button
             ref={menuButtonRef}
             className="menu-toggle"
@@ -138,8 +172,19 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
       {children}
 
       <PageTurnLink
-        className="mobile-sticky-cta"
-        href={siteConfig.primaryAction.href}
+        className={`mobile-sticky-cta${auditVisible && (pathname === "/" || pathname === "/free-audit") ? " is-hidden" : ""}`}
+        href={
+          pathname === "/free-audit"
+            ? "#audit-request"
+            : pathname === "/"
+              ? "#audit-request"
+              : siteConfig.primaryAction.href
+        }
+        onNavigate={() => {
+          if (pathname === "/free-audit") {
+            document.getElementById("audit-request")?.scrollIntoView();
+          }
+        }}
       >
         {siteConfig.primaryAction.label}
       </PageTurnLink>
@@ -156,8 +201,8 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
                 unoptimized
               />
             </PageTurnLink>
-            <p>Governed AI agents for service-business operations.</p>
-            <span>Systems move the work. People retain authority.</span>
+            <p>Automation built for the trades.</p>
+            <span>Your craft. Our code. A better-connected business.</span>
           </div>
 
           <nav className="footer-nav" aria-label="Footer navigation">
@@ -174,14 +219,32 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
             <PageTurnLink href="/about">About</PageTurnLink>
             <PageTurnLink href="/engagements">Engagements</PageTurnLink>
             <PageTurnLink href="/contact">Contact</PageTurnLink>
+            <PageTurnLink href="/free-audit">
+              Free Digital Presence Audit
+            </PageTurnLink>
             <PageTurnLink href="/privacy">Privacy</PageTurnLink>
+            <PageTurnLink href="/terms">Terms</PageTurnLink>
+            <PageTurnLink
+              href="/#newsletter"
+              onNavigate={() => {
+                if (pathname === "/")
+                  window.dispatchEvent(new Event("dreki-open-newsletter"));
+              }}
+            >
+              Newsletter
+            </PageTurnLink>
+            <PageTurnLink href="/admin/blog">Owner editor</PageTurnLink>
           </nav>
 
           <div className="footer-contact">
             <p>Start a conversation</p>
             <a href={`mailto:${contact.email}`}>{contact.email}</a>
             <a href={contact.phoneHref}>{contact.phoneDisplay}</a>
-            <PageTurnLink href={siteConfig.primaryAction.href}>
+            <PageTurnLink
+              href={
+                pathname === "/" ? "#free-audit" : siteConfig.primaryAction.href
+              }
+            >
               {siteConfig.primaryAction.label}
             </PageTurnLink>
           </div>
@@ -190,12 +253,14 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
         <div className="footer-legal">
           <p>© 2026 Dreki Solutions LLC. All rights reserved.</p>
           <p>
-            Dreki Solutions names, marks, original software concepts, and demonstration
-            materials are proprietary to Dreki Solutions LLC unless otherwise stated.
-            Unauthorized copying or redistribution is prohibited.
+            Dreki Solutions names, marks, original software concepts, and
+            demonstration materials are proprietary to Dreki Solutions LLC
+            unless otherwise stated. Unauthorized copying or redistribution is
+            prohibited.
           </p>
           <p>
-            Site information is general in nature and does not create a professional-services relationship.
+            Site information is general in nature and does not create a
+            professional-services relationship.
           </p>
         </div>
       </footer>

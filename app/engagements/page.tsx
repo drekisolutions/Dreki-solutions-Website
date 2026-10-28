@@ -76,8 +76,8 @@ export default function EngagementsPage() {
         eyebrow="How buying works"
         title="Scope the workflow before pricing the system."
         lede="Dreki does not publish one-size-fits-all agent pricing. A useful estimate depends on the workflow, source systems, permissions, exception risk, and level of ongoing operating support."
-        primaryHref="/book"
-        primaryLabel="Request a Strategy Call"
+        primaryHref="/free-audit"
+        primaryLabel="Get My Free Audit"
         secondaryHref="/services"
         secondaryLabel="Explore Services"
       >
@@ -188,11 +188,7 @@ export default function EngagementsPage() {
         </div>
       </LaunchSection>
 
-      <LaunchFinalCta
-        title="Request an estimate grounded in your workflow."
-        copy="Bring one process, the systems it touches, and the people who own its exceptions. If the fit is sound, Dreki will prepare a scoped next step."
-        label="Request a Strategy Call"
-      />
+      <LaunchFinalCta />
     </main>
   );
 }

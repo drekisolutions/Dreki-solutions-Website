@@ -39,11 +39,26 @@ const updatedDate = "2026-07-23" as const;
 
 export const contentRegistry = [
   {
+    route: "/free-audit",
+    slug: "free-audit",
+    title: "Free Digital Presence Business Audit",
+    description: "Request a free digital presence audit from Dreki Solutions. Review how customers find, trust, and contact your business online.",
+    publicationStatus: "published",
+    indexingStatus: "index",
+    pageType: "conversion",
+    audience: "Business owners",
+    primaryIntent: "Request a free digital presence business audit",
+    relatedPages: ["/contact", "/services"],
+    updatedDate: "2026-10-10",
+    structuredDataEligibility: ["breadcrumb"],
+    socialImage: "/og.png",
+  },
+  {
     route: "/",
     slug: "home",
-    title: "Agentic Systems for Service Businesses",
+    title: "Automation Built for the Trades",
     description:
-      "Dreki Solutions designs bounded agents that help service businesses respond, schedule, and coordinate work with human approval intact.",
+      "Dreki builds automation solutions for the trades, connecting missed-call follow-up, lead intake, scheduling, estimates, and invoicing.",
     publicationStatus: "published",
     indexingStatus: "index",
     pageType: "home",
@@ -211,9 +226,9 @@ export const contentRegistry = [
   {
     route: "/portfolio",
     slug: "portfolio",
-    title: "Internal Workflow Demonstrations",
+    title: "Client Projects and Dreki Products",
     description:
-      "Clearly labeled Dreki Solutions internal demonstrations of bounded customer response, intake, and workflow coordination systems.",
+      "Explore client projects and Dreki products, including Old Dog Sauce and Spice, Sea Wolf Cove, RoofBid, Hook and Clip, and Deskhand / Foreman.",
     publicationStatus: "published",
     indexingStatus: "index",
     pageType: "proof",
@@ -328,18 +343,18 @@ export const contentRegistry = [
   {
     route: "/terms",
     slug: "terms",
-    title: "Website Terms",
+    title: "Terms and Conditions",
     description:
-      "Concise website-use terms for dreki-solutions.ai, including acceptable use, intellectual property, and important limitations.",
-    publicationStatus: "draft",
-    indexingStatus: "noindex",
+      "Terms for Dreki Solutions website use, free audit requests, and optional text messages, including frequency, rates, help, and opt-out instructions.",
+    publicationStatus: "published",
+    indexingStatus: "index",
     pageType: "legal",
     audience: "Website visitors",
-    primaryIntent: "Review website terms",
+    primaryIntent: "Review website and text messaging terms",
     relatedPages: ["/privacy", "/contact"],
-    updatedDate,
+    updatedDate: "2026-10-10",
     structuredDataEligibility: ["none"],
-    socialImage: null,
+    socialImage: "/og.png",
   },
 ] as const satisfies readonly ContentRegistryEntry[];
 

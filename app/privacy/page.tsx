@@ -6,16 +6,20 @@ export const metadata: Metadata = metadataFromRegistry("/privacy");
 export default function PrivacyPage() {
   return (
     <main className="page-main legal-page" id="main-content">
-      <section className="page-section legal-section" aria-labelledby="privacy-title">
+      <section
+        className="page-section legal-section"
+        aria-labelledby="privacy-title"
+      >
         <article className="legal-document">
           <p className="eyebrow">Dreki Solutions LLC</p>
           <h1 id="privacy-title">Privacy Policy</h1>
-          <p className="legal-effective">Effective: July 23, 2026</p>
+          <p className="legal-effective">Effective: October 26, 2026</p>
 
           <p>
-            Dreki Solutions LLC (&quot;we,&quot; &quot;us&quot;) operates dreki-solutions.ai and related
-            internal software tools. This policy describes the information we
-            handle, why we handle it, and the choices available to you.
+            Dreki Solutions LLC (&quot;we,&quot; &quot;us&quot;) operates
+            dreki-solutions.ai and related internal software tools. This policy
+            describes the information we handle, why we handle it, and the
+            choices available to you.
           </p>
 
           <section aria-labelledby="privacy-website-title">
@@ -24,16 +28,86 @@ export default function PrivacyPage() {
               When the online inquiry form is active, we collect the information
               you choose to submit, including your name, work email, company,
               industry, area of interest, workflow description, timeline,
-              optional phone number, and consent choices. We may also process the
-              source page, limited campaign parameters in the page address, and
-              your IP address as submission context and for abuse prevention.
+              optional phone number, and consent choices. We may also process
+              the source page, limited campaign parameters in the page address,
+              and your IP address as submission context and for abuse
+              prevention.
             </p>
             <p>
               We use inquiry information to respond, evaluate whether Dreki may
               be a fit, arrange a strategy call, maintain business records, and
-              protect the form. We use contact information for marketing only
-              when you separately choose that option. We do not sell personal
-              information.
+              protect the form. We do not sell personal information.
+            </p>
+          </section>
+
+          <section aria-labelledby="privacy-newsletter-title">
+            <h2 id="privacy-newsletter-title">Dreki Dispatch newsletter</h2>
+            <p>
+              When you subscribe, we store your email address, signup date, and
+              the consent wording you accepted. We use this information for the
+              email newsletter you requested. Newsletter consent is separate
+              from audit requests and text-message consent. To stop receiving
+              the newsletter or request removal, email{" "}
+              <a href="mailto:brett@dreki-solutions.ai">
+                brett@dreki-solutions.ai
+              </a>
+              .
+            </p>
+            <p>
+              The private editorial area uses essential session cookies to
+              verify the owner&apos;s sign-in. Draft articles and the newsletter
+              subscriber list are accessible only to the signed-in owner.
+            </p>
+          </section>
+
+          <section aria-labelledby="privacy-audit-title">
+            <h2 id="privacy-audit-title">
+              Free audit requests and text messages
+            </h2>
+            <p>
+              For digital presence audit requests, we collect the owner&apos;s
+              first and last name, email address, company name, city, state,
+              phone number, text-message consent choice, and Terms and Privacy
+              Policy agreement. Requests are sent through Resend to Dreki&apos;s
+              business inbox so we can review and respond. We retain the consent
+              wording, choice, request identifier, and email receipt time with
+              the request. See the{" "}
+              <a
+                href="https://resend.com/legal/privacy-policy"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Resend Privacy Policy
+              </a>
+              .
+            </p>
+            <p>
+              Text-message consent is optional. Providing a phone number alone
+              does not authorize text messages. If you opt in, Dreki Solutions
+              LLC may send service texts: opt-in confirmations, appointment
+              reminders, order and waitlist updates, and status updates on
+              client projects in production. No marketing or promotional texts
+              are sent through this program. Message frequency varies. Msg &amp;
+              data rates may apply. Reply HELP for help. Reply STOP to opt out,
+              or email brett@dreki-solutions.ai. Consent is not a condition of
+              purchase. Mobile information and text-message opt-in data will not
+              be shared with third parties or affiliates for marketing or
+              promotional purposes. Service providers may process this
+              information only to help deliver our services.
+            </p>
+            <p>
+              We do not sell or share your SMS opt-in data or personal
+              information with third parties for marketing purposes.
+            </p>
+            <p>
+              Text-message opt-in data and consent are excluded from all other
+              sharing described in this policy.
+            </p>
+            <p>
+              Agreeing to our Terms and Privacy Policy does not authorize text
+              messages. Text-message consent is collected separately. Read our{" "}
+              <a href="/terms">Terms and Conditions</a> for the messaging
+              program details.
             </p>
           </section>
 
@@ -69,6 +143,20 @@ export default function PrivacyPage() {
           <section aria-labelledby="privacy-analytics-title">
             <h2 id="privacy-analytics-title">Website analytics</h2>
             <p>
+              Dreki uses Google Analytics to measure website visits and page
+              usage. Google Analytics uses cookies and processes information
+              about your browser, device, and interactions with the website.
+              Review the{" "}
+              <a
+                href="https://policies.google.com/privacy"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Google Privacy Policy
+              </a>
+              .
+            </p>
+            <p>
               When configured, Dreki uses Cloudflare Web Analytics for aggregate
               page-traffic and performance measurement. The service is designed
               without cookies or cross-site visitor tracking and does not
@@ -100,27 +188,37 @@ export default function PrivacyPage() {
           <section aria-labelledby="privacy-youtube-title">
             <h2 id="privacy-youtube-title">YouTube API Services</h2>
             <p>
-              Our internal publishing tools use YouTube API Services to upload and manage
-              content exclusively on our own YouTube channel. By using YouTube functionality
-              through our tools, users agree to the{" "}
-              <a href="https://www.youtube.com/t/terms" rel="noreferrer" target="_blank">
+              Our internal publishing tools use YouTube API Services to upload
+              and manage content exclusively on our own YouTube channel. By
+              using YouTube functionality through our tools, users agree to the{" "}
+              <a
+                href="https://www.youtube.com/t/terms"
+                rel="noreferrer"
+                target="_blank"
+              >
                 YouTube Terms of Service
               </a>
               . The{" "}
-              <a href="https://policies.google.com/privacy" rel="noreferrer" target="_blank">
+              <a
+                href="https://policies.google.com/privacy"
+                rel="noreferrer"
+                target="_blank"
+              >
                 Google Privacy Policy
               </a>{" "}
               applies to Google&apos;s handling of that data.
             </p>
             <p>
-              Our API client is an internal, single-user tool operated by the channel owner. It
-              does not access, collect, or store personal data belonging to any third-party
-              YouTube user. The only Google data it stores is the owner&apos;s own authorization
-              credential, kept in secured credential storage and used solely to publish to our
-              own channel. It does not use cookies and serves no advertising.
+              Our API client is an internal, single-user tool operated by the
+              channel owner. It does not access, collect, or store personal data
+              belonging to any third-party YouTube user. The only Google data it
+              stores is the owner&apos;s own authorization credential, kept in
+              secured credential storage and used solely to publish to our own
+              channel. It does not use cookies and serves no advertising.
             </p>
             <p>
-              Access granted to our API client can be revoked at any time via the{" "}
+              Access granted to our API client can be revoked at any time via
+              the{" "}
               <a
                 href="https://security.google.com/settings/security/permissions"
                 rel="noreferrer"
@@ -135,7 +233,9 @@ export default function PrivacyPage() {
           <section aria-labelledby="privacy-contact-title">
             <h2 id="privacy-contact-title">Contact</h2>
             <p>
-              <a href="mailto:brett@dreki-solutions.ai">brett@dreki-solutions.ai</a>
+              <a href="mailto:brett@dreki-solutions.ai">
+                brett@dreki-solutions.ai
+              </a>
             </p>
           </section>
         </article>

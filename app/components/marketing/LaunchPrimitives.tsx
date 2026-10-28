@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import PageTurnLink from "../PageTurnLink";
+import { siteConfig } from "../../site-config";
 
 type LaunchHeroProps = {
   eyebrow: string;
@@ -174,18 +175,18 @@ export function LaunchRelatedLinks({
 
 type LaunchFinalCtaProps = {
   eyebrow?: string;
-  title: string;
-  copy: string;
+  title?: string;
+  copy?: string;
   href?: string;
   label?: string;
 };
 
 export function LaunchFinalCta({
-  eyebrow = "A scoped first step",
-  title,
-  copy,
-  href = "/book",
-  label = "Book a Strategy Call",
+  eyebrow = "Free digital presence business audit",
+  title = "See where your online presence can work harder.",
+  copy = "Find the gaps in how customers find, trust, and contact your business. Request your free digital presence audit. No purchase required.",
+  href = siteConfig.primaryAction.href,
+  label = siteConfig.primaryAction.label,
 }: LaunchFinalCtaProps) {
   return (
     <section className="page-cta launch-final-cta" aria-labelledby="launch-final-cta-title">

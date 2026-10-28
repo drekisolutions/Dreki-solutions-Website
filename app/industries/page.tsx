@@ -31,8 +31,8 @@ export default function IndustriesPage() {
         eyebrow="Industry paths"
         title="Build around the way the work actually moves."
         lede="Agent patterns only become useful when they reflect the operating language, handoffs, constraints, and human authority of a real business."
-        primaryHref="/industries/service-businesses"
-        primaryLabel="Explore Service Businesses"
+        primaryHref="/free-audit"
+        primaryLabel="Get My Free Audit"
         secondaryHref="/book"
         secondaryLabel="Discuss Your Workflow"
       >
@@ -91,10 +91,7 @@ export default function IndustriesPage() {
         </div>
       </LaunchSection>
 
-      <LaunchFinalCta
-        title="Does your workflow have a clear normal path and exception owner?"
-        copy="Bring one recurring process to a strategy call. Dreki will examine its rules, data boundary, human decisions, and practical next step before recommending a build."
-      />
+      <LaunchFinalCta />
     </main>
   );
 }
