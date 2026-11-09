@@ -39,6 +39,10 @@ bounded request bodies, an empty honeypot, and best-effort per-instance
 throttling reduce abuse; configure platform rate limits for shared enforcement
 across serverless instances if traffic requires it.
 
+## Voice capture
+
+Sofia files confirmed caller messages through `POST /api/voice/capture`. Delivery creates a ClickUp task and a Gmail draft. The checklist for `VOICE_CLICKUP_LIST_ID`, `VOICE_NOTIFY_EMAIL`, and a compose-scoped `VOICE_GMAIL_CREDENTIALS` refresh token is in `docs/voice-env.md`.
+
 ## Structure
 
 - `app/` contains the server-rendered page and focused client experience.
