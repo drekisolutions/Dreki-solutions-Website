@@ -23,7 +23,7 @@ const routeExpectations = [
   {
     path: "/",
     title: "Automation Built for the Trades | Dreki Solutions",
-    h1: "You build. We connect the rest.",
+    h1: "AI agents that turn inquiries into booked work, with you in control",
     indexable: true,
     socialImage: true,
   },

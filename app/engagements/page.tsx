@@ -77,7 +77,7 @@ export default function EngagementsPage() {
         title="Scope the workflow before pricing the system."
         lede="Dreki does not publish one-size-fits-all agent pricing. A useful estimate depends on the workflow, source systems, permissions, exception risk, and level of ongoing operating support."
         primaryHref="/free-audit"
-        primaryLabel="Get My Free Audit"
+        primaryLabel="Start with a free audit"
         secondaryHref="/services"
         secondaryLabel="Explore Services"
       >

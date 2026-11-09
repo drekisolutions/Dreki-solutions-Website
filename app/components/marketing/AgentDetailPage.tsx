@@ -24,7 +24,7 @@ export default function AgentDetailPage({ agent, sequence }: AgentDetailPageProp
         title={agent.name}
         lede={agent.shortJob}
         primaryHref="/free-audit"
-        primaryLabel="Get My Free Audit"
+        primaryLabel="Start with a free audit"
         secondaryHref="/portfolio"
         secondaryLabel="View Internal Demos"
       >

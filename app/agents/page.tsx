@@ -33,7 +33,7 @@ export default function AgentsPage() {
         title="Give the repeatable work a clear owner."
         lede="Dreki designs agents for narrow operational jobs. Each system prepares work from approved inputs, shows its reasoning checkpoints, and hands consequential decisions back to a person."
         primaryHref="/free-audit"
-        primaryLabel="Get My Free Audit"
+        primaryLabel="Start with a free audit"
         secondaryHref="/industries/service-businesses"
         secondaryLabel="Explore Service Businesses"
       >

@@ -41,7 +41,7 @@ export default function ServicesPage() {
         title="Turn one recurring workflow into a controlled system."
         lede="Dreki audits, designs, deploys, and improves bounded agents for service-business response, intake, scheduling preparation, and coordination."
         primaryHref="/free-audit"
-        primaryLabel="Get My Free Audit"
+        primaryLabel="Start with a free audit"
         secondaryHref="/agents"
         secondaryLabel="Explore Featured Agents"
       >

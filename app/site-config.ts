@@ -30,7 +30,7 @@ export const siteConfig = {
   ),
   primaryAudience: "Trades and service businesses",
   primaryAction: {
-    label: "Get My Free Audit",
+    label: "Start with a free audit",
     href: "/free-audit",
   },
   meetingUrl: normalizeMeetingUrl(

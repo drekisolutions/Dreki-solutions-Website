@@ -66,7 +66,7 @@ export default function ServiceBusinessesPage() {
         title="Keep the customer journey moving while your team does the work."
         lede="Dreki designs bounded agents around the response, intake, scheduling preparation, and handoffs that surround service delivery."
         primaryHref="/free-audit"
-        primaryLabel="Get My Free Audit"
+        primaryLabel="Start with a free audit"
         secondaryHref="/agents"
         secondaryLabel="Compare Featured Agents"
       >

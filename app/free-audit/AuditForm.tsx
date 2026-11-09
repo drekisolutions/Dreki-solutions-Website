@@ -62,14 +62,15 @@ export default function AuditForm() {
       {status === "success" ? (
         <div ref={statusRef} tabIndex={-1} role="status" className={styles.success}>
           <span className="eyebrow">Request received</span>
-          <h2 id="audit-form-title">You’re on the list.</h2>
-          <p>Thank you for requesting your free digital presence audit. Dreki will follow up by email.</p>
+          <h2 id="audit-form-title">Your audit request is in.</h2>
+          <p>Your request has been sent to Brett at Dreki. He’ll follow up by email to confirm your business details and discuss your free digital presence audit. No appointment has been booked.</p>
           <Link className="button button-secondary" href="/">Back to the website</Link>
         </div>
       ) : (
         <>
           <div className={styles.cardHeading}>
             <h2 id="audit-form-title">Request your free audit.</h2>
+            <p>Brett will follow up by email to confirm your details and discuss the audit. No purchase required.</p>
             <p>All fields are required. Text-message consent is optional.</p>
           </div>
           <form onSubmit={submit} onFocus={() => { started.current ??= Date.now(); }} className={styles.form}>
@@ -98,7 +99,7 @@ export default function AuditForm() {
                 <input id="audit-terms" type="checkbox" name="termsAccepted" required aria-labelledby="audit-terms-label" />
                 <label htmlFor="audit-terms" id="audit-terms-label">I agree to the <a href="/terms" target="_blank" rel="noopener noreferrer">Terms</a> and <a href="/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>. <span className={styles.required}>(Required)</span></label>
               </div>
-              <button className="button button-primary" type="submit">{status === "sending" ? "Sending your request…" : "Request My Free Audit"}<span aria-hidden="true">↗</span></button>
+              <button className="button button-primary" type="submit">{status === "sending" ? "Sending your request…" : "Start with a free audit"}<span aria-hidden="true">↗</span></button>
             </fieldset>
             {status === "error" && <div ref={statusRef} tabIndex={-1} role="alert" className={styles.error}>{message} <a href="mailto:brett@dreki-solutions.ai?subject=Free%20digital%20presence%20audit%20request">Email Dreki</a></div>}
             <noscript><p>Please enable JavaScript to submit this form, or <a href="mailto:brett@dreki-solutions.ai?subject=Free%20digital%20presence%20audit%20request">request your audit by email</a>.</p></noscript>

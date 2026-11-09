@@ -33,7 +33,7 @@ export default function ProductsPage() {
         title="See exactly where each product stands."
         lede="Dreki publishes development status directly. A product description explains the intended job; it does not imply general availability or a guaranteed release date."
         primaryHref="/free-audit"
-        primaryLabel="Get My Free Audit"
+        primaryLabel="Start with a free audit"
         secondaryHref="/agents"
         secondaryLabel="Explore Custom Agents"
       >

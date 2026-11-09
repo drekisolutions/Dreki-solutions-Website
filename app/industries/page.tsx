@@ -32,7 +32,7 @@ export default function IndustriesPage() {
         title="Build around the way the work actually moves."
         lede="Agent patterns only become useful when they reflect the operating language, handoffs, constraints, and human authority of a real business."
         primaryHref="/free-audit"
-        primaryLabel="Get My Free Audit"
+        primaryLabel="Start with a free audit"
         secondaryHref="/book"
         secondaryLabel="Discuss Your Workflow"
       >

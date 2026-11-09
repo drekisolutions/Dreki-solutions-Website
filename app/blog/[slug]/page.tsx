@@ -57,7 +57,7 @@ export default async function BlogArticle({ params }: Props) {
           presence audit.
         </p>
         <Link className="button button-primary" href="/free-audit">
-          Get my free audit ↗
+          Start with a free audit ↗
         </Link>
       </aside>
     </main>

@@ -33,6 +33,7 @@ import {
   workflows,
   type JournalArticle,
 } from "./content";
+import InquiryDemo from "./InquiryDemo";
 import NewsletterPopup from "../blog/NewsletterPopup";
 import { useDragCarousel } from "./useDragCarousel";
 import "./trades.css";
@@ -84,22 +85,19 @@ function Hero() {
               <span className="forge-rule" /> YOUR CRAFT. OUR CODE.
             </p>
             <h1 id="forge-title">
-              You build.
-              <br />
-              We{" "}
+              AI agents that turn inquiries into booked work,{" "}
               <motion.span
                 className="forge-foil"
                 style={{
                   backgroundPosition: reduced ? "50% 50%" : foilPosition,
                 }}
               >
-                connect
-                <br className="forge-title-break" /> the rest.
+                with you in control
               </motion.span>
             </h1>
             <p className="forge-hero-lede">
-              Automation built for the trades. From the first missed call to the
-              final invoice, put the busywork in its place.
+              For trades and service businesses: collect job details, prepare replies,
+              and put the next step in your team’s hands.
             </p>
             <div className="forge-actions">
               <motion.a
@@ -108,21 +106,21 @@ function Hero() {
                 href="#free-audit"
                 className="forge-button"
               >
-                Get my free audit <ArrowUpRight size={18} />
+                Start with a free audit <ArrowUpRight size={18} />
               </motion.a>
               <motion.a
                 whileHover={{ scale: 1.02, y: -1 }}
                 whileTap={{ scale: 0.96 }}
-                href="#work"
+                href="#inquiry-demo"
                 className="forge-text-link"
               >
-                See what we build <ArrowRight size={17} />
+                Try the inquiry demo <ArrowRight size={17} />
               </motion.a>
             </div>
             <div className="forge-hero-footnote">
               <Wrench size={15} />
               <span>
-                Built around your business. With your team in control.
+                Built toward more booked work. Results depend on your process and follow-up.
               </span>
             </div>
           </div>
@@ -198,11 +196,11 @@ function Hero() {
             </span>
           </div>
         </div>
-        <a className="forge-scroll-cue" href="#systems">
+        <a className="forge-scroll-cue" href="#inquiry-demo">
           <span className="forge-scroll-track">
             <motion.i style={{ scaleY: reduced ? 1 : progress }} />
           </span>
-          <span>SCROLL TO CONNECT THE DOTS</span>
+          <span>SEE AN INQUIRY TAKE SHAPE</span>
           <ArrowDown size={14} />
         </a>
       </div>
@@ -317,8 +315,7 @@ function Systems() {
                 ))}
               </div>
               <small className="forge-demo-label">
-                Illustrative workflow · Designed around your tools and approval
-                rules.
+                Illustrative workflow · Scope and connected tools are agreed before a build.
               </small>
             </motion.div>
           </AnimatePresence>
@@ -408,7 +405,7 @@ export function Portfolio({ standalone = false }: { standalone?: boolean }) {
         <p>
           Client projects. Our own products.
           <br />
-          Different businesses. The same builder’s mindset.
+          Explore what was built and what is still planned.
         </p>
       </div>
       <div className="forge-portfolio-controls">
@@ -630,6 +627,9 @@ function HangingAudit() {
             <Check size={17} /> Practical next steps for your business
           </li>
         </ul>
+        <p className="forge-audit-followup">Your request goes to Brett at Dreki. He’ll follow up by email to confirm
+          your business details and discuss the audit. You get practical recommendations;
+          any paid work is a separate decision. No purchase required.</p>
         <div className="forge-audit-note">
           <span className="forge-foil">
             Built for people
@@ -675,6 +675,7 @@ export default function TradesHome({
     <MotionConfig reducedMotion="user" transition={{ duration: 0.6 }}>
       <main className="forge-home" id="main-content">
         <Hero />
+        <InquiryDemo />
         <div className="forge-trades-strip">
           <span>FOR THE PEOPLE WHO KEEP THINGS RUNNING</span>
           <div>

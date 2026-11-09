@@ -53,7 +53,7 @@ export default function AboutPage() {
             relationships, exceptions, strategy, and final approvals.
           </p>
           <a className="button button-primary" href="/free-audit">
-            Get My Free Audit
+            Start with a free audit
           </a>
         </div>
       </section>
