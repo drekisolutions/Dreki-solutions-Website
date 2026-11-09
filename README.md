@@ -41,7 +41,7 @@ across serverless instances if traffic requires it.
 
 ## Voice capture
 
-Sofia files confirmed caller messages through `POST /api/voice/capture`. Delivery creates a ClickUp task and a Gmail draft. The checklist for `VOICE_CLICKUP_LIST_ID`, `VOICE_NOTIFY_EMAIL`, and a compose-scoped `VOICE_GMAIL_CREDENTIALS` refresh token is in `docs/voice-env.md`.
+Sofia files confirmed caller messages through `POST /api/voice/capture`. Delivery creates a ClickUp task and sends email with the existing Gmail credential. The checklist for `VOICE_CLICKUP_LIST_ID` and `VOICE_NOTIFY_EMAIL` is in `docs/voice-env.md`.
 
 ## Structure
 
