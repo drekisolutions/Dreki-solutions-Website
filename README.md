@@ -41,7 +41,7 @@ across serverless instances if traffic requires it.
 
 ## Voice capture
 
-Sofia files confirmed caller messages through `POST /api/voice/capture`. Delivery creates a ClickUp task and sends email with the existing Gmail credential. The checklist for `VOICE_CLICKUP_LIST_ID` and `VOICE_NOTIFY_EMAIL` is in `docs/voice-env.md`.
+Sofia files confirmed caller messages through `POST /api/voice/capture`. Delivery creates a ClickUp task and sends email with the existing Gmail credential. An urgent capture outside weekdays 9 AM to 5 PM America/Detroit can text Brett once. The checklist, including `VOICE_URGENT_SMS_TO`, `TWILIO_FROM_NUMBER`, `TWILIO_MESSAGING_SERVICE_SID`, `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_API_KEY_SID`, and `TWILIO_API_KEY_SECRET`, is in `docs/voice-env.md`. The account SID and auth token already used by voice (`VOICE_TWILIO_ACCOUNT_SID`, `VOICE_TWILIO_AUTH_TOKEN`) are read first.
 
 ## Structure
 

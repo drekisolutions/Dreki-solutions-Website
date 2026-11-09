@@ -125,7 +125,9 @@ test("capture accepts a null callback and rejects unconfirmed or extra fields", 
   );
   assert.throws(() => captureRecord({ ...report(), message_confirmed: false }), /approval required/);
   assert.throws(() => captureRecord({ ...report(), callback_confirmed: false, message_confirmed: true }), /Callback confirmation/);
-  assert.throws(() => captureRecord({ ...report(), message_confirmed: true, urgent: true }), /Invalid report/);
+  assert.equal(captureRecord({ ...report(), message_confirmed: true, urgent: true }).urgent, true);
+  assert.throws(() => captureRecord({ ...report(), message_confirmed: true, urgent: "yes" }), /Invalid report/);
+  assert.throws(() => captureRecord({ ...report(), message_confirmed: true, extra: true }), /Invalid report/);
   assert.throws(() => captureRecord({ ...report({ kind: "urgent" }), message_confirmed: true }), /Invalid report/);
   assert.throws(() => captureRecord({ ...report({ message: "   " }), message_confirmed: true }), /Invalid report/);
   assert.throws(() => captureRecord({ ...report({ message: "x".repeat(4001) }), message_confirmed: true }), /Invalid report/);

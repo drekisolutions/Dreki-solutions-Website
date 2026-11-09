@@ -15,7 +15,27 @@ Set the two new variables on the host that runs the site. Do not commit the valu
 
 `VOICE_BLAND_AGENT_ID` is optional. When it is unset, verification uses Sofia, `a14c385f-e975-454f-a6f3-01d334da0d59`. Set it only to replace that id with another UUID.
 
-Existing voice variables stay as they are: `VOICE_PUBLIC_ORIGIN`, `VOICE_DATABASE_URL`, `VOICE_BLAND_TOKEN`, `VOICE_BLAND_WEBHOOK_SECRET`, `VOICE_CLICKUP_TOKEN`, `VOICE_WORKER_SECRET`, and the Twilio account, numbers, app, and auth token. This change does not add SMS or an urgent kind.
+Existing voice variables stay as they are: `VOICE_PUBLIC_ORIGIN`, `VOICE_DATABASE_URL`, `VOICE_BLAND_TOKEN`, `VOICE_BLAND_WEBHOOK_SECRET`, `VOICE_CLICKUP_TOKEN`, `VOICE_WORKER_SECRET`, and the Twilio account, numbers, app, and auth token.
+
+## After-hours urgent text
+
+A verified capture texts Brett only when it is urgent and the clock in America/Detroit is outside Monday–Friday 9:00 AM to 5:00 PM. Holidays are ordinary weekdays. During open hours, no text is sent. The capture, ClickUp task, and email still proceed when the text is skipped or Twilio rejects it.
+
+Urgent means the optional boolean `urgent` is true, or the message, after trimming, starts with the word `URGENT`. Each call id sends at most one text. The store allows about 10 texts per Detroit date. Run `lib/voice/migrations/001-voice-urgent-sms.sql` once on the voice database before relying on that dedupe. If the table or any required variable is missing, the text is skipped and logged.
+
+The `To` number is only `VOICE_URGENT_SMS_TO`. The callback number on the capture is never the destination. If `TWILIO_MESSAGING_SERVICE_SID` is set, that sender is used. Otherwise the sender is `TWILIO_FROM_NUMBER`.
+
+| Name | Role |
+| --- | --- |
+| `VOICE_URGENT_SMS_TO` | Only allowed recipient. |
+| `TWILIO_FROM_NUMBER` | Sender when no messaging service is set. |
+| `TWILIO_MESSAGING_SERVICE_SID` | Optional. Replaces `From` when set. |
+| `VOICE_TWILIO_ACCOUNT_SID` | Preferred account SID in the Twilio URL. |
+| `TWILIO_ACCOUNT_SID` | Fallback account SID. |
+| `VOICE_TWILIO_AUTH_TOKEN` | Preferred Basic-auth secret. Username is the account SID. |
+| `TWILIO_AUTH_TOKEN` | Fallback auth token. |
+| `TWILIO_API_KEY_SID` | Basic-auth username when no auth token is set. |
+| `TWILIO_API_KEY_SECRET` | Basic-auth password paired with the API key SID. |
 
 ## How the email addresses are chosen
 
