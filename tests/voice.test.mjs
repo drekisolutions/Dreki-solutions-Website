@@ -13,7 +13,7 @@ const CALL_ID = "11111111-1111-4111-8111-111111111111";
 const AGENT_ID = "a14c385f-e975-454f-a6f3-01d334da0d59";
 const CALLER = "+15172157573";
 const NOW = Date.parse("2026-11-09T21:00:00.000Z");
-const COMPOSE = "https://www.googleapis.com/auth/gmail.compose";
+const SEND = "https://www.googleapis.com/auth/gmail.send";
 const SECRET = "s".repeat(40);
 
 function voiceEnv(overrides = {}) {
@@ -26,11 +26,11 @@ function voiceEnv(overrides = {}) {
     VOICE_TWILIO_AUTH_TOKEN: "twilio-token-value",
     VOICE_CLICKUP_TOKEN: "pk_test_clickup",
     VOICE_GMAIL_CREDENTIALS: JSON.stringify({
-      scope: COMPOSE,
+      scope: SEND,
       sender: "brett@dreki-solutions.com",
       client_id: "existing-client.apps.googleusercontent.com",
       client_secret: "existing-client-secret",
-      refresh_token: "compose-refresh-token",
+      refresh_token: "existing-refresh-token",
     }),
     VOICE_WORKER_SECRET: "w".repeat(32),
     VOICE_BLAND_TOKEN: "bland-token",
@@ -190,63 +190,58 @@ test("ClickUp task name includes the caller and keeps the call id in the descrip
   assert.equal(numbered[0].name, "Sofia callback: Ada Lovelace (+15175551212)");
 });
 
-test("email delivery creates a Gmail draft and never calls messages/send", async () => {
+test("email delivery sends through Gmail and keeps the existing send credential", async () => {
   const seen = [];
   const record = report({ kind: "lead", name: "Ada\r\nBcc: evil@example.com" });
   const id = await sendReport("email", record, config(voiceEnv()), `${CALL_ID}:lead`, async (url, options) => {
     seen.push({ url, options });
-    if (String(url).includes("oauth2.googleapis.com")) return jsonResponse({ access_token: "ya29.test", scope: COMPOSE });
-    return jsonResponse({ id: "draft_1" });
+    if (String(url).includes("oauth2.googleapis.com")) return jsonResponse({ access_token: "ya29.test" });
+    return jsonResponse({ id: "msg_1" });
   });
-  assert.equal(id, "draft_1");
+  assert.equal(id, "msg_1");
   assert.equal(seen[0].url, "https://oauth2.googleapis.com/token");
   const token = new URLSearchParams(seen[0].options.body);
   assert.equal(token.get("grant_type"), "refresh_token");
   assert.equal(token.get("client_id"), "existing-client.apps.googleusercontent.com");
-  assert.equal(token.get("refresh_token"), "compose-refresh-token");
-  assert.equal(seen[1].url, "https://gmail.googleapis.com/gmail/v1/users/me/drafts");
+  assert.equal(token.get("refresh_token"), "existing-refresh-token");
+  assert.equal(seen[1].url, "https://gmail.googleapis.com/gmail/v1/users/me/messages/send");
   assert.equal(seen[1].options.headers.Authorization, "Bearer ya29.test");
   const payload = JSON.parse(seen[1].options.body);
-  assert.deepEqual(Object.keys(payload), ["message"]);
-  const mime = Buffer.from(payload.message.raw, "base64url").toString("utf8").replaceAll("\r", "");
+  assert.deepEqual(Object.keys(payload), ["raw"]);
+  const mime = Buffer.from(payload.raw, "base64url").toString("utf8").replaceAll("\r", "");
   assert.match(mime, /^From: brett@dreki-solutions\.com/m);
   assert.match(mime, /^To: brett@dreki-solutions\.com/m);
   assert.match(mime, /^Subject: Sofia: lead from Ada Bcc: evil@example.com$/m);
   assert.doesNotMatch(mime, /^(Bcc|Cc):/m);
-  assert.equal(seen.some((call) => String(call.url).includes("messages/send")), false);
+  assert.equal(seen.some((call) => String(call.url).includes("/drafts")), false);
 });
 
-test("Gmail scope and sender mismatches fail closed before a draft exists", async () => {
+test("Gmail rejects a compose scope or a sender that differs from VOICE_NOTIFY_EMAIL", async () => {
   const configured = config(voiceEnv());
-  const sendScoped = { ...configured, gmail: { ...configured.gmail, scope: "https://www.googleapis.com/auth/gmail.send" } };
+  const composeScoped = { ...configured, gmail: { ...configured.gmail, scope: "https://www.googleapis.com/auth/gmail.compose" } };
   let called = false;
   await assert.rejects(
-    () => sendReport("email", report(), sendScoped, `${CALL_ID}:callback`, async () => { called = true; throw new Error("network"); }),
+    () => sendReport("email", report(), composeScoped, `${CALL_ID}:callback`, async () => { called = true; throw new Error("network"); }),
     (error) => error.definitelyNotSent === true,
   );
   assert.equal(called, false);
 
-  const urls = [];
-  const liveSendScope = { ...configured, gmail: { ...configured.gmail, scope: COMPOSE } };
+  const otherSender = { ...configured, gmail: { ...configured.gmail, sender: "other@dreki-solutions.com" } };
   await assert.rejects(
-    () => sendReport("email", report(), liveSendScope, `${CALL_ID}:callback`, async (url) => {
-      urls.push(String(url));
-      return jsonResponse({ access_token: "ya29.test", scope: "https://www.googleapis.com/auth/gmail.send" });
-    }),
+    () => sendReport("email", report(), otherSender, `${CALL_ID}:callback`, async () => { throw new Error("network"); }),
     (error) => error.definitelyNotSent === true,
   );
-  assert.deepEqual(urls, ["https://oauth2.googleapis.com/token"]);
 });
 
-test("voice code has no Gmail send endpoint or send scope", () => {
+test("voice mail uses Gmail send and does not create drafts", () => {
   const source = readdirSync(new URL("../lib/voice/", import.meta.url))
     .filter((name) => name.endsWith(".mjs"))
     .map((name) => readFileSync(new URL(`../lib/voice/${name}`, import.meta.url), "utf8"))
     .join("\n");
-  assert.doesNotMatch(source, /messages\/send/);
-  assert.doesNotMatch(source, /gmail\.send/);
-  assert.match(source, /gmail\/v1\/users\/me\/drafts/);
-  assert.match(source, /https:\/\/www\.googleapis\.com\/auth\/gmail\.compose/);
+  assert.match(source, /gmail\/v1\/users\/me\/messages\/send/);
+  assert.match(source, /https:\/\/www\.googleapis\.com\/auth\/gmail\.send/);
+  assert.doesNotMatch(source, /\/drafts/);
+  assert.doesNotMatch(source, /gmail\.compose/);
 });
 
 test("Bland verification requires Sofia's agent id and ignores persona and pathway ids", async () => {
