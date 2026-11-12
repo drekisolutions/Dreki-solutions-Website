@@ -30,8 +30,8 @@ export default async function BlogArticle({ params }: Props) {
   if (!post) notFound();
   return (
     <main id="main-content" className="blog-article">
-      <Link className="blog-back" href="/#journal">
-        ← From the workbench
+      <Link className="blog-back" href="/blog">
+        ← All field notes
       </Link>
       <header>
         <p className="forge-kicker">{post.category} / DREKI FIELD NOTES</p>

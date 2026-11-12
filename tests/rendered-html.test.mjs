@@ -132,6 +132,13 @@ const routeExpectations = [
     indexable: true,
     socialImage: true,
   },
+  {
+    path: "/blog",
+    title: "Field Notes | Dreki Solutions",
+    h1: "Field notes from the workbench.",
+    indexable: true,
+    socialImage: true,
+  },
 ];
 
 const primaryNavigation = ["/#systems", "/#work", "/#journal", "/about"];
@@ -640,6 +647,31 @@ test("uses the requested ember actions and foil styling", async () => {
   assert.match(trades, /\.forge-foil[^}]*background-clip:\s*text/is);
   assert.match(trades, /prefers-reduced-motion:\s*reduce/);
 });
+test("blog index stays available when no posts are published", async () => {
+  for (const path of ["/blog", "/blog?page=2", "/blog?page=nope"]) {
+    const result = await fetchBuilt(path);
+    assert.equal(result.status, 200, `${path} must render without a database`);
+    assert.match(result.contentType, /^text\/html\b/i);
+    const text = textContent(visibleMarkup(result.body));
+    assert.match(text, /Posts coming soon/i);
+    assert.doesNotMatch(text, /Read article/i);
+    const canonical = tagsNamed(result.body, "link")
+      .map(attributesFor)
+      .filter((attributes) => attributes.get("rel") === "canonical")
+      .map((attributes) => attributes.get("href"));
+    assert.deepEqual(canonical, [canonicalFor("/blog")]);
+  }
+
+  const description = tagsNamed((await fetchBuilt("/blog")).body, "meta")
+    .map(attributesFor)
+    .find((attributes) => attributes.get("name") === "description")
+    ?.get("content");
+  assert.equal(
+    description,
+    "Browse published field notes from Dreki Solutions on automation, trade operations, and running a service business.",
+  );
+});
+
 test("publishes only indexable routes in sitemap and protects utility paths in robots", async () => {
   const sitemap = await fetchBuilt("/sitemap.xml");
   assert.equal(sitemap.status, 200);
