@@ -224,6 +224,7 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
             </PageTurnLink>
             <PageTurnLink href="/privacy">Privacy</PageTurnLink>
             <PageTurnLink href="/terms">Terms</PageTurnLink>
+            <PageTurnLink href="/blog">Blog</PageTurnLink>
             <PageTurnLink
               href="/#newsletter"
               onNavigate={() => {

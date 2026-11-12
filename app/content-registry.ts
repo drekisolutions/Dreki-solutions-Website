@@ -356,6 +356,22 @@ export const contentRegistry = [
     structuredDataEligibility: ["none"],
     socialImage: "/og.png",
   },
+  {
+    route: "/blog",
+    slug: "blog",
+    title: "Field Notes",
+    description:
+      "Browse published field notes from Dreki Solutions on automation, trade operations, and running a service business.",
+    publicationStatus: "published",
+    indexingStatus: "index",
+    pageType: "hub",
+    audience: "Trades and service-business owners",
+    primaryIntent: "Read published field notes",
+    relatedPages: ["/", "/free-audit", "/about"],
+    updatedDate: "2026-11-12",
+    structuredDataEligibility: ["none"],
+    socialImage: "/og.png",
+  },
 ] as const satisfies readonly ContentRegistryEntry[];
 
 export type RegistryRoute = (typeof contentRegistry)[number]["route"];
