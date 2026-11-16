@@ -330,7 +330,6 @@ const projectImages: Record<string, string> = {
   print: "sea-wolf",
   roof: "roofbid",
   clip: "hook-and-clip",
-  desk: "foreman",
 };
 const journalImages = {
   call: "blog-call",

@@ -107,7 +107,7 @@ export const serviceProducts = [
     title: "Visibility IQ",
     focus: "AI assistant visibility and bookability",
     status: "In Development",
-    copy: "More consumers are using AI to search for local trade contractors, and those assistants do not use the same search criteria. Visibility IQ solves this with (1) visibility measurement across assistants, (2) done-for-you agent-readiness fixes, and (3) a bookability endpoint—at local-business prices, plus a white-label tier for agencies.",
+    copy: "More consumers are using AI to search for local trade contractors, and those assistants do not use the same search criteria. Visibility IQ is in development. Planned features include (1) visibility measurement across assistants, (2) done-for-you agent-readiness fixes, (3) a bookability endpoint, and a white-label tier for agencies.",
   },
   {
     index: "S-05",

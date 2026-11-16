@@ -163,6 +163,8 @@ const retiredPublicTerms = [
   "Squawk Sheet AD",
   "Trend Sentinel",
   "Rotor Log",
+  "Deskhand",
+  "Foreman",
 ];
 
 let workerPromise;
@@ -425,7 +427,7 @@ test("renders exact contact details and preserves the complete governed lead for
 test("distinguishes client projects from Dreki products and preserves approved destinations", async () => {
   const markup = visibleMarkup((await fetchBuilt("/portfolio")).body);
   const cards = articleBlocksWithClass(markup, "forge-project-card");
-  assert.equal(cards.length, 5);
+  assert.equal(cards.length, 4);
   for (const title of ["Old Dog Sauce & Spice", "Sea Wolf Cove"]) {
     const card = cards.find((candidate) =>
       textContent(candidate).includes(title),
@@ -436,7 +438,6 @@ test("distinguishes client projects from Dreki products and preserves approved d
   for (const url of [
     "https://roofbid.dreki-solutions.ai",
     "https://www.hookandclip.com",
-    "https://deskhand-foreman.vercel.app/deskhand",
   ]) {
     const link = tagsNamed(markup, "a")
       .map(attributesFor)
@@ -445,7 +446,8 @@ test("distinguishes client projects from Dreki products and preserves approved d
     assert.equal(link.get("target"), "_blank");
     assert.match(link.get("rel"), /noopener/);
   }
-  assert.match(textContent(markup), /View offer sheet/);
+  assert.doesNotMatch(markup, /deskhand-foreman\.vercel\.app/i);
+  assert.doesNotMatch(textContent(markup), /View offer sheet|Deskhand|Foreman/i);
 });
 test("publishes only service-business products with a truthful status on every card", async () => {
   const markup = visibleMarkup((await fetchBuilt("/products")).body);
@@ -482,6 +484,11 @@ test("publishes only service-business products with a truthful status on every c
     text,
     /Aviation products|Valkyrie 135|Skyfar|Declare Ready|Squawk Sheet AD|Trend Sentinel|Rotor Log/i,
   );
+  assert.match(
+    text,
+    /Visibility IQ is in development\. Planned features include \(1\) visibility measurement across assistants, \(2\) done-for-you agent-readiness fixes, \(3\) a bookability endpoint, and a white-label tier for agencies\./i,
+  );
+  assert.doesNotMatch(text, /local-business prices/i);
 });
 
 test("ships Guardian Circuit as a progressive Three.js enhancement with a complete fallback", async () => {

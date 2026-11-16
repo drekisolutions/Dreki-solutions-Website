@@ -228,7 +228,7 @@ export const contentRegistry = [
     slug: "portfolio",
     title: "Client Projects and Dreki Products",
     description:
-      "Explore client projects and Dreki products, including Old Dog Sauce and Spice, Sea Wolf Cove, RoofBid, Hook and Clip, and Deskhand / Foreman.",
+      "Explore client projects and Dreki products, including Old Dog Sauce and Spice, Sea Wolf Cove, RoofBid, and Hook and Clip.",
     publicationStatus: "published",
     indexingStatus: "index",
     pageType: "proof",
