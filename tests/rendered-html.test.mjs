@@ -804,3 +804,18 @@ test("audit opt-in displays disclosures and separates SMS from required policy a
     );
   }
 });
+
+
+test("SBA certification is visible in the shared footer and About content", async () => {
+  const designation = "SBA-certified Service-Disabled Veteran-Owned Small Business (SDVOSB)";
+  for (const path of ["/", "/about", "/contact"]) {
+    const { status, body } = await fetchBuilt(path);
+    assert.equal(status, 200);
+    const footer = visibleMarkup(body).match(/<footer\b[\s\S]*?<\/footer>/i)?.[0] ?? "";
+    assert.ok(textContent(footer).includes(designation), `${path} footer certification`);
+    if (path === "/about") {
+      const main = visibleMarkup(body).match(/<main\b[\s\S]*?<\/main>/i)?.[0] ?? "";
+      assert.ok(textContent(main).includes(`Dreki Solutions LLC is an ${designation}.`));
+    }
+  }
+});

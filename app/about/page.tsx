@@ -48,6 +48,10 @@ export default function AboutPage() {
             customers, craft, judgment, and mission.
           </p>
           <p>
+            Dreki Solutions LLC is an SBA-certified Service-Disabled Veteran-Owned
+            Small Business (SDVOSB).
+          </p>
+          <p>
             Dreki builds agentic software with explicit human ownership. The system
             prepares, coordinates, and escalates; the team retains authority over
             relationships, exceptions, strategy, and final approvals.

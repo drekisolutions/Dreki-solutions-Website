@@ -202,6 +202,9 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
               />
             </PageTurnLink>
             <p>Automation built for the trades.</p>
+            <p className="footer-certification">
+              SBA-certified Service-Disabled Veteran-Owned Small Business (SDVOSB)
+            </p>
             <span>Your craft. Our code. A better-connected business.</span>
           </div>
 

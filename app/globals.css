@@ -1763,6 +1763,12 @@ p {
   color: var(--ivory-soft);
 }
 
+.footer-brand .footer-certification {
+  margin-block: 12px;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
 .footer-brand span {
   color: var(--glacial-muted);
   font-size: 0.65rem;
