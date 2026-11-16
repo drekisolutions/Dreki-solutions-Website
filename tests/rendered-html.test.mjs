@@ -165,6 +165,8 @@ const retiredPublicTerms = [
   "Rotor Log",
   "Deskhand",
   "Foreman",
+  "Visibility IQ",
+  "VisibilityIQ",
 ];
 
 let workerPromise;
@@ -456,7 +458,6 @@ test("publishes only service-business products with a truthful status on every c
     ["Margin Hawk", "In Development"],
     ["Second Swing", "In Development"],
     ["License Retention", "In Development"],
-    ["Visibility IQ", "In Development"],
     ["Bifrost", "In Development"],
     ["Asgard", "In Development"],
   ]);
@@ -484,9 +485,9 @@ test("publishes only service-business products with a truthful status on every c
     text,
     /Aviation products|Valkyrie 135|Skyfar|Declare Ready|Squawk Sheet AD|Trend Sentinel|Rotor Log/i,
   );
-  assert.match(
-    text,
-    /Visibility IQ is in development\. Planned features include \(1\) visibility measurement across assistants, \(2\) done-for-you agent-readiness fixes, \(3\) a bookability endpoint, and a white-label tier for agencies\./i,
+  assert.doesNotMatch(
+    markup,
+    /Visibility IQ|VisibilityIQ|visibility-iq|visibility_iq/i,
   );
   assert.doesNotMatch(text, /local-business prices/i);
 });
@@ -668,6 +669,10 @@ test("publishes only indexable routes in sitemap and protects utility paths in r
     /<loc>https:\/\/www\.dreki-solutions\.ai\/terms<\/loc>/i,
   );
   assert.doesNotMatch(sitemap.body, /https:\/\/dreki-solutions\.ai/i);
+  assert.doesNotMatch(
+    sitemap.body,
+    /Visibility IQ|VisibilityIQ|visibility-iq|visibility_iq/i,
+  );
 
   const robots = await fetchBuilt("/robots.txt");
   assert.equal(robots.status, 200);
@@ -748,9 +753,8 @@ test("references the production social card from every marketing route", async (
 
 test("keeps unsupported claims and retired product names out of public copy", async () => {
   for (const expected of routeExpectations) {
-    const text = textContent(
-      visibleMarkup((await fetchBuilt(expected.path)).body),
-    ).toLowerCase();
+    const body = (await fetchBuilt(expected.path)).body;
+    const text = textContent(visibleMarkup(body)).toLowerCase();
 
     for (const claim of forbiddenPublicClaims) {
       assert.equal(
@@ -766,6 +770,11 @@ test("keeps unsupported claims and retired product names out of public copy", as
         `${expected.path} contains retired product name: ${term}`,
       );
     }
+    assert.doesNotMatch(
+      body,
+      /Visibility IQ|VisibilityIQ|visibility-iq|visibility_iq/i,
+      `${expected.path} still mentions Visibility IQ`,
+    );
   }
 });
 

@@ -103,13 +103,6 @@ export const serviceProducts = [
     copy: "Maintains the full compliance inventory and executes renewals: pre-fills forms, tracks CE requirements, prepares filing packets, and submits where portals allow—with the owner approving signatures and payments. Launch hard-capped at 2 states.",
   },
   {
-    index: "S-04",
-    title: "Visibility IQ",
-    focus: "AI assistant visibility and bookability",
-    status: "In Development",
-    copy: "More consumers are using AI to search for local trade contractors, and those assistants do not use the same search criteria. Visibility IQ is in development. Planned features include (1) visibility measurement across assistants, (2) done-for-you agent-readiness fixes, (3) a bookability endpoint, and a white-label tier for agencies.",
-  },
-  {
     index: "S-05",
     title: "Bifrost",
     focus: "Branded MCP server delivery",
