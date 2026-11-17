@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import SiteChrome from "./components/SiteChrome";
 import ForgeAtmosphere from "./components/ForgeAtmosphere";
 import { absoluteUrl, siteConfig } from "./site-config";
@@ -107,6 +108,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             strategy="afterInteractive"
           />
         ) : null}
+        <Analytics />
       </body>
     </html>
   );
