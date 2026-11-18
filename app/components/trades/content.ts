@@ -88,18 +88,6 @@ export const projects = [
     href: "https://www.hookandclip.com",
     cta: "Visit Hook and Clip",
   },
-  {
-    name: "Deskhand / Foreman",
-    category: "Dreki product & offer",
-    kind: "dreki",
-    number: "05",
-    description:
-      "Meet Deskhand and review the Foreman offer sheet for the details.",
-    tags: ["Trade operations", "Foreman offer"],
-    visual: "desk",
-    href: "https://deskhand-foreman.vercel.app/deskhand",
-    cta: "View offer sheet",
-  },
 ] as const;
 
 export type JournalArticle = {

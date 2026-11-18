@@ -163,6 +163,10 @@ const retiredPublicTerms = [
   "Squawk Sheet AD",
   "Trend Sentinel",
   "Rotor Log",
+  "Deskhand",
+  "Foreman",
+  "Visibility IQ",
+  "VisibilityIQ",
 ];
 
 let workerPromise;
@@ -425,7 +429,7 @@ test("renders exact contact details and preserves the complete governed lead for
 test("distinguishes client projects from Dreki products and preserves approved destinations", async () => {
   const markup = visibleMarkup((await fetchBuilt("/portfolio")).body);
   const cards = articleBlocksWithClass(markup, "forge-project-card");
-  assert.equal(cards.length, 5);
+  assert.equal(cards.length, 4);
   for (const title of ["Old Dog Sauce & Spice", "Sea Wolf Cove"]) {
     const card = cards.find((candidate) =>
       textContent(candidate).includes(title),
@@ -436,7 +440,6 @@ test("distinguishes client projects from Dreki products and preserves approved d
   for (const url of [
     "https://roofbid.dreki-solutions.ai",
     "https://www.hookandclip.com",
-    "https://deskhand-foreman.vercel.app/deskhand",
   ]) {
     const link = tagsNamed(markup, "a")
       .map(attributesFor)
@@ -445,7 +448,8 @@ test("distinguishes client projects from Dreki products and preserves approved d
     assert.equal(link.get("target"), "_blank");
     assert.match(link.get("rel"), /noopener/);
   }
-  assert.match(textContent(markup), /View offer sheet/);
+  assert.doesNotMatch(markup, /deskhand-foreman\.vercel\.app/i);
+  assert.doesNotMatch(textContent(markup), /View offer sheet|Deskhand|Foreman/i);
 });
 test("publishes only service-business products with a truthful status on every card", async () => {
   const markup = visibleMarkup((await fetchBuilt("/products")).body);
@@ -454,7 +458,6 @@ test("publishes only service-business products with a truthful status on every c
     ["Margin Hawk", "In Development"],
     ["Second Swing", "In Development"],
     ["License Retention", "In Development"],
-    ["Visibility IQ", "In Development"],
     ["Bifrost", "In Development"],
     ["Asgard", "In Development"],
   ]);
@@ -482,6 +485,11 @@ test("publishes only service-business products with a truthful status on every c
     text,
     /Aviation products|Valkyrie 135|Skyfar|Declare Ready|Squawk Sheet AD|Trend Sentinel|Rotor Log/i,
   );
+  assert.doesNotMatch(
+    markup,
+    /Visibility IQ|VisibilityIQ|visibility-iq|visibility_iq/i,
+  );
+  assert.doesNotMatch(text, /local-business prices/i);
 });
 
 test("ships Guardian Circuit as a progressive Three.js enhancement with a complete fallback", async () => {
@@ -661,6 +669,10 @@ test("publishes only indexable routes in sitemap and protects utility paths in r
     /<loc>https:\/\/www\.dreki-solutions\.ai\/terms<\/loc>/i,
   );
   assert.doesNotMatch(sitemap.body, /https:\/\/dreki-solutions\.ai/i);
+  assert.doesNotMatch(
+    sitemap.body,
+    /Visibility IQ|VisibilityIQ|visibility-iq|visibility_iq/i,
+  );
 
   const robots = await fetchBuilt("/robots.txt");
   assert.equal(robots.status, 200);
@@ -741,9 +753,8 @@ test("references the production social card from every marketing route", async (
 
 test("keeps unsupported claims and retired product names out of public copy", async () => {
   for (const expected of routeExpectations) {
-    const text = textContent(
-      visibleMarkup((await fetchBuilt(expected.path)).body),
-    ).toLowerCase();
+    const body = (await fetchBuilt(expected.path)).body;
+    const text = textContent(visibleMarkup(body)).toLowerCase();
 
     for (const claim of forbiddenPublicClaims) {
       assert.equal(
@@ -759,6 +770,11 @@ test("keeps unsupported claims and retired product names out of public copy", as
         `${expected.path} contains retired product name: ${term}`,
       );
     }
+    assert.doesNotMatch(
+      body,
+      /Visibility IQ|VisibilityIQ|visibility-iq|visibility_iq/i,
+      `${expected.path} still mentions Visibility IQ`,
+    );
   }
 });
 
