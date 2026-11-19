@@ -17,6 +17,7 @@ export function buildAuditEmail(data: AuditRequest) {
       "FREE DIGITAL PRESENCE AUDIT REQUEST", "",
       `Owner: ${data.firstName} ${data.lastName}`,
       `Email: ${data.email}`, `Company: ${data.company}`,
+      `Website: ${data.businessUrl}`, `Industry: ${data.industry}`,
       `City: ${data.city}`, `State: ${data.state}`, `Phone: ${data.phone}`, "",
       `Text message authorization: ${data.smsConsent ? "YES — opted in" : "NO — do not text"}`,
       `Consent wording version: ${SMS_CONSENT_VERSION}`,

@@ -587,6 +587,8 @@ test("renders the connected trades experience, real audit fields, and honest unp
     "email",
     "phone",
     "company",
+    "businessUrl",
+    "industry",
     "city",
     "state",
     "termsAccepted",
