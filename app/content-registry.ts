@@ -56,9 +56,9 @@ export const contentRegistry = [
   {
     route: "/",
     slug: "home",
-    title: "Automation Built for the Trades",
+    title: "Social Media Marketing and Branding for Small Businesses",
     description:
-      "Dreki builds AI agents for trades and service businesses to collect job details, prepare replies, and coordinate next steps with your team in control.",
+      "Dreki Solutions helps owner-led small businesses with social media marketing, brand development, and a free digital presence audit.",
     publicationStatus: "published",
     indexingStatus: "index",
     pageType: "home",

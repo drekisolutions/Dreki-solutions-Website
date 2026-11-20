@@ -23,13 +23,17 @@ import {
   FileCheck2,
   FileText,
   Inbox,
+  Megaphone,
+  Palette,
   PhoneCall,
+  SearchCheck,
   Wrench,
 } from "lucide-react";
 import AuditForm from "../../free-audit/AuditForm";
 import {
   journalTopics,
   projects,
+  services,
   workflows,
   type JournalArticle,
 } from "./content";
@@ -41,6 +45,14 @@ import "./trades.css";
 // Quarter stiffness and half damping preserve the spring shape at half speed.
 const spring = { type: "spring" as const, stiffness: 45, damping: 12 };
 const icons = [PhoneCall, Inbox, CalendarDays, FileText, FileCheck2];
+const serviceIcons = [Megaphone, Palette, SearchCheck];
+const networkPoints = [
+  [115, 123],
+  [490, 125],
+  [527, 365],
+  [300, 535],
+  [75, 375],
+];
 
 function Reveal({ children }: { children: ReactNode }) {
   const reduced = useReducedMotion();
@@ -75,9 +87,9 @@ function Hero() {
       <div className="forge-hero-sticky">
         <div className="forge-hero-top">
           <span>
-            <i /> BUILT FOR THE TRADES. ENGINEERED FOR YOU.
+            <i /> BUILT FOR SMALL BUSINESS. ENGINEERED FOR YOU.
           </span>
-          <span className="forge-edition">DREKI / CONNECTED OPERATIONS</span>
+          <span className="forge-edition">DREKI / MARKETING &amp; BRAND</span>
         </div>
         <div className="forge-hero-layout">
           <div className="forge-hero-copy">
@@ -85,19 +97,20 @@ function Hero() {
               <span className="forge-rule" /> YOUR CRAFT. OUR CODE.
             </p>
             <h1 id="forge-title">
-              AI agents that turn inquiries into booked work,{" "}
+              Social media marketing and brand development for small
+              businesses,{" "}
               <motion.span
                 className="forge-foil"
                 style={{
                   backgroundPosition: reduced ? "50% 50%" : foilPosition,
                 }}
               >
-                with you in control
+                starting with a free audit
               </motion.span>
             </h1>
             <p className="forge-hero-lede">
-              For trades and service businesses: collect job details, prepare replies,
-              and put the next step in your team’s hands.
+              For owner-led small businesses: get found, look the part, and stay
+              in front of customers. Start with a free digital presence audit.
             </p>
             <div className="forge-actions">
               <motion.a
@@ -111,10 +124,10 @@ function Hero() {
               <motion.a
                 whileHover={{ scale: 1.02, y: -1 }}
                 whileTap={{ scale: 0.96 }}
-                href="#inquiry-demo"
+                href="#services"
                 className="forge-text-link"
               >
-                Try the inquiry demo <ArrowRight size={17} />
+                See what we do <ArrowRight size={17} />
               </motion.a>
             </div>
             <div className="forge-hero-footnote">
@@ -127,30 +140,27 @@ function Hero() {
           <div
             className="forge-network"
             role="img"
-            aria-label="Dreki connects missed-call follow-up, lead intake, scheduling, estimates, and invoicing. Scroll to assemble the network."
+            aria-label="Dreki connects social media marketing, brand development, and a free digital presence audit. Scroll to assemble the network."
           >
             <div className="forge-orbit forge-orbit-one" />
             <div className="forge-orbit forge-orbit-two" />
-            <span className="forge-coordinate">CONNECTED OPERATIONS</span>
+            <span className="forge-coordinate">ONE CONNECTED PRESENCE</span>
             <motion.svg
               className="forge-connections"
               viewBox="0 0 600 600"
               style={{ opacity: reduced ? 1 : networkOpacity }}
               aria-hidden="true"
             >
-              {[
-                [115, 123],
-                [490, 125],
-                [527, 365],
-                [300, 535],
-                [75, 375],
-              ].map(([x, y], i) => (
-                <motion.path
-                  key={i}
-                  d={`M300 300 L${x} ${y}`}
-                  style={{ pathLength: reduced ? 1 : lineLength }}
-                />
-              ))}
+              {services.map((service) => {
+                const [x, y] = networkPoints[service.node];
+                return (
+                  <motion.path
+                    key={service.short}
+                    d={`M300 300 L${x} ${y}`}
+                    style={{ pathLength: reduced ? 1 : lineLength }}
+                  />
+                );
+              })}
             </motion.svg>
             <motion.div
               className="forge-logo-core"
@@ -177,15 +187,15 @@ function Hero() {
                 scale: reduced ? 1 : networkScale,
               }}
             >
-              {workflows.map((flow, i) => {
-                const Icon = icons[i];
+              {services.map((service, i) => {
+                const Icon = serviceIcons[i];
                 return (
                   <div
-                    className={`forge-node forge-node-${i}`}
-                    key={flow.short}
+                    className={`forge-node forge-node-${service.node}`}
+                    key={service.short}
                   >
                     <Icon size={19} />
-                    <span>{flow.short}</span>
+                    <span>{service.short}</span>
                     <small>0{i + 1}</small>
                   </div>
                 );
@@ -196,13 +206,58 @@ function Hero() {
             </span>
           </div>
         </div>
-        <a className="forge-scroll-cue" href="#inquiry-demo">
+        <a className="forge-scroll-cue" href="#services">
           <span className="forge-scroll-track">
             <motion.i style={{ scaleY: reduced ? 1 : progress }} />
           </span>
-          <span>SEE AN INQUIRY TAKE SHAPE</span>
+          <span>SEE WHAT WE DO</span>
           <ArrowDown size={14} />
         </a>
+      </div>
+    </section>
+  );
+}
+
+function Services() {
+  return (
+    <section
+      className="forge-section forge-services"
+      id="services"
+      aria-labelledby="services-title"
+    >
+      <div className="forge-section-heading">
+        <div>
+          <p className="forge-kicker">WHAT WE DO</p>
+          <h2 id="services-title">
+            Three ways we help{" "}
+            <span className="forge-foil">small businesses get found.</span>
+          </h2>
+        </div>
+        <p>
+          Built for businesses where the owner still does the work
+          <br />
+          and has little time left for marketing.
+        </p>
+      </div>
+      <div className="forge-services-grid">
+        {services.map((service, i) => {
+          const Icon = serviceIcons[i];
+          return (
+            <article className="forge-service-card" key={service.title}>
+              <div className="forge-service-top">
+                <Icon size={24} />
+                <span className="forge-small-label">SERVICE / 0{i + 1}</span>
+              </div>
+              <h3>{service.title}</h3>
+              <p>{service.copy}</p>
+              {service.href && (
+                <a className="forge-project-link" href={service.href}>
+                  {service.cta} <ArrowUpRight size={17} />
+                </a>
+              )}
+            </article>
+          );
+        })}
       </div>
     </section>
   );
@@ -675,6 +730,9 @@ export default function TradesHome({
     <MotionConfig reducedMotion="user" transition={{ duration: 0.6 }}>
       <main className="forge-home" id="main-content">
         <Hero />
+        <Reveal>
+          <Services />
+        </Reveal>
         <InquiryDemo />
         <div className="forge-trades-strip">
           <span>FOR THE PEOPLE WHO KEEP THINGS RUNNING</span>

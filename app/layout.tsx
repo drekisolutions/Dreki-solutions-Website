@@ -8,9 +8,9 @@ import "@fontsource-variable/inter/wght.css";
 import "./globals.css";
 import "./forge-theme.css";
 
-const defaultTitle = "Dreki Solutions | Automation Built for the Trades";
+const defaultTitle = "Dreki Solutions | Social Media Marketing and Branding for Small Businesses";
 const defaultDescription =
-  "Dreki builds automation solutions for the trades, from missed-call follow-up and lead intake to scheduling, estimates, and invoicing.";
+  "Dreki Solutions helps owner-led small businesses with social media marketing, brand development, and a free digital presence audit, and builds automation for trades and service businesses.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),

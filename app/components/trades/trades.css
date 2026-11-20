@@ -1639,3 +1639,46 @@
 @media (prefers-reduced-motion: reduce) {
  .forge-hero { height: auto; min-height: 0; }
 }
+
+.forge-services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.forge-service-card {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 28px;
+  border-radius: 12px;
+  border: 1px solid #d4c29c25;
+  border-top-color: #e4d7bb38;
+  background: linear-gradient(135deg, #ffffff05, #ffffff01);
+  box-shadow:
+    0 20px 40px #0004,
+    inset 0 1px 0 #fff1;
+}
+.forge-service-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #d6ae67;
+}
+.forge-service-card h3 {
+  font-size: 21px;
+  margin: 22px 0 10px;
+}
+.forge-service-card p {
+  font-size: 13px;
+  color: #9d9d95;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+.forge-service-card .forge-project-link {
+  margin-top: auto;
+  padding-top: 22px;
+}
+@media (max-width: 900px) {
+  .forge-services-grid {
+    grid-template-columns: 1fr;
+  }
+}

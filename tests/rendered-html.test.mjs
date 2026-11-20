@@ -22,8 +22,8 @@ const routeExpectations = [
   },
   {
     path: "/",
-    title: "Automation Built for the Trades | Dreki Solutions",
-    h1: "AI agents that turn inquiries into booked work, with you in control",
+    title: "Social Media Marketing and Branding for Small Businesses | Dreki Solutions",
+    h1: "Social media marketing and brand development for small businesses, starting with a free audit",
     indexable: true,
     socialImage: true,
   },
@@ -572,8 +572,14 @@ test("ships Guardian Circuit as a progressive Three.js enhancement with a comple
 test("renders the connected trades experience, real audit fields, and honest unpublished articles", async () => {
   const markup = visibleMarkup((await fetchBuilt("/")).body);
   const text = textContent(markup);
+  for (const service of [
+    "Social media marketing",
+    "Brand development",
+    "Digital presence audit",
+  ])
+    assert.ok(text.includes(service));
   for (const workflow of [
-    "Missed calls",
+    "Missed-call follow-up",
     "Lead intake",
     "Scheduling",
     "Estimates",
