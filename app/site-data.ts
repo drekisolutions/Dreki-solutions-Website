@@ -6,6 +6,8 @@ export const contact = {
 
 export const navigation = [
   { href: "/#systems", label: "Solutions" },
+  { href: "/social-media-marketing", label: "Social media" },
+  { href: "/brand-development", label: "Branding" },
   { href: "/#work", label: "Our work" },
   { href: "/#journal", label: "Field notes" },
   { href: "/about", label: "About" },

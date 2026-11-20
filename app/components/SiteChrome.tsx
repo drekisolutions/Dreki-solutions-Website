@@ -201,7 +201,7 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
                 unoptimized
               />
             </PageTurnLink>
-            <p>Automation built for the trades.</p>
+            <p>Social media marketing and brand development for small businesses.</p>
             <p className="footer-certification">
               SBA-certified Service-Disabled Veteran-Owned Small Business (SDVOSB)
             </p>
