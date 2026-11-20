@@ -19,6 +19,11 @@ export default function FreeAuditPage() {
             <li><span>03</span><div><h2>Make contact easy.</h2><p>The path from an interested visitor to a business inquiry.</p></div></li>
           </ol>
           <p className={styles.note}>Free to request. No purchase required.<br />We’ll follow up by email about your audit.</p>
+          <div className={styles.answer}>
+            <h2>What does the free audit include?</h2>
+            <p>The free digital presence audit is a review of your website, your social accounts, and your Google Business Profile. You get a written report on what to fix first.</p>
+            <p>We look at three things: whether customers can find you, whether what they see builds trust, and how easy it is to contact you. It is free to request and no purchase is required. Brett follows up by email to confirm your details and discuss the audit.</p>
+          </div>
         </section>
         <AuditForm />
       </div>
