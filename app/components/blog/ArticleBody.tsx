@@ -1,6 +1,20 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-export default function ArticleBody({ body }: { body: string }) {
+import { richHtml, type RichNode } from "@/lib/blog/rich-content";
+export default function ArticleBody({
+  body,
+  richDoc,
+}: {
+  body: string;
+  richDoc?: RichNode;
+}) {
+  if (richDoc)
+    return (
+      <div
+        className="article-prose"
+        dangerouslySetInnerHTML={{ __html: richHtml(richDoc) }}
+      />
+    );
   return (
     <div className="article-prose">
       <ReactMarkdown

@@ -1,6 +1,9 @@
 export class HttpError extends Error {
   status: number;
-  constructor(status: number, message: string) { super(message); this.status = status; }
+  constructor(status: number, message: string) {
+    super(message);
+    this.status = status;
+  }
 }
 export function requireOrigin(request: Request) {
   const expected = new URL(process.env.BLOG_AUTH_URL || request.url).origin;
@@ -9,7 +12,7 @@ export function requireOrigin(request: Request) {
 }
 export async function jsonBody(
   request: Request,
-  max = 100000,
+  max = 350000,
 ): Promise<Record<string, unknown>> {
   if (
     request.headers.get("content-type")?.split(";")[0].trim() !==

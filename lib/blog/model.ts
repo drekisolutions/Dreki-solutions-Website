@@ -1,3 +1,4 @@
+import { validateRichDoc, type RichNode } from "./rich-content.ts";
 export type ArticleContent = {
   title: string;
   slug: string;
@@ -7,6 +8,11 @@ export type ArticleContent = {
   motif: "call" | "flow" | "grid" | "paper";
   imageUrl?: string;
   imageAlt?: string;
+  richDoc?: RichNode;
+  kind?: "blog" | "newsletter";
+  seoTitle?: string;
+  seoDescription?: string;
+  socialImage?: string;
 };
 export type BlogPost = {
   id: string;
@@ -15,6 +21,10 @@ export type BlogPost = {
   revision: number;
   updatedAt: string;
   publishedAt: string | null;
+  kind?: "blog" | "newsletter";
+  deletedAt?: string | null;
+  scheduledAt?: string | null;
+  newsletterSent?: boolean;
 };
 export type ArticleSummary = ArticleContent & {
   id: string;
@@ -50,11 +60,59 @@ export function validateArticle(input: unknown): ArticleContent | null {
     return null;
   if (!["call", "flow", "grid", "paper"].includes(String(value.motif)))
     return null;
-  if (value.imageUrl !== undefined && (typeof value.imageUrl !== "string" ||
-      (value.imageUrl !== "" && !/^\/api\/blog-images\/[0-9a-f-]{36}$/.test(value.imageUrl)))) return null;
-  if (value.imageAlt !== undefined && (typeof value.imageAlt !== "string" || value.imageAlt.length > 300 || /[\u0000-\u001f]/.test(value.imageAlt))) return null;
-  return { ...result, motif: value.motif,
-    ...(value.imageUrl ? { imageUrl: value.imageUrl, imageAlt: String(value.imageAlt || "").trim() } : {}),
+  if (
+    value.imageUrl !== undefined &&
+    (typeof value.imageUrl !== "string" ||
+      (value.imageUrl !== "" &&
+        !/^\/api\/blog-images\/[0-9a-f-]{36}$/.test(value.imageUrl)))
+  )
+    return null;
+  if (
+    value.imageAlt !== undefined &&
+    (typeof value.imageAlt !== "string" ||
+      value.imageAlt.length > 300 ||
+      /[\u0000-\u001f]/.test(value.imageAlt))
+  )
+    return null;
+  const richDoc =
+    value.richDoc === undefined ? undefined : validateRichDoc(value.richDoc);
+  if (value.richDoc !== undefined && !richDoc) return null;
+  if (
+    value.kind !== undefined &&
+    !["blog", "newsletter"].includes(String(value.kind))
+  )
+    return null;
+  for (const [key, max] of [
+    ["seoTitle", 140],
+    ["seoDescription", 300],
+    ["socialImage", 200],
+  ] as const)
+    if (
+      value[key] !== undefined &&
+      (typeof value[key] !== "string" || String(value[key]).length > max)
+    )
+      return null;
+  if (
+    value.socialImage &&
+    !/^\/api\/blog-images\/[0-9a-f-]{36}$/.test(String(value.socialImage))
+  )
+    return null;
+  return {
+    ...result,
+    motif: value.motif,
+    ...(value.imageUrl
+      ? {
+          imageUrl: value.imageUrl,
+          imageAlt: String(value.imageAlt || "").trim(),
+        }
+      : {}),
+    ...(richDoc ? { richDoc } : {}),
+    ...(value.kind ? { kind: value.kind } : {}),
+    ...Object.fromEntries(
+      ["seoTitle", "seoDescription", "socialImage"]
+        .filter((k) => value[k])
+        .map((k) => [k, value[k]]),
+    ),
   } as ArticleContent;
 }
 

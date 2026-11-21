@@ -14,14 +14,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await publishedPost(slug);
   if (!post) return { title: "Article not found", robots: { index: false } };
   return {
-    title: post.title,
-    description: post.excerpt,
+    title: post.seoTitle || post.title,
+    description: post.seoDescription || post.excerpt,
     alternates: { canonical: absoluteUrl(`/blog/${post.slug}`) },
     openGraph: {
       type: "article",
-      title: post.title,
-      description: post.excerpt,
+      title: post.seoTitle || post.title,
+      description: post.seoDescription || post.excerpt,
       publishedTime: post.publishedAt,
+      ...(post.socialImage || post.imageUrl
+        ? { images: [absoluteUrl((post.socialImage || post.imageUrl)!)] }
+        : {}),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.seoTitle || post.title,
+      description: post.seoDescription || post.excerpt,
+      ...(post.socialImage || post.imageUrl
+        ? { images: [absoluteUrl((post.socialImage || post.imageUrl)!)] }
+        : {}),
     },
   };
 }
@@ -50,8 +61,17 @@ export default async function BlogArticle({ params }: Props) {
           </time>
         </div>
       </header>
-      {post.imageUrl && <Image className="blog-cover" src={post.imageUrl} alt={post.imageAlt || ""} width={1600} height={1000} unoptimized />}
-      <ArticleBody body={post.body} />
+      {post.imageUrl && (
+        <Image
+          className="blog-cover"
+          src={post.imageUrl}
+          alt={post.imageAlt || ""}
+          width={1600}
+          height={1000}
+          unoptimized
+        />
+      )}
+      <ArticleBody body={post.body} richDoc={post.richDoc} />
       <aside className="blog-article-cta">
         <h2>Put the next idea to work.</h2>
         <p>

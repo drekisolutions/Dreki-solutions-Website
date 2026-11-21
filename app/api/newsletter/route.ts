@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     if (Number(rows[0].count) > 10)
       return reply({ error: "Please wait before trying again." }, 429);
     await query(
-      "INSERT INTO newsletter_subscribers(email,subscribed_at,consent_version,status) VALUES($1,$2,$3,'subscribed') ON CONFLICT(email) DO NOTHING",
+      "INSERT INTO newsletter_subscribers(email,subscribed_at,consent_version,status) VALUES($1,$2,$3,'subscribed') ON CONFLICT(email) DO UPDATE SET subscribed_at=excluded.subscribed_at,consent_version=excluded.consent_version,status='subscribed'",
       [email, now, "dreki-dispatch-2026-10-26"],
     );
     return reply({ ok: true });

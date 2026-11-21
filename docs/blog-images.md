@@ -4,7 +4,7 @@ The owner can upload JPG, PNG, or WebP images from the article workspace. The up
 
 Uploads use the existing private Postgres connection. `dreki_blog.blog_images` stores compressed WebP data; no additional storage service or credentials are required. Source files are limited to 3 MiB and 40 megapixels, and resized to fit 1600 by 1600 pixels. Sharp strips original metadata. SVG and animated images are rejected. The library has a 1,000-image upload guard. Image records are retained when removed from drafts so published snapshots and unsaved work are not broken; storage can be reviewed separately as the library grows.
 
-Only owner sessions with the expected origin can upload. Public image requests succeed only when the image is referenced by a published article. Draft previews require the owner session. Responses disable caching so unpublishing or deleting an article also ends public image access. Runtime database roles have no browser API access; RLS and grants limit image reads/writes to the editorial server role.
+Only owner sessions with the expected origin can upload. Public image requests succeed when an image is referenced by a published web edition or an immutable issued newsletter. Draft previews require the owner session. Responses disable caching so unpublishing or deleting a blog article ends public access unless another published edition or issued newsletter still references it. Issued newsletter images are retained so emails already sent remain readable. Runtime database roles have no browser API access; RLS and grants limit image reads/writes to the editorial server role.
 
 Production table setup:
 

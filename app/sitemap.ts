@@ -28,5 +28,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             : 0.8,
     }));
   const posts = await publishedPosts().catch(() => []);
-  return [...pages, ...posts.map(post => ({ url: absoluteUrl(`/blog/${post.slug}`), lastModified: new Date(post.publishedAt), changeFrequency: "monthly" as const, priority: 0.7 }))];
+  const newsletters = await publishedPosts("newsletter").catch(() => []);
+  return [
+    ...pages,
+    ...posts.map((post) => ({
+      url: absoluteUrl(`/blog/${post.slug}`),
+      lastModified: new Date(post.publishedAt),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+    ...newsletters.map((post) => ({
+      url: absoluteUrl(`/newsletter/${post.slug}`),
+      lastModified: new Date(post.publishedAt),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+  ];
 }

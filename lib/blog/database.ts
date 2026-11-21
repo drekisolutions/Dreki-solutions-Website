@@ -10,7 +10,8 @@ export const blogConfigured = () =>
   localEditor() || Boolean(process.env.BLOG_DATABASE_URL);
 
 type Connection =
-  { pool: pg.Pool; sqlite?: never } | { sqlite: DatabaseSync; pool?: never };
+  | { pool: pg.Pool; sqlite?: never }
+  | { sqlite: DatabaseSync; pool?: never };
 const globalDatabase = globalThis as unknown as {
   drekiBlogDatabase?: Promise<Connection>;
 };
@@ -32,6 +33,20 @@ export async function getDatabase(): Promise<Connection> {
       );
       sqlite.exec("PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;");
       sqlite.exec(schemaSql);
+      const columns = sqlite
+        .prepare("PRAGMA table_info(blog_posts)")
+        .all()
+        .map((row) => row.name);
+      for (const [name, definition] of Object.entries({
+        kind: "TEXT NOT NULL DEFAULT 'blog'",
+        deleted_at: "TEXT",
+        scheduled_at: "TEXT",
+        scheduled_content: "TEXT",
+      }))
+        if (!columns.includes(name))
+          sqlite.exec(
+            `ALTER TABLE blog_posts ADD COLUMN ${name} ${definition}`,
+          );
       return { sqlite };
     }
     const url = new URL(process.env.BLOG_DATABASE_URL!);
@@ -48,7 +63,12 @@ export async function getDatabase(): Promise<Connection> {
       url.searchParams.delete(option);
     const pool = new pg.Pool({
       connectionString: url.toString(),
-      ssl: { rejectUnauthorized: true, ...(process.env.DATABASE_SSL_CA ? { ca: process.env.DATABASE_SSL_CA } : {}) },
+      ssl: {
+        rejectUnauthorized: true,
+        ...(process.env.DATABASE_SSL_CA
+          ? { ca: process.env.DATABASE_SSL_CA }
+          : {}),
+      },
       options: "-c search_path=dreki_blog",
       max: 2,
       connectionTimeoutMillis: 8000,
@@ -67,7 +87,8 @@ export const schemaSql = `
 CREATE TABLE IF NOT EXISTS blog_images (id TEXT PRIMARY KEY, data BYTEA NOT NULL);
 CREATE TABLE IF NOT EXISTS blog_posts (
   id TEXT PRIMARY KEY, slug TEXT NOT NULL UNIQUE, draft TEXT NOT NULL,
-  published TEXT, revision INTEGER NOT NULL, updated_at TEXT NOT NULL, published_at TEXT
+  published TEXT, revision INTEGER NOT NULL, updated_at TEXT NOT NULL, published_at TEXT,
+  kind TEXT NOT NULL DEFAULT 'blog', deleted_at TEXT, scheduled_at TEXT, scheduled_content TEXT
 );
 CREATE TABLE IF NOT EXISTS newsletter_subscribers (
   email TEXT PRIMARY KEY, subscribed_at TEXT NOT NULL,
@@ -75,7 +96,13 @@ CREATE TABLE IF NOT EXISTS newsletter_subscribers (
 );
 CREATE TABLE IF NOT EXISTS newsletter_limits (
   bucket TEXT PRIMARY KEY, count INTEGER NOT NULL, expires TEXT NOT NULL
-);`;
+);
+CREATE TABLE IF NOT EXISTS blog_revisions (id TEXT PRIMARY KEY, post_id TEXT NOT NULL, revision INTEGER NOT NULL, content TEXT NOT NULL, saved_at TEXT NOT NULL);
+CREATE UNIQUE INDEX IF NOT EXISTS blog_revisions_post ON blog_revisions(post_id,revision);
+CREATE TABLE IF NOT EXISTS newsletter_issues (post_id TEXT PRIMARY KEY, content TEXT NOT NULL, created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS newsletter_deliveries (id TEXT PRIMARY KEY, post_id TEXT NOT NULL, email TEXT NOT NULL, state TEXT NOT NULL DEFAULT 'pending', attempts INTEGER NOT NULL DEFAULT 0, next_at TEXT NOT NULL, first_attempt TEXT, provider_id TEXT, error TEXT, UNIQUE(post_id,email));
+CREATE INDEX IF NOT EXISTS newsletter_delivery_queue ON newsletter_deliveries(state,next_at);
+`;
 
 export async function query<
   T extends Record<string, unknown> = Record<string, unknown>,
@@ -88,4 +115,35 @@ export async function query<
     return "?";
   });
   return db.sqlite.prepare(localSql).all(...ordered) as T[];
+}
+
+export async function withBlogTransaction<T>(
+  operation: (sql: typeof query) => Promise<T>,
+): Promise<T> {
+  const db = await getDatabase();
+  if (db.sqlite) {
+    db.sqlite.exec("BEGIN IMMEDIATE");
+    try {
+      const result = await operation(query);
+      db.sqlite.exec("COMMIT");
+      return result;
+    } catch (error) {
+      db.sqlite.exec("ROLLBACK");
+      throw error;
+    }
+  }
+  const client = await db.pool.connect();
+  try {
+    await client.query("BEGIN");
+    const sql: typeof query = async (text, params = []) =>
+      (await client.query(text, params)).rows;
+    const result = await operation(sql);
+    await client.query("COMMIT");
+    return result;
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
 }
