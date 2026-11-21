@@ -1682,3 +1682,39 @@
     grid-template-columns: 1fr;
   }
 }
+
+.forge-service-card .forge-service-choice {
+  margin-top: 18px;
+  color: #d4cbb5;
+}
+.forge-service-options {
+  padding-left: 18px;
+  margin: 10px 0 0;
+  color: #ded8c9;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.forge-service-prices {
+  margin: 18px 0 0;
+}
+.forge-service-prices > div {
+  border-top: 1px solid #d4c29c25;
+  padding: 14px 0;
+}
+.forge-service-prices dt {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #c6b58e;
+}
+.forge-service-prices dd {
+  margin: 6px 0 0;
+  color: #eee8d9;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.forge-service-prices small {
+  display: block;
+  font-size: 12px;
+  color: #b9b3a2;
+  margin-top: 4px;
+}

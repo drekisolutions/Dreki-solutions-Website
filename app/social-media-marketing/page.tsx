@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { metadataFromRegistry } from "../content-registry";
-import { servicePricing } from "../service-pricing";
+import { servicePricing, monthlyContentOptions } from "../service-pricing";
 import "../service-pages.css";
 
 export const metadata: Metadata = metadataFromRegistry("/social-media-marketing");
@@ -27,8 +27,7 @@ export default function SocialMediaMarketingPage() {
             <h2 id="social-media-monthly-title">What you get each month</h2>
             <p>Choose one monthly content option:</p>
             <ul>
-              <li>30 static ad posts</li>
-              <li>20 posts and 8 videos</li>
+              {monthlyContentOptions.map(option => <li key={option}>{option}</li>)}
             </ul>
             <p>Both options include:</p>
             <ul>

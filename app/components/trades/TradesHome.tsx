@@ -234,6 +234,16 @@ function Services() {
               </div>
               <h3>{service.title}</h3>
               <p>{service.copy}</p>
+              {service.options.length > 0 && <>
+                <p className="forge-service-choice">Choose one monthly content option:</p>
+                <ul className="forge-service-options">{service.options.map(option => <li key={option}>{option}</li>)}</ul>
+              </>}
+              {service.prices.length > 0 && <dl className="forge-service-prices">
+                {service.prices.map(price => <div key={price.name}>
+                  <dt>{price.name}</dt>
+                  <dd><strong>{price.amount}</strong>{price.term && <> <small>with a {price.term}</small></>}</dd>
+                </div>)}
+              </dl>}
               {service.href && (
                 <a className="forge-project-link" href={service.href}>
                   {service.cta} <ArrowUpRight size={17} />

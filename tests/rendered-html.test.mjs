@@ -391,6 +391,21 @@ test("renders exact contact details and preserves the complete governed lead for
   }
 });
 
+test("homepage service offers match the approved service-page prices and monthly choices", async () => {
+  const cards = articleBlocksWithClass(visibleMarkup((await fetchBuilt("/")).body), "forge-service-card");
+  const socialCard = cards.find(card => textContent(card).includes("Social media marketing"));
+  const brandCard = cards.find(card => textContent(card).includes("Brand development"));
+  assert.ok(socialCard);
+  assert.ok(brandCard);
+  const socialTexts = [textContent(socialCard), textContent(visibleMarkup((await fetchBuilt("/social-media-marketing")).body))];
+  for (const text of socialTexts) for (const expected of ["30 static ad posts", "20 posts and 8 videos", "$1,000 a month", "three-month minimum"])
+    assert.ok(text.includes(expected), `social offer must include ${expected}`);
+  const brandTexts = [textContent(brandCard), textContent(visibleMarkup((await fetchBuilt("/brand-development")).body))];
+  for (const text of brandTexts) for (const expected of ["Business brand kit", "$1,500 one time", "Owner personal brand development", "$750 one time", "Monthly content retainer", "$1,000 a month", "three-month minimum"])
+    assert.ok(text.includes(expected), `brand offer must include ${expected}`);
+  for (const text of [...socialTexts, ...brandTexts]) assert.doesNotMatch(text, /\$(595|250)\b/);
+});
+
 test("renders the three services, real audit fields, and honest unpublished articles", async () => {
   const markup = visibleMarkup((await fetchBuilt("/")).body);
   const text = textContent(markup);

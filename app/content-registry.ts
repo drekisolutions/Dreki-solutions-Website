@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { servicePricing } from "./service-pricing";
+import { servicePricing, monthlyContentOptions } from "./service-pricing";
 
 export type PublicationStatus = "published" | "draft";
 export type IndexingStatus = "index" | "noindex";
@@ -66,7 +66,7 @@ export const contentRegistry = [
     audience: "Owner-led small businesses",
     primaryIntent: "Start with a free audit",
     relatedPages: ["/free-audit", "/social-media-marketing", "/brand-development"],
-    updatedDate: "2026-11-08",
+    updatedDate: "2026-11-21",
     structuredDataEligibility: ["organization", "service"],
     socialImage: "/og.png",
   },
@@ -75,7 +75,7 @@ export const contentRegistry = [
     slug: "social-media-marketing",
     title: "Social Media Marketing for Small Businesses",
     description:
-      `Choose 30 static ad posts or 20 posts and 8 videos a month. ${servicePricing.monthlyContent}, ${servicePricing.minimumTerm}. Start with a free audit.`,
+      `Choose ${monthlyContentOptions[0]} or ${monthlyContentOptions[1]} a month. ${servicePricing.monthlyContent}, ${servicePricing.minimumTerm}. Start with a free audit.`,
     publicationStatus: "published",
     indexingStatus: "index",
     pageType: "service",

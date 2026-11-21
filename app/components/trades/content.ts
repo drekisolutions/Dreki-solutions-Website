@@ -1,24 +1,36 @@
+import { servicePricing, monthlyContentOptions } from "../../service-pricing.ts";
+
 export const services = [
   {
     title: "Social media marketing",
     short: "Social media",
-    copy: "Monthly social content for your business, planned and produced so you stay in front of customers without giving up your evenings.",
+    copy: "We plan, produce, and post your monthly social content after your approval.",
+    options: monthlyContentOptions,
+    prices: [{ name: "Monthly content", amount: servicePricing.monthlyContent, term: servicePricing.minimumTerm }],
     node: 0,
     href: "/social-media-marketing",
-    cta: "See what you get",
+    cta: "See monthly options",
   },
   {
     title: "Brand development",
     short: "Brand",
-    copy: "A clear look, voice, and story for your company and for you as the owner, so the business looks like the work you do.",
+    copy: "Logo, colors, type, and guidelines for your business, or positioning and a profile overhaul for you as the owner.",
+    options: [],
+    prices: [
+      { name: "Business brand kit", amount: servicePricing.businessBrandKit, term: "" },
+      { name: "Owner personal brand development", amount: servicePricing.ownerPersonalBrand, term: "" },
+      { name: "Monthly content retainer", amount: servicePricing.monthlyContent, term: servicePricing.minimumTerm },
+    ],
     node: 1,
     href: "/brand-development",
-    cta: "See what is included",
+    cta: "See branding options",
   },
   {
     title: "Digital presence audit",
     short: "Free audit",
     copy: "A free review of your website, social accounts, and Google Business Profile, with a written report on what to fix first.",
+    options: [],
+    prices: [],
     node: 3,
     href: "#free-audit",
     cta: "Request your free audit",
