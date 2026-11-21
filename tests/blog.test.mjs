@@ -17,6 +17,17 @@ import { getAuth, ownerSession } from "../lib/blog/auth.ts";
 import { getMigrations } from "better-auth/db/migration";
 import sharp from "sharp";
 import { optimizeBlogImage, MAX_IMAGE_BYTES } from "../lib/blog/images.ts";
+import { insertArticleImage } from "../lib/blog/inline-image.ts";
+
+test("inline images insert at the cursor without losing text and escape descriptions", () => {
+  const url = "/api/blog-images/11111111-1111-4111-8111-111111111111";
+  const result = insertArticleImage("Before.After.", 7, url, "Tools [ready]");
+  assert.equal(result.text, `Before.\n\n![Tools \\[ready\\]](${url})\n\nAfter.`);
+  assert.equal(result.text.slice(result.cursor), "After.");
+  assert.ok(insertArticleImage("", 0, url, "").text.startsWith(`![](${url})`));
+  const second = insertArticleImage(result.text, result.text.length, url, "Second");
+  assert.equal(second.text.split(url).length - 1, 2);
+});
 
 const directory = resolve(`.codex-tmp/blog-tests-${process.pid}`);
 await mkdir(directory, { recursive: true });

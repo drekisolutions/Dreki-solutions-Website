@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import ArticleBody from "../../components/blog/ArticleBody";
 import type { ArticleContent, BlogPost } from "@/lib/blog/model";
+import { insertArticleImage } from "@/lib/blog/inline-image";
 import "../../blog/blog.css";
 import "./editor.css";
 
@@ -61,6 +62,8 @@ export default function BlogEditor({
   const [problem, setProblem] = useState("");
   const [linkSent, setLinkSent] = useState(false);
   const writing = useRef<HTMLTextAreaElement>(null);
+  const inlinePosition = useRef(0);
+  const [inlineDescription, setInlineDescription] = useState("");
   const dirty =
     JSON.stringify(content) !== JSON.stringify(current?.draft ?? empty);
 
@@ -154,6 +157,7 @@ export default function BlogEditor({
     setMessage("");
     setProblem("");
     setView("posts");
+    setInlineDescription("");
   }
   function field<K extends keyof ArticleContent>(
     key: K,
@@ -171,6 +175,7 @@ export default function BlogEditor({
     setMessage("");
   }
   function format(before: string, after = "") {
+    if (busy) return;
     const area = writing.current;
     if (!area) return;
     const start = area.selectionStart;
@@ -283,7 +288,7 @@ export default function BlogEditor({
     }
   }
 
-  async function uploadImage(file: File | undefined) {
+  async function uploadImage(file: File | undefined, inline = false) {
     if (!file || busy) return;
     if (file.size > 3 * 1024 * 1024) { setProblem("Choose an image smaller than 3 MB."); return; }
     setBusy(true);
@@ -295,8 +300,19 @@ export default function BlogEditor({
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Image upload failed.");
-      setContent((previous) => ({ ...previous, imageUrl: data.imageUrl }));
-      setMessage("Image uploaded. Save your draft or publish to attach it to this article.");
+      if (inline) {
+        const inserted = insertArticleImage(content.body, inlinePosition.current, data.imageUrl, inlineDescription);
+        if (inserted.text.length > 60000) throw new Error("The article is too long to insert this image. Shorten the text and try again.");
+        setContent((previous) => ({ ...previous, body: inserted.text }));
+        setInlineDescription("");
+        requestAnimationFrame(() => {
+          writing.current?.focus();
+          writing.current?.setSelectionRange(inserted.cursor, inserted.cursor);
+        });
+      } else {
+        setContent((previous) => ({ ...previous, imageUrl: data.imageUrl }));
+      }
+      setMessage(inline ? "Image inserted. Preview your article, then save or publish your changes." : "Image uploaded. Save your draft or publish to attach it to this article.");
     } catch (error) {
       setProblem(error instanceof Error ? error.message : "Image upload failed.");
     } finally { setBusy(false); }
@@ -577,6 +593,12 @@ export default function BlogEditor({
                       words
                     </span>
                   </div>
+                  <fieldset disabled={busy} className="editor-inline-upload">
+                    <label>Image description
+                      <input maxLength={300} value={inlineDescription} onChange={(event) => setInlineDescription(event.target.value)} placeholder="Describe the next image (optional)" />
+                    </label>
+                    <p className="editor-helper">Place your cursor in the article, then insert an image. Repeat anywhere in the post. Remove an image by deleting its image line.</p>
+                  </fieldset>
                   <div
                     className="editor-formatting"
                     role="group"
@@ -617,10 +639,17 @@ export default function BlogEditor({
                     <span>
                       Write naturally. Use Preview to see the finished article.
                     </span>
+                    <label className="editor-secondary editor-upload">
+                      <Upload size={15} /> Insert image
+                      <input type="file" aria-label="Insert image into article" accept="image/jpeg,image/png,image/webp" disabled={busy}
+                        onClick={() => { inlinePosition.current = writing.current?.selectionStart ?? content.body.length; }}
+                        onChange={(event) => { void uploadImage(event.target.files?.[0], true); event.target.value = ""; }} />
+                    </label>
                   </div>
                   <textarea
                     id="article-body"
                     ref={writing}
+                    disabled={busy}
                     className="editor-body"
                     value={content.body}
                     maxLength={60000}

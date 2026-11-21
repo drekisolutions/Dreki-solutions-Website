@@ -487,3 +487,7 @@
 .editor-upload { position: relative; display: inline-flex; cursor: pointer; }
 .editor-upload input { position: absolute; inset: 0; opacity: 0; width: 100%; cursor: pointer; }
 .editor-upload:focus-within { outline: 2px solid #c9a45e; outline-offset: 4px; }
+
+.editor-inline-upload { border: 0; padding: 0; margin: 18px 0 10px; min-width: 0; }
+.editor-formatting { flex-wrap: wrap; }
+.editor-formatting .editor-upload { font-size: 12px; padding: 8px 12px; }

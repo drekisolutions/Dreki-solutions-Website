@@ -22,3 +22,8 @@ CREATE POLICY private_editor_images ON dreki_blog.blog_images
 ```
 
 Validation includes native image decoding/resizing, invalid-file rejection, draft versus published snapshot isolation, and a local HTTP flow covering upload, owner preview, public publication, deletion privacy, and rejected unsigned/foreign-origin requests.
+
+## Images inside articles
+
+The writing toolbar also provides Insert image. Place the cursor in the article, optionally add an image description, then select a file. The editor inserts an image line at that position, preserving surrounding text. Repeat to add multiple images. Preview renders these images at responsive widths. Move or delete the image line to reposition or remove it, then save or publish. Inline images use the same upload limits and draft/public access checks as covers.
+
