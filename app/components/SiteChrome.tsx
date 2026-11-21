@@ -201,11 +201,11 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
                 unoptimized
               />
             </PageTurnLink>
-            <p>Social media marketing and brand development for small businesses.</p>
+            <p>More customers find you. Audit, brand, and monthly social content for owner-led small businesses.</p>
             <p className="footer-certification">
               SBA-certified Service-Disabled Veteran-Owned Small Business (SDVOSB)
             </p>
-            <span>Your craft. Our code. A better-connected business.</span>
+            <span>More customers find you.</span>
           </div>
 
           <nav className="footer-nav" aria-label="Footer navigation">

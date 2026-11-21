@@ -10,19 +10,19 @@ export default function FreeAuditPage() {
     <main className={`page-main ${styles.page}`} id="main-content">
       <div className={styles.layout}>
         <section className={styles.intro} aria-labelledby="audit-title">
-          <p className="eyebrow">Free digital presence business audit</p>
-          <h1 id="audit-title">See your business <em>the way customers do.</em></h1>
-          <p className={styles.lede}>Find the gaps between being online and being easy to find, trust, and contact.</p>
-          <ol className={styles.scope} aria-label="Audit focus areas">
-            <li><span>01</span><div><h2>Get found.</h2><p>Your business visibility and local online presence.</p></div></li>
-            <li><span>02</span><div><h2>Build trust.</h2><p>The first impression your website and business information make.</p></div></li>
-            <li><span>03</span><div><h2>Make contact easy.</h2><p>The path from an interested visitor to a business inquiry.</p></div></li>
+          <p className="eyebrow">Step 1. The way in.</p>
+          <h1 id="audit-title">The free audit is step 1.</h1>
+          <p className={styles.lede}>We review your Google Business Profile, website, and social accounts. You get a clear list of what to fix first.</p>
+          <ol className={styles.scope} aria-label="What the audit reviews">
+            <li><span>01</span><div><h2>Google Business Profile.</h2><p>How you show up when someone searches for a business like yours.</p></div></li>
+            <li><span>02</span><div><h2>Website.</h2><p>Whether the site is current and easy to contact you from.</p></div></li>
+            <li><span>03</span><div><h2>Social accounts.</h2><p>Whether the accounts are active and sound like the owner.</p></div></li>
           </ol>
-          <p className={styles.note}>Free to request. No purchase required.<br />We’ll follow up by email about your audit.</p>
+          <p className={styles.note}>The audit is free. No purchase required.<br />Brett follows up by email.</p>
           <div className={styles.answer}>
             <h2>What does the free audit include?</h2>
-            <p>The free digital presence audit is a review of your website, your social accounts, and your Google Business Profile. You get a written report on what to fix first.</p>
-            <p>We look at three things: whether customers can find you, whether what they see builds trust, and how easy it is to contact you. It is free to request and no purchase is required. Brett follows up by email to confirm your details and discuss the audit.</p>
+            <p>The free audit is step 1 and the way in. It reviews your Google Business Profile, your website, and your social accounts. You get a written list of what to fix first.</p>
+            <p>It is free to request. No purchase is required. Brand work, profile and site fixes, and monthly social content are separate decisions. Brett follows up by email to confirm your details and discuss the audit.</p>
           </div>
         </section>
         <AuditForm />

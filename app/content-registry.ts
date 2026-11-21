@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pricingPendingCopy } from "./site-data";
 
 export type PublicationStatus = "published" | "draft";
 export type IndexingStatus = "index" | "noindex";
@@ -58,7 +59,7 @@ export const contentRegistry = [
     slug: "home",
     title: "Social Media Marketing and Branding for Small Businesses",
     description:
-      "Dreki Solutions helps owner-led small businesses with social media marketing, brand development, and a free digital presence audit.",
+      "More customers find you. Dreki helps owner-led small businesses with a free audit, brand for the company and the owner, and monthly social content.",
     publicationStatus: "published",
     indexingStatus: "index",
     pageType: "home",
@@ -74,7 +75,7 @@ export const contentRegistry = [
     slug: "social-media-marketing",
     title: "Social Media Marketing for Small Business",
     description:
-      "Up to 30 posts and videos a month across six platforms, with a calendar you approve. $595 setup, then $595 a month. Start with a free audit.",
+      `Up to 30 posts a month for owner-led small businesses, on a calendar you approve. ${pricingPendingCopy}.`,
     publicationStatus: "published",
     indexingStatus: "index",
     pageType: "service",
@@ -90,7 +91,7 @@ export const contentRegistry = [
     slug: "brand-development",
     title: "Brand Development for Small Businesses",
     description:
-      "A logo, colors, fonts, voice guide, and templates for your small business in about 1 to 2 weeks. $250 for the company, $250 for a personal brand.",
+      "A company brand and a personal brand for the owner. Quoted privately, and not part of the monthly social plan.",
     publicationStatus: "published",
     indexingStatus: "index",
     pageType: "service",
@@ -214,7 +215,7 @@ export function getContentEntry(route: RegistryRoute) {
 export function metadataFromRegistry(route: RegistryRoute): Metadata {
   const entry = getContentEntry(route);
   const image = entry.socialImage
-    ? [{ url: entry.socialImage, alt: `${entry.title} — Dreki Solutions` }]
+    ? [{ url: entry.socialImage, alt: `${entry.title}. Dreki Solutions` }]
     : undefined;
 
   return {

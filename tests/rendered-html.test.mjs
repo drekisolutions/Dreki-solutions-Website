@@ -16,14 +16,14 @@ const routeExpectations = [
   {
     path: "/free-audit",
     title: "Free Website & Digital Presence Audit | Dreki Solutions",
-    h1: "See your business the way customers do.",
+    h1: "The free audit is step 1.",
     indexable: true,
     socialImage: true,
   },
   {
     path: "/",
     title: "Social Media Marketing and Branding for Small Businesses | Dreki Solutions",
-    h1: "Social media marketing and brand development for small businesses, starting with a free audit",
+    h1: "More customers find you.",
     indexable: true,
     socialImage: true,
   },
@@ -94,6 +94,9 @@ const retiredRoutes = [
   "/products",
   "/portfolio",
   "/engagements",
+  "/asgard",
+  "/asgard/privacy",
+  "/asgard/terms",
 ];
 
 const forbiddenPublicClaims = [
@@ -118,11 +121,32 @@ const retiredPublicTerms = [
   "ReviewShield",
   "SocialPulse",
   "Valkyrie 135",
+  "Valkyrie",
   "Skyfar",
   "Declare Ready",
   "Squawk Sheet AD",
   "Trend Sentinel",
   "Rotor Log",
+  "HVAC",
+  "food maker",
+  "food-maker",
+  "foodmaker",
+  "Deskhand",
+  "Foreman",
+  "Visibility IQ",
+  "Margin Hawk",
+  "MarginHawk",
+  "Second Swing",
+  "SecondSwing",
+  "License Retention",
+  "Bifrost",
+  "Asgard",
+  "O.D.I.N",
+  "ODIN",
+  "RoofBid",
+  "PaveOps",
+  "AI receptionist",
+  "sales dashboard",
 ];
 
 let workerPromise;
@@ -391,15 +415,22 @@ test("renders exact contact details and preserves the complete governed lead for
   }
 });
 
-test("renders the three services, real audit fields, and honest unpublished articles", async () => {
+test("renders the four offers in order, real audit fields, and honest unpublished articles", async () => {
   const markup = visibleMarkup((await fetchBuilt("/")).body);
   const text = textContent(markup);
-  for (const service of [
-    "Social media marketing",
-    "Brand development",
+  const serviceTitles = [
     "Digital presence audit",
-  ])
-    assert.ok(text.includes(service));
+    "Brand development",
+    "Social media marketing",
+    "Profile and site fixes",
+  ];
+  for (const service of serviceTitles) assert.ok(text.includes(service));
+  const positions = serviceTitles.map((service) => text.indexOf(service));
+  assert.deepEqual(
+    positions,
+    [...positions].sort((a, b) => a - b),
+    "homepage offers must stay in audit, brand, social, fixes order",
+  );
   for (const retired of [
     "Missed-call follow-up",
     "Selected work",
@@ -565,6 +596,79 @@ test("references the production social card from every marketing route", async (
       metadataImages.some((value) => value?.includes("/og-wide.png")),
       false,
       `${expected.path} must not reference the retired social card`,
+    );
+  }
+});
+
+test("keeps prices, setup fees, and unconfirmed platform lists off the public pages", async () => {
+  for (const expected of routeExpectations) {
+    const text = textContent(
+      visibleMarkup((await fetchBuilt(expected.path)).body),
+    );
+    assert.doesNotMatch(
+      text,
+      /\$\s?\d/,
+      `${expected.path} shows a dollar amount`,
+    );
+    assert.equal(
+      text.toLowerCase().includes("setup fee"),
+      false,
+      `${expected.path} shows a setup fee`,
+    );
+    assert.equal(
+      text.toLowerCase().includes("tiktok"),
+      false,
+      `${expected.path} names an unconfirmed platform`,
+    );
+  }
+
+  const social = textContent(
+    visibleMarkup((await fetchBuilt("/social-media-marketing")).body),
+  );
+  assert.match(social, /Up to 30 posts a month/);
+  assert.match(social, /This plan is social content only/);
+  assert.match(social, /Pricing shared after your free audit/);
+  assert.match(social, /not priced here/);
+
+  const brand = textContent(
+    visibleMarkup((await fetchBuilt("/brand-development")).body),
+  );
+  assert.match(brand, /quoted privately/i);
+  assert.match(brand, /not part of the monthly social plan/i);
+});
+
+test("fails when HVAC, food maker, or a discontinued product name returns in site source", async () => {
+  const { readdir } = await import("node:fs/promises");
+  const path = await import("node:path");
+  const { fileURLToPath } = await import("node:url");
+  const banned =
+    /\b(?:hvac|food[ -]?maker|deskhand|foreman|visibility iq|margin ?hawk|second swing|license retention|bifrost|asgard|o\.d\.i\.n\.?|odin|valkyrie|roofbid|paveops)\b|ai receptionist|sales dashboard/i;
+
+  async function filesIn(dir) {
+    const entries = await readdir(dir, { withFileTypes: true });
+    const files = [];
+    for (const entry of entries) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) files.push(...(await filesIn(full)));
+      else if (/\.(tsx?|css)$/.test(entry.name)) files.push(full);
+    }
+    return files;
+  }
+
+  const root = fileURLToPath(new URL("../app/", import.meta.url));
+  const files = await filesIn(root);
+  for (const file of files) {
+    if (file.endsWith(`${path.sep}next.config.ts`)) continue;
+    const source = await readFile(file, "utf8");
+    assert.equal(
+      banned.test(source),
+      false,
+      `${file} contains a retired product or audience term`,
+    );
+    assert.equal(
+      /href\s*=\s*["'][^"']*(?:foreman|deskhand)/i.test(source),
+      false,
+      `${file} links to Foreman or Deskhand`,
     );
   }
 });

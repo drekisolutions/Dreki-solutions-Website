@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { metadataFromRegistry } from "../content-registry";
+import { socialPriceCopy } from "../site-data";
 
 export const metadata: Metadata = metadataFromRegistry("/social-media-marketing");
 
@@ -14,48 +15,45 @@ export default function SocialMediaMarketingPage() {
           <p className="eyebrow">Dreki / Marketing &amp; Brand</p>
           <h1 id="social-media-title">Social media marketing for small businesses</h1>
           <p>
-            We plan, produce, and post your social media content each month, so
-            you stay in front of customers without giving up your evenings. It
-            is built for owner-led small businesses where the owner still does
-            the work and has little time left for marketing. We work online,
-            wherever your business is.
+            Monthly social content so more customers find you. You approve the
+            calendar before anything goes out. We work online, wherever your
+            business is. This plan is social content only.
           </p>
 
           <section aria-labelledby="social-media-monthly-title">
             <h2 id="social-media-monthly-title">What you get each month</h2>
             <ul>
-              <li>Up to 30 posts and videos a month</li>
+              <li>Up to 30 posts a month</li>
               <li>A content calendar you approve before anything goes out</li>
-              <li>Automated posting, once you approve</li>
-              <li>A website audit report</li>
+              <li>Posting after you approve</li>
             </ul>
-          </section>
-
-          <section aria-labelledby="social-media-platforms-title">
-            <h2 id="social-media-platforms-title">Which platforms do you cover?</h2>
-            <p>Facebook, Instagram, YouTube, TikTok, X, and LinkedIn.</p>
+            <p>
+              Brand, profile, and site fixes are separate. They are quoted
+              privately and are not priced here.
+            </p>
           </section>
 
           <section aria-labelledby="social-media-cost-title">
             <h2 id="social-media-cost-title">How much does social media marketing cost?</h2>
-            <p>Setup is $595, one time. After that it is $595 a month.</p>
+            <p>{socialPriceCopy()}</p>
           </section>
 
           <section aria-labelledby="social-media-who-title">
             <h2 id="social-media-who-title">Who runs my social media?</h2>
             <p>
-              We do. We plan and produce the content, you approve the calendar,
-              and posting is automated after your approval. Nothing goes out
-              without your say.
+              You work with Brett. There is no account manager. We plan and
+              produce the posts. You approve the calendar. Automation posts
+              them after you approve. Nothing goes out without your say. You
+              spend less time making the posts.
             </p>
           </section>
 
           <section aria-labelledby="social-media-start-title">
             <h2 id="social-media-start-title">How do I start?</h2>
             <p>
-              Start with a free digital presence audit. It is a free review of
-              your website, social accounts, and Google Business Profile, with a
-              written report on what to fix first. No purchase required.
+              Start with the free audit. It is step 1. It reviews your Google
+              Business Profile, website, and social accounts, and lists what to
+              fix first. The audit is free. No purchase required.
             </p>
             <p>
               <a className="button button-primary" href="/free-audit">

@@ -36,6 +36,8 @@ const retiredRoutes = [
   "/products",
   "/portfolio",
   "/engagements",
+  "/asgard",
+  "/asgard/:path*",
 ];
 
 const nextConfig: NextConfig = {

@@ -14,10 +14,9 @@ export default function BrandDevelopmentPage() {
           <p className="eyebrow">Dreki / Marketing &amp; Brand</p>
           <h1 id="brand-development-title">Brand development for small businesses</h1>
           <p>
-            We give your company a clear look, voice, and story, so the business
-            looks like the work you do. We can build a personal brand for you as
-            the owner too. A project takes about 1 to 2 weeks. We work online,
-            wherever your business is.
+            We build a brand for the company and a personal brand for you, the
+            owner. A project takes about 1 to 2 weeks. We work online, wherever
+            your business is. This work is separate from the monthly social plan.
           </p>
 
           <section aria-labelledby="brand-included-title">
@@ -32,10 +31,10 @@ export default function BrandDevelopmentPage() {
           </section>
 
           <section aria-labelledby="brand-cost-title">
-            <h2 id="brand-cost-title">How much does branding cost?</h2>
+            <h2 id="brand-cost-title">How is brand work priced?</h2>
             <p>
-              Brand creation is $250 for your company. A personal brand for you
-              as the owner is $250.
+              Brand work is quoted privately. It is not part of the monthly
+              social plan, and it is not priced on this site.
             </p>
           </section>
 

@@ -92,7 +92,10 @@ type LaunchWorkflowProps = {
 
 export function LaunchWorkflow({ label, steps }: LaunchWorkflowProps) {
   return (
-    <ol className="process-grid launch-workflow" aria-label={label}>
+    <ol
+      className={`process-grid launch-workflow${steps.length === 3 ? " process-grid--three" : ""}`}
+      aria-label={label}
+    >
       {steps.map((step) => (
         <li key={step.index}>
           <span>{step.index}</span>

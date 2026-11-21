@@ -1,4 +1,4 @@
-/* Shared Asgard finish. Route layouts and carousel transforms stay independent. */
+/* Shared forge finish. Route layouts and carousel transforms stay independent. */
 body.dreki-forge {
   --obsidian: #090909;
   --obsidian-deep: #0c0c0b;
@@ -11,9 +11,9 @@ body.dreki-forge {
   --line: #e0ac4757;
   --line-soft: #e0ac4733;
   --line-gold: #e0ac4766;
-  --asgard-glass: linear-gradient(145deg, #433e3266, #131313c7 46%, #100f0db3);
-  --asgard-edge: #f5bf5091;
-  --asgard-shadow: 0 16px 44px -18px #000c, 0 0 17px -7px #dc9b2b66, inset 0 1px 0 #ffe2a12b, inset 0 0 0 1px #f7c8680a;
+  --forge-metal-glass: linear-gradient(145deg, #433e3266, #131313c7 46%, #100f0db3);
+  --forge-metal-edge: #f5bf5091;
+  --forge-metal-shadow: 0 16px 44px -18px #000c, 0 0 17px -7px #dc9b2b66, inset 0 1px 0 #ffe2a12b, inset 0 0 0 1px #f7c8680a;
   isolation: isolate;
   background: #090909;
   color: var(--ivory);
@@ -106,10 +106,10 @@ body.dreki-forge :is(.forge-home, .forge-standalone) {
 body.dreki-forge :is(.site-header, .mobile-menu) {
   background: #10100ee8;
   backdrop-filter: blur(20px) saturate(125%);
-  border-color: var(--asgard-edge);
+  border-color: var(--forge-metal-edge);
   box-shadow: 0 1px 15px -5px #f0b74966;
 }
-body.dreki-forge .site-footer { background: #10100eb8; border-color: var(--asgard-edge); }
+body.dreki-forge .site-footer { background: #10100eb8; border-color: var(--forge-metal-edge); }
 /* Locking body scrolling otherwise makes the sticky header scroll out of view. */
 body.dreki-forge[data-menu-open="true"] { padding-top: 82px; }
 body.dreki-forge[data-menu-open="true"] .site-header { position: fixed; top: 0; }
@@ -129,10 +129,10 @@ body.dreki-forge :is(
   .editor-login, .editor-login-card, .editor-post-item.is-selected,
   .newsie-paper, .article-prose pre
 ), body.dreki-forge #audit-request {
-  background: var(--asgard-glass);
-  border: 1px solid var(--asgard-edge);
+  background: var(--forge-metal-glass);
+  border: 1px solid var(--forge-metal-edge);
   border-radius: 16px;
-  box-shadow: var(--asgard-shadow);
+  box-shadow: var(--forge-metal-shadow);
   backdrop-filter: blur(18px) saturate(125%);
 }
 body.dreki-forge .forge-hanging-tag #audit-request {

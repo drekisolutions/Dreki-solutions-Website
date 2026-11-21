@@ -13,15 +13,15 @@ export const metadata: Metadata = metadataFromRegistry("/about");
 const principles = [
   {
     title: "Start with the audit",
-    copy: "We look at how customers find you today before we recommend anything.",
+    copy: "We review how customers find you before we recommend any work.",
   },
   {
-    title: "Nothing posts without you",
-    copy: "You approve the content calendar before anything goes out.",
+    title: "The owner is the brand",
+    copy: "The company brand and your personal brand should sound like you.",
   },
   {
-    title: "Plain terms",
-    copy: "Clear deliverables and plain language. No jargon and no surprises.",
+    title: "You work with Brett",
+    copy: "You talk to the founder. There are no account managers.",
   },
 ] as const;
 
@@ -43,18 +43,19 @@ export default function AboutPage() {
           <p className="eyebrow">Dreki Solutions LLC</p>
           <h1 id="about-title">Good work deserves to be found.</h1>
           <p>
-            U.S. Army veteran Brett Moser founded Dreki Solutions to help
-            owner-led small businesses get found, look the part, and stay in
-            front of customers.
+            U.S. Army veteran Brett Moser runs Dreki Solutions from Manitou
+            Beach, Michigan. He helps owner-led small businesses get found
+            online and get chosen.
           </p>
           <p>
             Dreki Solutions LLC is an SBA-certified Service-Disabled Veteran-Owned
             Small Business (SDVOSB).
           </p>
           <p>
-            Dreki does three things: social media marketing, brand development,
-            and a free digital presence audit. You approve the work before it
-            goes out.
+            The work goes in this order: a free digital presence audit, brand
+            for the company and for the owner, monthly social content, and
+            profile and site fixes. Brand, profile, and site fixes are quoted
+            privately. They are not part of the monthly social plan.
           </p>
           <a className="button button-primary" href="/free-audit">
             Start with a free audit
@@ -66,7 +67,7 @@ export default function AboutPage() {
         id="about-principles"
         eyebrow="How we work"
         title="You stay in charge."
-        intro="You know your business. We do the marketing work and bring it to you for approval."
+        intro="Automation does the production. That is faster, and it costs less than a traditional agency. You still approve the work before it goes out."
       >
         <div className="feature-grid feature-grid--three">
           {principles.map((principle, index) => (
@@ -89,7 +90,11 @@ export default function AboutPage() {
         <LaunchWorkflow label="Dreki delivery process" steps={processSteps} />
       </LaunchSection>
 
-      <LaunchFinalCta />
+      <LaunchFinalCta
+        eyebrow="Step 1"
+        title="Start with the free audit."
+        copy="It reviews your Google Business Profile, website, and social accounts, and lists what to fix first. The audit is free."
+      />
     </main>
   );
 }

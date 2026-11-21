@@ -10,7 +10,7 @@ import "./forge-theme.css";
 
 const defaultTitle = "Dreki Solutions | Social Media Marketing and Branding for Small Businesses";
 const defaultDescription =
-  "Dreki Solutions helps owner-led small businesses with social media marketing, brand development, and a free digital presence audit.";
+  "More customers find you. Dreki Solutions helps owner-led small businesses with a free audit, brand, and monthly social content.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
