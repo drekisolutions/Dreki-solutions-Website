@@ -22,7 +22,8 @@ const routeExpectations = [
   },
   {
     path: "/",
-    title: "Social Media Marketing and Branding for Small Businesses | Dreki Solutions",
+    title:
+      "Social Media Marketing and Branding for Small Businesses | Dreki Solutions",
     h1: "Social media marketing and brand development for small businesses, starting with a free audit",
     indexable: true,
     socialImage: true,
@@ -383,27 +384,62 @@ test("renders exact contact details and preserves the complete governed lead for
     assert.match(text, /The secure online intake is not active yet\./i);
     assert.match(text, /Dreki will arrange the call directly\./i);
     assert.ok(
-      hrefs.includes(
-        "mailto:brett@dreki-solutions.ai?subject=Call%20request",
-      ),
+      hrefs.includes("mailto:brett@dreki-solutions.ai?subject=Call%20request"),
       "unconfigured lead capture must retain a direct request path",
     );
   }
 });
 
 test("homepage service offers match the approved service-page prices and monthly choices", async () => {
-  const cards = articleBlocksWithClass(visibleMarkup((await fetchBuilt("/")).body), "forge-service-card");
-  const socialCard = cards.find(card => textContent(card).includes("Social media marketing"));
-  const brandCard = cards.find(card => textContent(card).includes("Brand development"));
+  const cards = articleBlocksWithClass(
+    visibleMarkup((await fetchBuilt("/")).body),
+    "forge-service-card",
+  );
+  const socialCard = cards.find((card) =>
+    textContent(card).includes("Social media marketing"),
+  );
+  const brandCard = cards.find((card) =>
+    textContent(card).includes("Brand development"),
+  );
   assert.ok(socialCard);
   assert.ok(brandCard);
-  const socialTexts = [textContent(socialCard), textContent(visibleMarkup((await fetchBuilt("/social-media-marketing")).body))];
-  for (const text of socialTexts) for (const expected of ["30 static ad posts", "20 posts and 8 videos", "$1,000 a month", "three-month minimum"])
-    assert.ok(text.includes(expected), `social offer must include ${expected}`);
-  const brandTexts = [textContent(brandCard), textContent(visibleMarkup((await fetchBuilt("/brand-development")).body))];
-  for (const text of brandTexts) for (const expected of ["Business brand kit", "$1,500 one time", "Owner personal brand development", "$750 one time", "Monthly content retainer", "$1,000 a month", "three-month minimum"])
-    assert.ok(text.includes(expected), `brand offer must include ${expected}`);
-  for (const text of [...socialTexts, ...brandTexts]) assert.doesNotMatch(text, /\$(595|250)\b/);
+  const socialTexts = [
+    textContent(socialCard),
+    textContent(
+      visibleMarkup((await fetchBuilt("/social-media-marketing")).body),
+    ),
+  ];
+  for (const text of socialTexts)
+    for (const expected of [
+      "30 static ad posts",
+      "20 posts and 8 videos",
+      "$1,000 a month",
+      "three-month minimum",
+    ])
+      assert.ok(
+        text.includes(expected),
+        `social offer must include ${expected}`,
+      );
+  const brandTexts = [
+    textContent(brandCard),
+    textContent(visibleMarkup((await fetchBuilt("/brand-development")).body)),
+  ];
+  for (const text of brandTexts)
+    for (const expected of [
+      "Business brand kit",
+      "$1,500 one time",
+      "Owner personal brand development",
+      "$750 one time",
+      "Monthly content retainer",
+      "$1,000 a month",
+      "three-month minimum",
+    ])
+      assert.ok(
+        text.includes(expected),
+        `brand offer must include ${expected}`,
+      );
+  for (const text of [...socialTexts, ...brandTexts])
+    assert.doesNotMatch(text, /\$(595|250)\b/);
 });
 
 test("renders the three services, real audit fields, and honest unpublished articles", async () => {
@@ -650,17 +686,61 @@ test("audit opt-in displays disclosures and separates SMS from required policy a
   }
 });
 
-
 test("SBA certification is visible in the shared footer and About content", async () => {
-  const designation = "SBA-certified Service-Disabled Veteran-Owned Small Business (SDVOSB)";
+  const designation =
+    "SBA-certified Service-Disabled Veteran-Owned Small Business (SDVOSB)";
   for (const path of ["/", "/about", "/contact"]) {
     const { status, body } = await fetchBuilt(path);
     assert.equal(status, 200);
-    const footer = visibleMarkup(body).match(/<footer\b[\s\S]*?<\/footer>/i)?.[0] ?? "";
-    assert.ok(textContent(footer).includes(designation), `${path} footer certification`);
+    const footer =
+      visibleMarkup(body).match(/<footer\b[\s\S]*?<\/footer>/i)?.[0] ?? "";
+    assert.ok(
+      textContent(footer).includes(designation),
+      `${path} footer certification`,
+    );
     if (path === "/about") {
-      const main = visibleMarkup(body).match(/<main\b[\s\S]*?<\/main>/i)?.[0] ?? "";
-      assert.ok(textContent(main).includes(`Dreki Solutions LLC is an ${designation}.`));
+      const main =
+        visibleMarkup(body).match(/<main\b[\s\S]*?<\/main>/i)?.[0] ?? "";
+      assert.ok(
+        textContent(main).includes(`Dreki Solutions LLC is an ${designation}.`),
+      );
     }
+  }
+});
+
+test("service checkout exposes the approved choice and commitment without tracking private billing links", async () => {
+  for (const path of [
+    "/checkout/social-media-marketing",
+    "/checkout/monthly-content-retainer",
+    "/checkout/business-brand-kit",
+    "/checkout/owner-personal-brand",
+    "/billing",
+    "/billing/cancel?token=invalid",
+  ]) {
+    const { status, body } = await fetchBuilt(path);
+    assert.equal(status, 200, path);
+    const markup = visibleMarkup(body);
+    assert.doesNotMatch(
+      markup,
+      /<script[^>]+src=["'][^"']*(googletagmanager|cloudflareinsights)/i,
+      path,
+    );
+    assert.doesNotMatch(markup, /class=["'][^"']*mobile-sticky-cta/i, path);
+    if (path === "/checkout/social-media-marketing") {
+      const text = textContent(markup);
+      assert.ok(text.includes("30 static ad posts"));
+      assert.ok(text.includes("20 posts and 8 videos"));
+      assert.ok(text.includes("Three-month minimum"));
+      assert.ok(text.includes("$3,000"));
+      assert.ok(text.includes("Then renews monthly until canceled"));
+      assert.match(
+        markup,
+        /type="radio"[^>]+required|type="radio"[^>]*required/,
+      );
+    }
+    if (path.startsWith("/checkout/"))
+      assert.match(markup, /type="checkbox"[^>]*required/);
+    if (path.startsWith("/billing/cancel"))
+      assert.ok(textContent(markup).includes("expired or is invalid"));
   }
 });

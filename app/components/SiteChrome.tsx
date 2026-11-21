@@ -81,7 +81,9 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
         <a className="skip-link" href="#main-content">
           Skip to editor
         </a>
-        <div className="editor-motion-bar"><ForgeMotionControl /></div>
+        <div className="editor-motion-bar">
+          <ForgeMotionControl />
+        </div>
         {children}
       </>
     );
@@ -171,23 +173,25 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
 
       {children}
 
-      <PageTurnLink
-        className={`mobile-sticky-cta${auditVisible && (pathname === "/" || pathname === "/free-audit") ? " is-hidden" : ""}`}
-        href={
-          pathname === "/free-audit"
-            ? "#audit-request"
-            : pathname === "/"
+      {!/^\/(billing|checkout)(\/|$)/.test(pathname) && (
+        <PageTurnLink
+          className={`mobile-sticky-cta${auditVisible && (pathname === "/" || pathname === "/free-audit") ? " is-hidden" : ""}`}
+          href={
+            pathname === "/free-audit"
               ? "#audit-request"
-              : siteConfig.primaryAction.href
-        }
-        onNavigate={() => {
-          if (pathname === "/free-audit") {
-            document.getElementById("audit-request")?.scrollIntoView();
+              : pathname === "/"
+                ? "#audit-request"
+                : siteConfig.primaryAction.href
           }
-        }}
-      >
-        {siteConfig.primaryAction.label}
-      </PageTurnLink>
+          onNavigate={() => {
+            if (pathname === "/free-audit") {
+              document.getElementById("audit-request")?.scrollIntoView();
+            }
+          }}
+        >
+          {siteConfig.primaryAction.label}
+        </PageTurnLink>
+      )}
 
       <footer className="site-footer">
         <div className="footer-main">
@@ -201,9 +205,12 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
                 unoptimized
               />
             </PageTurnLink>
-            <p>Social media marketing and brand development for small businesses.</p>
+            <p>
+              Social media marketing and brand development for small businesses.
+            </p>
             <p className="footer-certification">
-              SBA-certified Service-Disabled Veteran-Owned Small Business (SDVOSB)
+              SBA-certified Service-Disabled Veteran-Owned Small Business
+              (SDVOSB)
             </p>
             <span>Your craft. Our code. A better-connected business.</span>
           </div>
@@ -226,6 +233,7 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
             </PageTurnLink>
             <PageTurnLink href="/privacy">Privacy</PageTurnLink>
             <PageTurnLink href="/terms">Terms</PageTurnLink>
+            <PageTurnLink href="/billing">Manage billing</PageTurnLink>
             <PageTurnLink
               href="/#newsletter"
               onNavigate={() => {

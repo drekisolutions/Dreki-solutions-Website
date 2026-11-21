@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { metadataFromRegistry } from "../content-registry";
 import { servicePricing, monthlyContentOptions } from "../service-pricing";
 import "../service-pages.css";
 
-export const metadata: Metadata = metadataFromRegistry("/social-media-marketing");
+export const metadata: Metadata = metadataFromRegistry(
+  "/social-media-marketing",
+);
 
 export default function SocialMediaMarketingPage() {
   return (
@@ -14,7 +17,9 @@ export default function SocialMediaMarketingPage() {
       >
         <article className="legal-document">
           <p className="eyebrow">Dreki / Marketing &amp; Brand</p>
-          <h1 id="social-media-title">Social media marketing for small businesses</h1>
+          <h1 id="social-media-title">
+            Social media marketing for small businesses
+          </h1>
           <p>
             We plan, produce, and post your social media content each month, so
             you stay in front of customers without giving up your evenings. It
@@ -27,7 +32,9 @@ export default function SocialMediaMarketingPage() {
             <h2 id="social-media-monthly-title">What you get each month</h2>
             <p>Choose one monthly content option:</p>
             <ul>
-              {monthlyContentOptions.map(option => <li key={option}>{option}</li>)}
+              {monthlyContentOptions.map((option) => (
+                <li key={option}>{option}</li>
+              ))}
             </ul>
             <p>Both options include:</p>
             <ul>
@@ -38,14 +45,32 @@ export default function SocialMediaMarketingPage() {
           </section>
 
           <section aria-labelledby="social-media-platforms-title">
-            <h2 id="social-media-platforms-title">Which platforms do you cover?</h2>
+            <h2 id="social-media-platforms-title">
+              Which platforms do you cover?
+            </h2>
             <p>Facebook, Instagram, YouTube, TikTok, X, and LinkedIn.</p>
           </section>
 
-          <section className="service-investment" aria-labelledby="social-media-cost-title">
-            <h2 id="social-media-cost-title">Your investment for social media marketing</h2>
+          <section
+            className="service-investment"
+            aria-labelledby="social-media-cost-title"
+          >
+            <h2 id="social-media-cost-title">
+              Your investment for social media marketing
+            </h2>
             <div className="service-offer">
-              <p className="service-price"><strong>{servicePricing.monthlyContent}</strong> with a {servicePricing.minimumTerm}.</p>
+              <p className="service-price">
+                <strong>{servicePricing.monthlyContent}</strong> with a{" "}
+                {servicePricing.minimumTerm}.
+              </p>
+              <p>
+                <Link
+                  className="button button-primary"
+                  href="/checkout/social-media-marketing"
+                >
+                  Choose your monthly content
+                </Link>
+              </p>
             </div>
           </section>
 

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
+import AnalyticsGate from "./components/AnalyticsGate";
 import SiteChrome from "./components/SiteChrome";
 import ForgeAtmosphere from "./components/ForgeAtmosphere";
 import { absoluteUrl, siteConfig } from "./site-config";
@@ -8,7 +8,8 @@ import "@fontsource-variable/inter/wght.css";
 import "./globals.css";
 import "./forge-theme.css";
 
-const defaultTitle = "Dreki Solutions | Social Media Marketing and Branding for Small Businesses";
+const defaultTitle =
+  "Dreki Solutions | Social Media Marketing and Branding for Small Businesses";
 const defaultDescription =
   "Dreki Solutions helps owner-led small businesses with social media marketing, brand development, and a free digital presence audit.";
 
@@ -77,36 +78,19 @@ const serializedStructuredData = JSON.stringify(structuredData).replace(
 const analyticsToken =
   process.env.NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN?.trim();
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body className="dreki-forge">
         <SiteChrome>{children}</SiteChrome>
         <ForgeAtmosphere />
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-9NPJ7GQ70H"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-9NPJ7GQ70H');
-          `}
-        </Script>
+        <AnalyticsGate cloudflareToken={analyticsToken} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: serializedStructuredData }}
         />
-        {analyticsToken ? (
-          <Script
-            id="cloudflare-web-analytics"
-            src="https://static.cloudflareinsights.com/beacon.min.js"
-            data-cf-beacon={JSON.stringify({ token: analyticsToken })}
-            strategy="afterInteractive"
-          />
-        ) : null}
       </body>
     </html>
   );

@@ -38,3 +38,64 @@
     padding: 20px 0;
   }
 }
+.billing-form {
+  display: grid;
+  gap: 22px;
+  margin: 30px 0;
+}
+.billing-page .legal-section { padding-top: clamp(32px, 4vw, 56px); }
+.billing-page .legal-document { padding: clamp(24px, 4vw, 48px); }
+.billing-page .legal-document h1 { font-size: clamp(2rem, 4.5vw, 3.5rem); line-height: 1.15; }
+.billing-page .service-price { font-size: 24px; }
+.billing-form fieldset {
+  border: 1px solid #9b7b3f66;
+  border-radius: 12px;
+  padding: 22px;
+  display: grid;
+  gap: 18px;
+  min-width: 0;
+}
+.billing-form legend {
+  padding: 0 8px;
+  font-weight: 600;
+}
+.billing-form label {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  line-height: 1.6;
+}
+.billing-form label:has(input[type="email"]) {
+  display: grid;
+}
+.billing-form input[type="email"] {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #9b7b3f88;
+  border-radius: 8px;
+  background: #111;
+  color: #fff;
+  font: inherit;
+}
+.billing-form input[type="radio"],
+.billing-form input[type="checkbox"] {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  accent-color: #9b7b3f;
+}
+.billing-form .button {
+  width: fit-content;
+  max-width: 100%;
+  white-space: normal;
+  text-align: center;
+  min-height: 48px;
+}
+.billing-form .button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+.billing-note {
+  font-size: 14px;
+}
