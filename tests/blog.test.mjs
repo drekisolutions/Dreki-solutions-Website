@@ -5,7 +5,7 @@ import { mkdir, rm } from "node:fs/promises";
 import { resolve } from "node:path";
 import { validateArticle, canPublish, validEmail } from "../lib/blog/model.ts";
 import { HttpError, jsonBody, requireOrigin } from "../lib/blog/http.ts";
-import { getDatabase } from "../lib/blog/database.ts";
+import { getDatabase, query } from "../lib/blog/database.ts";
 import {
   listPosts,
   publishedPosts,
@@ -65,6 +65,24 @@ test("keeps drafts private, publishes snapshots, and prevents conflicting writes
     draft.revision,
   );
   assert.equal((await publishedPost(article.slug)).body, article.body);
+  await query("UPDATE blog_posts SET published_at=$1 WHERE id=$2", [
+    "2020-01-01T00:00:00.000Z",
+    published.id,
+  ]);
+  const newerArticle = {
+    ...article,
+    title: "Newer bench note",
+    slug: "newer-bench-note",
+    excerpt: "A later note from the workbench.",
+  };
+  await savePost(newerArticle, "publish", null, 0);
+  const posts = await publishedPosts();
+  const olderIndex = posts.findIndex((post) => post.slug === article.slug);
+  const newerIndex = posts.findIndex((post) => post.slug === newerArticle.slug);
+  assert.ok(newerIndex >= 0 && olderIndex > newerIndex);
+  assert.equal(posts[newerIndex].title, newerArticle.title);
+  assert.equal(posts[newerIndex].excerpt, newerArticle.excerpt);
+  assert.equal(posts[olderIndex].publishedAt, "2020-01-01T00:00:00.000Z");
   const revised = {
     ...article,
     body: article.body + " A private new paragraph.",
