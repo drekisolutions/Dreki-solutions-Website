@@ -48,7 +48,7 @@ export async function getDatabase(): Promise<Connection> {
       url.searchParams.delete(option);
     const pool = new pg.Pool({
       connectionString: url.toString(),
-      ssl: { rejectUnauthorized: true },
+      ssl: { rejectUnauthorized: true, ...(process.env.DATABASE_SSL_CA ? { ca: process.env.DATABASE_SSL_CA } : {}) },
       options: "-c search_path=dreki_blog",
       max: 2,
       connectionTimeoutMillis: 8000,

@@ -6,7 +6,7 @@ import { captureRecord, verifiedBlandRecord, verifyBlandCall } from "../lib/voic
 import { config } from "../lib/voice/config.mjs";
 import { sendReport } from "../lib/voice/delivery.mjs";
 import { handle } from "../lib/voice/http.mjs";
-import { validateRecord } from "../lib/voice/store.mjs";
+import { database, validateRecord } from "../lib/voice/store.mjs";
 import { transferOpen } from "../lib/voice/transfer.mjs";
 
 const CALL_ID = "11111111-1111-4111-8111-111111111111";
@@ -287,4 +287,17 @@ test("handoff hours are Monday through Friday, 9 AM until 5 PM America/New_York"
   assert.equal(at("2026-07-10T19:59:00.000Z"), true);
   assert.equal(at("2026-07-10T20:00:00.000Z"), true);
   assert.equal(at("2026-07-10T21:00:00.000Z"), false);
+});
+
+
+test("voice database accepts the migration destination and retains verified TLS", async () => {
+  for (const host of ["ep-test.neon.tech", "aws-0-us-east-1.pooler.supabase.com", "db.yfaznjmpmtijlsjcccjb.supabase.co"]) {
+    const pool = database(`postgresql://test:test@${host}/postgres?sslmode=disable`);
+    assert.equal(pool.options.ssl.rejectUnauthorized, true);
+    assert.equal(new URL(pool.options.connectionString).searchParams.has("sslmode"), false);
+    await pool.end();
+  }
+  for (const url of ["postgresql://test:test@example.com/postgres", "postgresql://test:test/neon.tech.evil.example/postgres", "https://ep-test.neon.tech/postgres"]) {
+    assert.throws(() => database(url));
+  }
 });
