@@ -75,7 +75,7 @@ export const contentRegistry = [
     slug: "social-media-marketing",
     title: "Social Media Marketing for Small Business",
     description:
-      `Up to 30 posts and videos a month across six platforms. ${servicePricing.monthlyContent}, ${servicePricing.minimumTerm}. Start with a free audit.`,
+      `Choose 30 static ad posts or 20 posts and 8 videos a month. ${servicePricing.monthlyContent}, ${servicePricing.minimumTerm}. Start with a free audit.`,
     publicationStatus: "published",
     indexingStatus: "index",
     pageType: "service",
