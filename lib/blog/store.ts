@@ -26,6 +26,14 @@ export async function listPosts() {
     fromRow,
   );
 }
+export async function deletePost(id: string, expectedRevision: number) {
+  const rows = await query(
+    "DELETE FROM blog_posts WHERE id=$1 AND revision=$2 RETURNING id",
+    [id, expectedRevision],
+  );
+  if (!rows.length)
+    throw new BlogError(409, "This article changed or was already deleted. Reload the editor before deleting it.");
+}
 export async function publishedPosts(): Promise<ArticleSummary[]> {
   if (!blogConfigured()) return [];
   const rows = await query(

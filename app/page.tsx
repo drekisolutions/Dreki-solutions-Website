@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import TradesHome from "./components/trades/TradesHome";
 import { metadataFromRegistry } from "./content-registry";
 import { publishedPosts } from "@/lib/blog/store";
+import { blogConfigured } from "@/lib/blog/database";
 import { journalTopics } from "./components/trades/content";
 export const metadata: Metadata = metadataFromRegistry("/");
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 export default async function HomePage() {
   const posts = await publishedPosts().catch(() => []);
-  const articles = posts.length
+  const articles = posts.length || blogConfigured()
     ? posts.map((post, index) => ({
         number: String(index + 1).padStart(2, "0"),
         category: post.category,

@@ -11,6 +11,7 @@ import {
   publishedPosts,
   publishedPost,
   savePost,
+  deletePost,
 } from "../lib/blog/store.ts";
 import { getAuth, ownerSession } from "../lib/blog/auth.ts";
 import { getMigrations } from "better-auth/db/migration";
@@ -124,6 +125,19 @@ test("rejects foreign origins and oversized request bodies", async () => {
     ),
     (error) => error.status === 413,
   );
+});
+
+test("deletes drafts and published articles without deleting a newer revision", async () => {
+  const post = await savePost({ ...article, slug: "delete-check" }, "publish", null, 0);
+  const updated = await savePost(post.draft, "save", post.id, post.revision);
+  await assert.rejects(deletePost(post.id, post.revision), (error) => error.status === 409);
+  assert.ok(await publishedPost("delete-check"));
+  await deletePost(updated.id, updated.revision);
+  assert.equal(await publishedPost("delete-check"), null);
+  assert.ok(!(await listPosts()).some((item) => item.id === post.id));
+  const draft = await savePost({ ...article, slug: "delete-draft" }, "save", null, 0);
+  await deletePost(draft.id, draft.revision);
+  assert.ok(!(await listPosts()).some((item) => item.id === draft.id));
 });
 
 test("fails closed for forged sessions and non-owner sign-ins", async () => {

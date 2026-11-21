@@ -15,6 +15,7 @@ import {
   LogOut,
   Save,
   Send,
+  Trash2,
   Users,
 } from "lucide-react";
 import ArticleBody from "../../components/blog/ArticleBody";
@@ -251,6 +252,35 @@ export default function BlogEditor({
     }
   }
 
+  async function removePost() {
+    if (!current || busy) return;
+    const post = current;
+    if (!window.confirm(`Permanently delete “${post.draft.title}”?\n\nThis removes the draft and any published article from the website and blog carousel. Unsaved changes will also be lost. This cannot be undone.`)) return;
+    setBusy(true);
+    setProblem("");
+    setMessage("");
+    try {
+      const response = await fetch("/api/editor/posts", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: post.id, revision: post.revision }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(response.status === 401
+        ? "Your session expired. Sign in again before deleting this article."
+        : data.error || "The article could not be deleted.");
+      setPosts((previous) => previous.filter((item) => item.id !== post.id));
+      setCurrent(null);
+      setContent({ ...empty });
+      setPreview(false);
+      setMessage(`Deleted “${post.draft.title}”.`);
+    } catch (error) {
+      setProblem(error instanceof Error ? error.message : "The article could not be deleted.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   if (access === "loading")
     return (
       <div className="editor-loading">
@@ -312,16 +342,16 @@ export default function BlogEditor({
           <span className="editor-eyebrow">DREKI / PRIVATE EDITORIAL</span>
           <h1>The workbench.</h1>
         </div>
-        <button className="editor-quiet" onClick={signOut}>
+        <button className="editor-quiet" disabled={busy} onClick={signOut}>
           <LogOut size={15} /> Sign out
         </button>
       </header>
       <div className="editor-layout">
         <aside className="editor-sidebar">
-          <button className="editor-primary" onClick={() => select(null)}>
+          <button className="editor-primary" disabled={busy} onClick={() => select(null)}>
             <FilePlus2 size={16} /> New article
           </button>
-          <button className="editor-sidebar-action" onClick={showSubscribers}>
+          <button className="editor-sidebar-action" disabled={busy} onClick={showSubscribers}>
             <Users size={16} /> Newsletter subscribers
           </button>
           <p className="editor-eyebrow">YOUR ARTICLES / {posts.length}</p>
@@ -334,6 +364,7 @@ export default function BlogEditor({
             {posts.map((post) => (
               <button
                 key={post.id}
+                disabled={busy}
                 className={`editor-post-item ${current?.id === post.id && view === "posts" ? "is-selected" : ""}`}
                 onClick={() => select(post)}
               >
@@ -565,6 +596,11 @@ export default function BlogEditor({
               )}
               <footer className="editor-savebar">
                 <div>
+                  {current && (
+                    <button disabled={busy} className="editor-quiet editor-delete" onClick={removePost}>
+                      <Trash2 size={15} /> Delete article
+                    </button>
+                  )}
                   {current?.published && (
                     <a
                       href={`/blog/${current.published.slug}`}

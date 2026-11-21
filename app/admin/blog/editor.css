@@ -477,3 +477,6 @@
     transition: none;
   }
 }
+
+.editor-delete { color: #e6a18a; }
+.editor-delete:hover { color: #ffc2ad; }

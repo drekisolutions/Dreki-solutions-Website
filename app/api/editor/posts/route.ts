@@ -1,9 +1,27 @@
 import { ownerSession } from "@/lib/blog/auth";
 import { validateArticle } from "@/lib/blog/model";
-import { BlogError, listPosts, savePost } from "@/lib/blog/store";
+import { BlogError, deletePost, listPosts, savePost } from "@/lib/blog/store";
 import { HttpError, jsonBody, reply, requireOrigin } from "@/lib/blog/http";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+export async function DELETE(request: Request) {
+  try {
+    requireOrigin(request);
+    if (!(await ownerSession(request.headers)))
+      return reply({ error: "Please sign in." }, 401);
+    const data = await jsonBody(request, 1000);
+    if (typeof data.id !== "string" || !/^[0-9a-f-]{36}$/i.test(data.id) ||
+        !Number.isSafeInteger(data.revision) || Number(data.revision) < 1)
+      return reply({ error: "Choose a saved article to delete." }, 400);
+    await deletePost(data.id, Number(data.revision));
+    return reply({ deleted: true });
+  } catch (error) {
+    if (error instanceof HttpError || error instanceof BlogError)
+      return reply({ error: error.message }, error.status);
+    return reply({ error: "The article could not be deleted. Please try again." }, 503);
+  }
+}
 
 export async function GET(request: Request) {
   try {
