@@ -38,7 +38,7 @@ export default function SocialMediaMarketingPage() {
           </section>
 
           <section aria-labelledby="social-media-cost-title">
-            <h2 id="social-media-cost-title">How much does social media marketing cost?</h2>
+            <h2 id="social-media-cost-title">Your investment for social media marketing</h2>
             <p><strong>{servicePricing.monthlyContent}</strong> with a {servicePricing.minimumTerm}.</p>
           </section>
 
