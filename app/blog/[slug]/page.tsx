@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { publishedPost } from "@/lib/blog/store";
 import { absoluteUrl } from "@/app/site-config";
@@ -49,6 +50,7 @@ export default async function BlogArticle({ params }: Props) {
           </time>
         </div>
       </header>
+      {post.imageUrl && <Image className="blog-cover" src={post.imageUrl} alt={post.imageAlt || ""} width={1600} height={1000} unoptimized />}
       <ArticleBody body={post.body} />
       <aside className="blog-article-cta">
         <h2>Put the next idea to work.</h2>

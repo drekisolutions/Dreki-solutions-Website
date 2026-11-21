@@ -15,6 +15,8 @@ import {
 } from "../lib/blog/store.ts";
 import { getAuth, ownerSession } from "../lib/blog/auth.ts";
 import { getMigrations } from "better-auth/db/migration";
+import sharp from "sharp";
+import { optimizeBlogImage, MAX_IMAGE_BYTES } from "../lib/blog/images.ts";
 
 const directory = resolve(`.codex-tmp/blog-tests-${process.pid}`);
 await mkdir(directory, { recursive: true });
@@ -52,6 +54,29 @@ test("validates article addresses and bounded writing fields", () => {
   assert.equal(canPublish({ ...article, body: "short" }), false);
   assert.equal(validEmail(" Owner@Example.com "), "owner@example.com");
   assert.equal(validEmail("person@example.com\r\nBCC:other@example.com"), null);
+});
+
+test("image uploads decode and resize actual images and reject invalid files", async () => {
+  const input = await sharp({ create: { width: 2400, height: 1200, channels: 3, background: "#9b7b3f" } }).png().toBuffer();
+  const image = await optimizeBlogImage(input);
+  const metadata = await sharp(image).metadata();
+  assert.equal(metadata.format, "webp");
+  assert.equal(metadata.width, 1600);
+  assert.equal(metadata.height, 800);
+  await assert.rejects(optimizeBlogImage(Buffer.from("<svg>not an upload</svg>")), (error) => error.status === 400);
+  await assert.rejects(optimizeBlogImage(new Uint8Array(MAX_IMAGE_BYTES + 1)), (error) => error.status === 413);
+});
+
+test("cover images survive saves while arbitrary image URLs are rejected", async () => {
+  const imageUrl = "/api/blog-images/11111111-1111-4111-8111-111111111111";
+  const content = validateArticle({ ...article, imageUrl, imageAlt: "Work in progress" });
+  assert.equal(content.imageUrl, imageUrl);
+  assert.equal(validateArticle({ ...article, imageUrl: "https://attacker.invalid/image" }), null);
+  assert.equal(validateArticle({ ...article, imageUrl, imageAlt: "x".repeat(301) }), null);
+  const post = await savePost({ ...content, slug: "image-snapshot-check" }, "publish", null, 0);
+  await savePost({ ...post.draft, imageUrl: "", imageAlt: "" }, "save", post.id, post.revision);
+  assert.equal((await publishedPost("image-snapshot-check")).imageUrl, imageUrl);
+  await deletePost(post.id, post.revision + 1);
 });
 
 test("keeps drafts private, publishes snapshots, and prevents conflicting writes", async () => {

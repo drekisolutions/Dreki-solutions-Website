@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -16,6 +17,7 @@ import {
   Save,
   Send,
   Trash2,
+  Upload,
   Users,
 } from "lucide-react";
 import ArticleBody from "../../components/blog/ArticleBody";
@@ -163,7 +165,7 @@ export default function BlogEditor({
       ...(key === "title" &&
       !current &&
       previous.slug === slugify(previous.title)
-        ? { slug: slugify(value) }
+        ? { slug: slugify(String(value)) }
         : {}),
     }));
     setMessage("");
@@ -279,6 +281,25 @@ export default function BlogEditor({
     } finally {
       setBusy(false);
     }
+  }
+
+  async function uploadImage(file: File | undefined) {
+    if (!file || busy) return;
+    if (file.size > 3 * 1024 * 1024) { setProblem("Choose an image smaller than 3 MB."); return; }
+    setBusy(true);
+    setProblem("");
+    setMessage("");
+    try {
+      const response = await fetch("/api/editor/images", {
+        method: "POST", headers: { "Content-Type": "application/octet-stream" }, body: file,
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Image upload failed.");
+      setContent((previous) => ({ ...previous, imageUrl: data.imageUrl }));
+      setMessage("Image uploaded. Save your draft or publish to attach it to this article.");
+    } catch (error) {
+      setProblem(error instanceof Error ? error.message : "Image upload failed.");
+    } finally { setBusy(false); }
   }
 
   if (access === "loading")
@@ -455,6 +476,21 @@ export default function BlogEditor({
                   </button>
                 </div>
               </div>
+              <section className="editor-image-panel" aria-label="Article cover image">
+                <div>
+                  <strong>Article image</strong>
+                  <p className="editor-helper">Appears on your blog card and article. JPG, PNG, or WebP, up to 3 MB. Resized automatically.</p>
+                </div>
+                {content.imageUrl && <Image className="editor-cover" src={content.imageUrl} alt={content.imageAlt || "Article image preview"} width={800} height={500} unoptimized />}
+                <label className="editor-secondary editor-upload">
+                  <Upload size={15} /> {busy ? "Working…" : content.imageUrl ? "Replace image" : "Upload image"}
+                  <input type="file" aria-label="Upload article image" accept="image/jpeg,image/png,image/webp" disabled={busy} onChange={(event) => { void uploadImage(event.target.files?.[0]); event.target.value = ""; }} />
+                </label>
+                {content.imageUrl && <>
+                  <button className="editor-quiet" disabled={busy} onClick={() => { field("imageUrl", ""); field("imageAlt", ""); }}>Remove image</button>
+                  <label>Image description<input maxLength={300} value={content.imageAlt || ""} onChange={(event) => field("imageAlt", event.target.value)} placeholder="Describe the image for readers using a screen reader" /></label>
+                </>}
+              </section>
               {preview ? (
                 <article className="editor-preview">
                   <span className="editor-eyebrow">{content.category}</span>

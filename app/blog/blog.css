@@ -86,3 +86,5 @@
 .blog-article-cta p {
   color: #aaa69b;
 }
+
+.blog-cover { width: 100%; height: auto; max-height: 600px; object-fit: contain; border-radius: 12px; margin-bottom: 32px; }

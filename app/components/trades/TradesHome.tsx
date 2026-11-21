@@ -306,7 +306,8 @@ function Journal({ articles }: { articles: JournalArticle[] }) {
               aria-hidden="true"
             >
               <Image
-                src={`/images/cards/${journalImages[topic.motif]}.webp`}
+                src={topic.imageUrl || `/images/cards/${journalImages[topic.motif]}.webp`}
+                unoptimized={Boolean(topic.imageUrl)}
                 alt=""
                 fill
                 sizes="(max-width: 700px) 85vw, (max-width: 1100px) 50vw, 400px"

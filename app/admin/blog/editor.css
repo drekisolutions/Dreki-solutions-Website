@@ -480,3 +480,10 @@
 
 .editor-delete { color: #e6a18a; }
 .editor-delete:hover { color: #ffc2ad; }
+
+.editor-image-panel { padding: 20px; margin: 20px 0; border: 1px solid #c9a45e33; border-radius: 12px; background: #151713; }
+.editor-cover { width: 100%; max-height: 260px; object-fit: contain; border-radius: 8px; margin-bottom: 16px; }
+.editor-image-panel label:not(.editor-upload) { display: grid; gap: 8px; margin-top: 16px; }
+.editor-upload { position: relative; display: inline-flex; cursor: pointer; }
+.editor-upload input { position: absolute; inset: 0; opacity: 0; width: 100%; cursor: pointer; }
+.editor-upload:focus-within { outline: 2px solid #c9a45e; outline-offset: 4px; }

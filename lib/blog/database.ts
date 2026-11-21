@@ -64,6 +64,7 @@ export async function getDatabase(): Promise<Connection> {
 }
 
 export const schemaSql = `
+CREATE TABLE IF NOT EXISTS blog_images (id TEXT PRIMARY KEY, data BYTEA NOT NULL);
 CREATE TABLE IF NOT EXISTS blog_posts (
   id TEXT PRIMARY KEY, slug TEXT NOT NULL UNIQUE, draft TEXT NOT NULL,
   published TEXT, revision INTEGER NOT NULL, updated_at TEXT NOT NULL, published_at TEXT

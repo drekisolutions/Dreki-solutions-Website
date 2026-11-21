@@ -15,6 +15,7 @@ export default async function HomePage() {
         category: post.category,
         title: post.title,
         motif: post.motif,
+        imageUrl: post.imageUrl,
         href: "/blog/" + post.slug,
       }))
     : journalTopics;

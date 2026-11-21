@@ -33,6 +33,7 @@ export type JournalArticle = {
   motif: "call" | "flow" | "grid" | "paper";
   /** Add the article URL when published. Omit it for a coming-soon topic. */
   href?: string;
+  imageUrl?: string;
 };
 
 // Append one entry per article. The carousel adapts to any number of entries.
