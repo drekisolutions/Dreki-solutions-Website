@@ -182,7 +182,7 @@ export default function NewsletterPopup() {
           </>
         )}
         <div className="newsie-bottom">
-          YOUR CRAFT. OUR CODE. SOMETHING WORTH READING.
+          FIELD NOTES FOR OWNERS.
         </div>
       </motion.section>
     </dialog>

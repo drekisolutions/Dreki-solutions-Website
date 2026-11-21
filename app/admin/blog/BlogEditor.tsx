@@ -254,7 +254,7 @@ export default function BlogEditor({
   if (access === "loading")
     return (
       <div className="editor-loading">
-        <LoaderCircle className="editor-spinner" /> Opening your workbench…
+        <LoaderCircle className="editor-spinner" /> Opening the editor…
       </div>
     );
   if (access === "login")
@@ -271,7 +271,7 @@ export default function BlogEditor({
             <span>The next edition.</span>
           </h1>
           <p>
-            A private workbench for writing, previewing, and publishing your
+            A private editor for writing, previewing, and publishing your
             field notes.
           </p>
           <form onSubmit={signIn}>
@@ -310,7 +310,7 @@ export default function BlogEditor({
       <header className="editor-top">
         <div>
           <span className="editor-eyebrow">DREKI / PRIVATE EDITORIAL</span>
-          <h1>The workbench.</h1>
+          <h1>The editor.</h1>
         </div>
         <button className="editor-quiet" onClick={signOut}>
           <LogOut size={15} /> Sign out

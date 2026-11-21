@@ -29,7 +29,7 @@ import "./trades.css";
 
 // Quarter stiffness and half damping preserve the spring shape at half speed.
 const spring = { type: "spring" as const, stiffness: 45, damping: 12 };
-const serviceIcons = [Megaphone, Palette, SearchCheck];
+const serviceIcons = [SearchCheck, Palette, Megaphone, Wrench];
 const networkPoints = [
   [115, 123],
   [490, 125],
@@ -71,30 +71,29 @@ function Hero() {
       <div className="forge-hero-sticky">
         <div className="forge-hero-top">
           <span>
-            <i /> BUILT FOR SMALL BUSINESS. ENGINEERED FOR YOU.
+            <i /> THE OWNER IS THE FACE OF THE COMPANY.
           </span>
           <span className="forge-edition">DREKI / MARKETING &amp; BRAND</span>
         </div>
         <div className="forge-hero-layout">
           <div className="forge-hero-copy">
             <p className="forge-kicker">
-              <span className="forge-rule" /> YOUR CRAFT. OUR CODE.
+              <span className="forge-rule" /> OWNER-LED SMALL BUSINESSES
             </p>
             <h1 id="forge-title">
-              Social media marketing and brand development for small
-              businesses,{" "}
+              More customers{" "}
               <motion.span
                 className="forge-foil"
                 style={{
                   backgroundPosition: reduced ? "50% 50%" : foilPosition,
                 }}
               >
-                starting with a free audit
+                find you.
               </motion.span>
             </h1>
             <p className="forge-hero-lede">
-              For owner-led small businesses: get found, look the part, and stay
-              in front of customers. Start with a free digital presence audit.
+              Dreki helps owner-led small businesses get found online and get
+              chosen. Start with a free audit.
             </p>
             <div className="forge-actions">
               <motion.a
@@ -115,16 +114,13 @@ function Hero() {
               </motion.a>
             </div>
             <div className="forge-hero-footnote">
-              <Wrench size={15} />
-              <span>
-                Built toward more booked work. Results depend on your process and follow-up.
-              </span>
+              <span>You work with Brett. No account managers.</span>
             </div>
           </div>
           <div
             className="forge-network"
             role="img"
-            aria-label="Dreki connects social media marketing, brand development, and a free digital presence audit. Scroll to assemble the network."
+            aria-label="Dreki connects a free audit, brand, monthly social content, and profile and site fixes. Scroll to assemble the network."
           >
             <div className="forge-orbit forge-orbit-one" />
             <div className="forge-orbit forge-orbit-two" />
@@ -213,14 +209,14 @@ function Services() {
         <div>
           <p className="forge-kicker">01 / WHAT WE DO</p>
           <h2 id="services-title">
-            Three ways we help{" "}
-            <span className="forge-foil">small businesses get found.</span>
+            The work, in order.{" "}
+            <span className="forge-foil">Audit first.</span>
           </h2>
         </div>
         <p>
-          Built for businesses where the owner still does the work
+          For owner-led small businesses.
           <br />
-          and has little time left for marketing.
+          The owner is the face of the company.
         </p>
       </div>
       <div className="forge-services-grid">
@@ -264,7 +260,7 @@ function Journal({ articles }: { articles: JournalArticle[] }) {
     >
       <div className="forge-section-heading">
         <div>
-          <p className="forge-kicker">02 / FROM THE WORKBENCH</p>
+          <p className="forge-kicker">02 / FIELD NOTES</p>
           <h2 id="journal-title">
             Ideas worth <span className="forge-foil">putting to work.</span>
           </h2>
@@ -336,7 +332,7 @@ function Journal({ articles }: { articles: JournalArticle[] }) {
         ))}
       </div>
       <div className="forge-journal-bottom">
-        <span>NOTES FROM PEOPLE WHO BUILD.</span>
+        <span>NOTES FOR OWNERS.</span>
         <span>
           HOLD & DRAG TO EXPLORE <ArrowRight size={13} />
         </span>
@@ -356,24 +352,22 @@ function HangingAudit() {
       <div className="forge-audit-copy">
         <p className="forge-kicker">03 / LET’S FIND YOUR NEXT MOVE</p>
         <h2 id="audit-section-title">
-          Less busywork.
-          <br />
-          <span className="forge-foil">More business.</span>
+          Step 1 is the free audit.
         </h2>
         <p>
-          Start with a free digital presence audit. See how customers find,
-          trust, and contact your business—and where the experience could work
-          harder for you.
+          We review your Google Business Profile, website, and social accounts.
+          You get a clear list of what to fix first. The audit is free, and it
+          is the way in.
         </p>
         <ul>
           <li>
-            <Check size={17} /> A fresh look at your online presence
+            <Check size={17} /> Google Business Profile
           </li>
           <li>
-            <Check size={17} /> Friction in the path from interest to inquiry
+            <Check size={17} /> Website
           </li>
           <li>
-            <Check size={17} /> Practical next steps for your business
+            <Check size={17} /> Social accounts
           </li>
         </ul>
         <p className="forge-audit-followup">Your request goes to Brett at Dreki. He’ll follow up by email to confirm
@@ -381,9 +375,9 @@ function HangingAudit() {
           any paid work is a separate decision. No purchase required.</p>
         <div className="forge-audit-note">
           <span className="forge-foil">
-            Built for people
+            You work with Brett.
             <br />
-            who build things.
+            No account managers.
           </span>
           <ArrowUpRight size={35} />
         </div>
@@ -406,7 +400,7 @@ function HangingAudit() {
           </div>
           <AuditForm />
           <div className="forge-tag-bottom">
-            <span>YOUR NEXT CHAPTER STARTS HERE.</span>
+            <span>START WITH THE AUDIT.</span>
             <span>↗</span>
           </div>
         </motion.div>

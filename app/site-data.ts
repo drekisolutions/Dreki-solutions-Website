@@ -14,9 +14,43 @@ export const navigation = [
 export const consultationMailto =
   "mailto:brett@dreki-solutions.ai?subject=Call%20request&body=Business%20name%3A%0D%0AWebsite%3A%0D%0AWhat%20you%20want%20help%20with%3A%0D%0APreferred%20contact%20method%3A%0D%0A";
 
+// TODO: prices from offer ladder, pending Brett's approval
+// Null stays off the page. Do not render a setup fee, a one-time fix price,
+// or any dollar amount while these values are null.
+export const pricing = {
+  socialMonthly: null as number | null,
+  socialSetup: null as number | null,
+  freeAudit: null as number | null,
+} as const;
+
+export const pricingPendingCopy = "Pricing shared after your free audit";
+
+export function socialPriceCopy(): string {
+  if (pricing.socialMonthly == null || pricing.socialSetup == null) {
+    return pricingPendingCopy;
+  }
+
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  }).format(pricing.socialMonthly) + " a month.";
+}
+
 export const processSteps = [
-  { index: "01", title: "Audit", copy: "Review your website, social accounts, and Google Business Profile, and report what to fix first." },
-  { index: "02", title: "Plan", copy: "Agree on the brand direction or the month's content calendar before any work starts." },
-  { index: "03", title: "Produce", copy: "Create the brand assets or the month's posts and videos for your approval." },
-  { index: "04", title: "Publish", copy: "Post on schedule once you approve. Nothing goes out without your say." },
+  {
+    index: "01",
+    title: "Audit",
+    copy: "Review the Google Business Profile, website, and social accounts. You get a clear list of what to fix first.",
+  },
+  {
+    index: "02",
+    title: "Fix and brand",
+    copy: "Fix the profile and site gaps, and build a brand for the company and a personal brand for the owner. This work is quoted privately. It is not part of the monthly social plan.",
+  },
+  {
+    index: "03",
+    title: "Monthly content",
+    copy: "Stay on a retainer for social content. Up to 30 posts a month. You approve the calendar before anything goes out.",
+  },
 ] as const;
