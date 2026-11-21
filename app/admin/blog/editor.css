@@ -670,6 +670,7 @@
   overflow-wrap: anywhere;
 }
 .editor-rich-prose p {
+  color: #252820;
   margin: 0 0 1.1em;
 }
 .editor-rich-prose h1,
