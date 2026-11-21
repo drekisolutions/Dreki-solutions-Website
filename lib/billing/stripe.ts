@@ -115,6 +115,7 @@ export async function createServiceCheckout(
       },
       consent_collection: { terms_of_service: "required" },
       custom_text: {
+        ...(key === "social-media-marketing" ? { submit: { message: "Your selected monthly content: " + (choice === "static" ? "30 static ad posts." : "20 posts and 8 videos.") } } : {}),
         terms_of_service_acceptance: {
           message: offer.monthly
             ? "I agree to Dreki’s [service terms](https://www.dreki-solutions.ai/terms#terms-paid-services): $1,000/month, three-month minimum ($3,000 before applicable tax), then month to month. Cancellation requests: https://www.dreki-solutions.ai/billing."

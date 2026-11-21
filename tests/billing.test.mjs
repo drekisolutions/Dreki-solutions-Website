@@ -219,6 +219,7 @@ test("checkout enforces catalogue amount, term consent, fixed quantity, option c
   assert.deepEqual(p.line_items, [{ price: "price_test", quantity: 1 }]);
   assert.equal(p.consent_collection.terms_of_service, "required");
   assert.equal(p.subscription_data.metadata.content_option, "mixed");
+  assert.match(p.custom_text.submit.message, /20 posts and 8 videos/);
   assert.equal(p.subscription_data.metadata.offer, "social-media-marketing");
   assert.equal(Object.hasOwn(p, "payment_method_types"), false);
   stripe.products.retrieve = async () => ({
