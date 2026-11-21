@@ -1648,6 +1648,7 @@
 .forge-service-card {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   padding: 30px 28px;
   border-radius: 12px;
   border: 1px solid #d4c29c25;
@@ -1668,8 +1669,8 @@
   margin: 22px 0 10px;
 }
 .forge-service-card p {
-  font-size: 13px;
-  color: #9d9d95;
+  font-size: 15px;
+  color: #b9b9b0;
   line-height: 1.7;
   margin-bottom: 0;
 }
@@ -1691,9 +1692,10 @@
   padding-left: 18px;
   margin: 10px 0 0;
   color: #ded8c9;
-  font-size: 13px;
-  line-height: 1.8;
+  font-size: 15px;
+  line-height: 1.6;
 }
+.forge-service-options li + li { margin-top: 10px; }
 .forge-service-prices {
   margin: 18px 0 0;
 }
@@ -1702,19 +1704,26 @@
   padding: 14px 0;
 }
 .forge-service-prices dt {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
   color: #c6b58e;
 }
 .forge-service-prices dd {
   margin: 6px 0 0;
   color: #eee8d9;
-  font-size: 16px;
+  font-size: 20px;
   line-height: 1.5;
 }
 .forge-service-prices small {
   display: block;
-  font-size: 12px;
+  font-size: 14px;
   color: #b9b3a2;
   margin-top: 4px;
+}
+@media (min-width: 901px) and (max-width: 1100px) {
+  .forge-services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) {
+  .forge-service-card { padding: 26px 22px; }
+  .forge-service-card h3 { line-height: 1.3; }
 }
