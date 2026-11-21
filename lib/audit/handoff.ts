@@ -10,6 +10,13 @@ import type { AuditRequest } from "./validation.ts";
 // seconds, and any failure is reported to the caller instead of thrown.
 
 export const HANDOFF_SECRET_HEADER = "X-Dreki-Webhook-Secret";
+
+// The n8n webhook checks one named header. Set N8N_AUDIT_INTAKE_HEADER when the
+// workflow's header-auth credential uses a different header name.
+export function handoffSecretHeader() {
+  const name = process.env.N8N_AUDIT_INTAKE_HEADER?.trim();
+  return name && /^[A-Za-z0-9-]{1,64}$/.test(name) ? name : HANDOFF_SECRET_HEADER;
+}
 const TIMEOUT_MS = 5_000;
 
 export function isAuditHandoffConfigured() {
@@ -40,7 +47,7 @@ export async function handOffAuditRequest(
   try {
     const response = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json", [HANDOFF_SECRET_HEADER]: secret },
+      headers: { "Content-Type": "application/json", [handoffSecretHeader()]: secret },
       body: JSON.stringify(buildHandoffPayload(data)),
       signal: AbortSignal.timeout(TIMEOUT_MS),
     });
