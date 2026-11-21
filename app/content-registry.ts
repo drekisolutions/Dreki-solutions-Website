@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { servicePricing } from "./service-pricing";
 
 export type PublicationStatus = "published" | "draft";
 export type IndexingStatus = "index" | "noindex";
@@ -74,14 +75,14 @@ export const contentRegistry = [
     slug: "social-media-marketing",
     title: "Social Media Marketing for Small Business",
     description:
-      "Up to 30 posts and videos a month across six platforms, with a calendar you approve. $595 setup, then $595 a month. Start with a free audit.",
+      `Up to 30 posts and videos a month across six platforms. ${servicePricing.monthlyContent}, ${servicePricing.minimumTerm}. Start with a free audit.`,
     publicationStatus: "published",
     indexingStatus: "index",
     pageType: "service",
     audience: "Owner-led small businesses",
     primaryIntent: "Start with a free audit",
     relatedPages: ["/free-audit", "/brand-development"],
-    updatedDate: "2026-11-20",
+    updatedDate: "2026-11-21",
     structuredDataEligibility: ["breadcrumb"],
     socialImage: "/og.png",
   },
@@ -90,7 +91,7 @@ export const contentRegistry = [
     slug: "brand-development",
     title: "Brand Development for Small Businesses",
     description:
-      "Business brand kit: $1,500 one time. Owner personal brand development: $750 one time. Monthly content retainer: $1,000 a month, three-month minimum.",
+      `Business brand kit: ${servicePricing.businessBrandKit}. Owner personal brand development: ${servicePricing.ownerPersonalBrand}. Monthly content retainer: ${servicePricing.monthlyContent}, ${servicePricing.minimumTerm}.`,
     publicationStatus: "published",
     indexingStatus: "index",
     pageType: "service",

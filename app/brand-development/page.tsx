@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { metadataFromRegistry } from "../content-registry";
+import { servicePricing } from "../service-pricing";
 
 export const metadata: Metadata = metadataFromRegistry("/brand-development");
 
@@ -20,27 +21,16 @@ export default function BrandDevelopmentPage() {
             wherever your business is.
           </p>
 
-          <section aria-labelledby="brand-included-title">
-            <h2 id="brand-included-title">What is included in brand development?</h2>
-            <ul>
-              <li>A logo</li>
-              <li>Colors</li>
-              <li>Fonts</li>
-              <li>A voice guide</li>
-              <li>Templates</li>
-            </ul>
-          </section>
-
           <section aria-labelledby="brand-cost-title">
             <h2 id="brand-cost-title">Your investment for branding development</h2>
             <h3>Business brand kit</h3>
+            <p><strong>{servicePricing.businessBrandKit}</strong></p>
             <p>Logo, colors, type, and guidelines.</p>
-            <p><strong>$1,500 one time</strong></p>
             <h3>Owner personal brand development</h3>
+            <p><strong>{servicePricing.ownerPersonalBrand}</strong></p>
             <p>Positioning and profile overhaul.</p>
-            <p><strong>$750 one time</strong></p>
             <h3>Monthly content retainer</h3>
-            <p><strong>$1,000 a month</strong> with a three-month minimum.</p>
+            <p><strong>{servicePricing.monthlyContent}</strong> with a {servicePricing.minimumTerm}.</p>
           </section>
 
           <section aria-labelledby="brand-time-title">

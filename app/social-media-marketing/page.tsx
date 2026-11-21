@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { metadataFromRegistry } from "../content-registry";
+import { servicePricing } from "../service-pricing";
 
 export const metadata: Metadata = metadataFromRegistry("/social-media-marketing");
 
@@ -38,7 +39,7 @@ export default function SocialMediaMarketingPage() {
 
           <section aria-labelledby="social-media-cost-title">
             <h2 id="social-media-cost-title">How much does social media marketing cost?</h2>
-            <p>Setup is $595, one time. After that it is $595 a month.</p>
+            <p><strong>{servicePricing.monthlyContent}</strong> with a {servicePricing.minimumTerm}.</p>
           </section>
 
           <section aria-labelledby="social-media-who-title">
