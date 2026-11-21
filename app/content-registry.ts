@@ -73,7 +73,7 @@ export const contentRegistry = [
   {
     route: "/social-media-marketing",
     slug: "social-media-marketing",
-    title: "Social Media Marketing for Small Business",
+    title: "Social Media Marketing for Small Businesses",
     description:
       `Choose 30 static ad posts or 20 posts and 8 videos a month. ${servicePricing.monthlyContent}, ${servicePricing.minimumTerm}. Start with a free audit.`,
     publicationStatus: "published",

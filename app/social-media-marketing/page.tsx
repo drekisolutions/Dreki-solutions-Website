@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { metadataFromRegistry } from "../content-registry";
 import { servicePricing } from "../service-pricing";
+import "../service-pages.css";
 
 export const metadata: Metadata = metadataFromRegistry("/social-media-marketing");
 
 export default function SocialMediaMarketingPage() {
   return (
-    <main className="page-main legal-page" id="main-content">
+    <main className="page-main legal-page service-page" id="main-content">
       <section
         className="page-section legal-section"
         aria-labelledby="social-media-title"
@@ -42,9 +43,11 @@ export default function SocialMediaMarketingPage() {
             <p>Facebook, Instagram, YouTube, TikTok, X, and LinkedIn.</p>
           </section>
 
-          <section aria-labelledby="social-media-cost-title">
+          <section className="service-investment" aria-labelledby="social-media-cost-title">
             <h2 id="social-media-cost-title">Your investment for social media marketing</h2>
-            <p><strong>{servicePricing.monthlyContent}</strong> with a {servicePricing.minimumTerm}.</p>
+            <div className="service-offer">
+              <p className="service-price"><strong>{servicePricing.monthlyContent}</strong> with a {servicePricing.minimumTerm}.</p>
+            </div>
           </section>
 
           <section aria-labelledby="social-media-who-title">

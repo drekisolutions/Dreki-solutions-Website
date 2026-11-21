@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { metadataFromRegistry } from "../content-registry";
 import { servicePricing } from "../service-pricing";
+import "../service-pages.css";
 
 export const metadata: Metadata = metadataFromRegistry("/brand-development");
 
 export default function BrandDevelopmentPage() {
   return (
-    <main className="page-main legal-page" id="main-content">
+    <main className="page-main legal-page service-page" id="main-content">
       <section
         className="page-section legal-section"
         aria-labelledby="brand-development-title"
@@ -17,20 +18,26 @@ export default function BrandDevelopmentPage() {
           <p>
             We give your company a clear look, voice, and story, so the business
             looks like the work you do. We can build a personal brand for you as
-            the owner too. A project takes about 1 to 2 weeks. We work online,
+            the owner too. We work online,
             wherever your business is.
           </p>
 
-          <section aria-labelledby="brand-cost-title">
+          <section className="service-investment" aria-labelledby="brand-cost-title">
             <h2 id="brand-cost-title">Your investment for branding development</h2>
-            <h3>Business brand kit</h3>
-            <p><strong>{servicePricing.businessBrandKit}</strong></p>
-            <p>Logo, colors, type, and guidelines.</p>
-            <h3>Owner personal brand development</h3>
-            <p><strong>{servicePricing.ownerPersonalBrand}</strong></p>
-            <p>Positioning and profile overhaul.</p>
-            <h3>Monthly content retainer</h3>
-            <p><strong>{servicePricing.monthlyContent}</strong> with a {servicePricing.minimumTerm}.</p>
+            <div className="service-offer">
+              <h3>Business brand kit</h3>
+              <p className="service-price"><strong>{servicePricing.businessBrandKit}</strong></p>
+              <p>Logo, colors, type, and guidelines.</p>
+            </div>
+            <div className="service-offer">
+              <h3>Owner personal brand development</h3>
+              <p className="service-price"><strong>{servicePricing.ownerPersonalBrand}</strong></p>
+              <p>Positioning and profile overhaul.</p>
+            </div>
+            <div className="service-offer">
+              <h3>Monthly content retainer</h3>
+              <p className="service-price"><strong>{servicePricing.monthlyContent}</strong> with a {servicePricing.minimumTerm}.</p>
+            </div>
           </section>
 
           <section aria-labelledby="brand-time-title">

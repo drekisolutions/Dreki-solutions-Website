@@ -29,7 +29,7 @@ const routeExpectations = [
   },
   {
     path: "/social-media-marketing",
-    title: "Social Media Marketing for Small Business | Dreki Solutions",
+    title: "Social Media Marketing for Small Businesses | Dreki Solutions",
     h1: "Social media marketing for small businesses",
     indexable: true,
     socialImage: true,
