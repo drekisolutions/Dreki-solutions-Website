@@ -32,11 +32,15 @@ export default function BrandDevelopmentPage() {
           </section>
 
           <section aria-labelledby="brand-cost-title">
-            <h2 id="brand-cost-title">How much does branding cost?</h2>
-            <p>
-              Brand creation is $250 for your company. A personal brand for you
-              as the owner is $250.
-            </p>
+            <h2 id="brand-cost-title">Your investment for branding development</h2>
+            <h3>Business brand kit</h3>
+            <p>Logo, colors, type, and guidelines.</p>
+            <p><strong>$1,500 one time</strong></p>
+            <h3>Owner personal brand development</h3>
+            <p>Positioning and profile overhaul.</p>
+            <p><strong>$750 one time</strong></p>
+            <h3>Monthly content retainer</h3>
+            <p><strong>$1,000 a month</strong> with a three-month minimum.</p>
           </section>
 
           <section aria-labelledby="brand-time-title">
