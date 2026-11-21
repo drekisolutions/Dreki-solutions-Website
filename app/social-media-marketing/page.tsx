@@ -24,8 +24,13 @@ export default function SocialMediaMarketingPage() {
 
           <section aria-labelledby="social-media-monthly-title">
             <h2 id="social-media-monthly-title">What you get each month</h2>
+            <p>Choose one monthly content option:</p>
             <ul>
-              <li>Your choice of 30 static ad posts or 20 posts and 8 videos each month</li>
+              <li>30 static ad posts</li>
+              <li>20 posts and 8 videos</li>
+            </ul>
+            <p>Both options include:</p>
+            <ul>
               <li>A content calendar you approve before anything goes out</li>
               <li>Automated posting, once you approve</li>
               <li>A website audit report</li>
