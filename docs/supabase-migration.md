@@ -4,8 +4,8 @@ The production website uses the dedicated `dreki-website` Supabase project in Dr
 
 ## Configuration
 
-- `BLOG_DATABASE_URL`: private `dreki_website_blog` role, session pooler, database `postgres`, search path `dreki_blog`.
-- `VOICE_DATABASE_URL`: separate private `dreki_website_voice` role, session pooler, search path `public`.
+- `BLOG_DATABASE_URL`: private `dreki_website_blog` role, transaction pooler, database `postgres`, search path `dreki_blog`.
+- `VOICE_DATABASE_URL`: separate private `dreki_website_voice` role, transaction pooler, search path `public`.
 - `DATABASE_SSL_CA`: official Supabase database CA in PEM format. Both connections require certificate verification.
 - Existing `BLOG_AUTH_SECRET`, Resend settings, and voice service credentials remain unchanged.
 - Owner sign-in remains restricted to `brett@dreki-solutions.ai` at `/admin/blog`.
@@ -21,3 +21,4 @@ The real editor storage code passed loading, draft creation, editing, publishing
 Production deployment `dpl_DEf3rSTuApqmuJ1P11LmqMYzXnWw` returned READY and was assigned to `www.dreki-solutions.ai`. Public articles returned HTTP 200; signed-out editor posts returned 401, and session lookup returned 200 instead of 503. The live sign-in form successfully requested an owner email link.
 
 Full Neon backups, manifests, and migration verification output are retained locally under `.codex-tmp/neon-migration/` and must never be committed. The original Neon database is retained for recovery. A rollback requires restoring a working Neon plan and its former connection settings; simply redeploying old code would not restore the old environment.
+
