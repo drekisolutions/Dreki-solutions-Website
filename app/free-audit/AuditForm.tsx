@@ -63,14 +63,14 @@ export default function AuditForm() {
         <div ref={statusRef} tabIndex={-1} role="status" className={styles.success}>
           <span className="eyebrow">Request received</span>
           <h2 id="audit-form-title">Your audit request is in.</h2>
-          <p>Your request has been sent to Brett at Dreki. He’ll follow up by email to confirm your business details and discuss your free digital presence audit. No appointment has been booked.</p>
+          <p>We’re running your free digital presence audit now. Your report will arrive by email within a few minutes, with a link to book a call with Brett. If anything needs a closer look, Brett will follow up personally. No appointment has been booked.</p>
           <Link className="button button-secondary" href="/">Back to the website</Link>
         </div>
       ) : (
         <>
           <div className={styles.cardHeading}>
             <h2 id="audit-form-title">Request your free audit.</h2>
-            <p>Brett will follow up by email to confirm your details and discuss the audit. No purchase required.</p>
+            <p>We’ll audit your website, Google reviews and local competitors, then email you the report. No purchase required.</p>
             <p>All fields are required. Text-message consent is optional.</p>
           </div>
           <form onSubmit={submit} onFocus={() => { started.current ??= Date.now(); }} className={styles.form}>
@@ -82,6 +82,8 @@ export default function AuditForm() {
                 <label>Email address<input name="email" type="email" autoComplete="email" maxLength={254} required /></label>
                 <label>Phone number<input name="phone" type="tel" autoComplete="tel" maxLength={40} pattern={"\\+?[0-9\\s.\\(\\)\\-]{10,40}"} title="Enter a phone number with 10 to 15 digits, including an area code." required /></label>
                 <label className={styles.full}>Company name<input name="company" autoComplete="organization" maxLength={160} required /></label>
+                <label>Business website<input name="businessUrl" type="text" inputMode="url" autoComplete="url" placeholder="yourbusiness.com" maxLength={200} pattern={"(https?://)?[A-Za-z0-9.\\-]+\\.[A-Za-z]{2,}(/.*)?"} title="Enter your business website, for example yourbusiness.com." required /></label>
+                <label>Industry<input name="industry" autoComplete="off" placeholder="Plumber, dentist, roofer…" minLength={2} maxLength={80} required /></label>
                 <label>City<input name="city" autoComplete="address-level2" maxLength={100} required /></label>
                 <label>State<select name="state" autoComplete="address-level1" defaultValue="" required>
                   <option value="" disabled>Select your state</option>

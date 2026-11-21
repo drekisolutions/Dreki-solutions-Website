@@ -417,6 +417,8 @@ test("renders the three services, real audit fields, and honest unpublished arti
     "email",
     "phone",
     "company",
+    "businessUrl",
+    "industry",
     "city",
     "state",
     "termsAccepted",

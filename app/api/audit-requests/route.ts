@@ -1,4 +1,5 @@
 import { deliverAuditRequest, isAuditDeliveryConfigured } from "@/lib/audit/delivery";
+import { handOffAuditRequest } from "@/lib/audit/handoff";
 import { validateAuditRequest } from "@/lib/audit/validation";
 
 const attempts = new Map<string, { count: number; expires: number }>();
@@ -52,5 +53,11 @@ export async function POST(request: Request) {
   if (!data) return reply(400, "invalid_submission");
   if (!isAuditDeliveryConfigured()) return reply(503, "delivery_unavailable");
   if (!(await deliverAuditRequest(data))) return reply(502, "delivery_failed");
+  // Brett has the request by email at this point, so a failed hand-off only
+  // means the automatic audit did not start. He follows up by hand.
+  const handoff = await handOffAuditRequest(data);
+  if (!handoff.ok && !handoff.skipped) {
+    console.error(`Audit hand-off to n8n failed (status ${handoff.status ?? "none"}) for ${data.submissionId}`);
+  }
   return reply(200, "received");
 }
