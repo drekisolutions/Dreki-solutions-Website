@@ -13,13 +13,12 @@ export default function ContactPage() {
     <main className="page-main launch-page" id="main-content">
       <section className="contact-hero" aria-labelledby="contact-title">
         <div>
-          <p className="eyebrow">Start with the bottleneck</p>
-          <h1 id="contact-title">Bring one workflow worth improving.</h1>
+          <p className="eyebrow">Get in touch</p>
+          <h1 id="contact-title">Tell us about your business.</h1>
           <p>
-            Share where response, intake, scheduling, or a recurring handoff
-            slows down. Dreki will use the first conversation to identify the
-            operating boundary, the decisions that must stay human, and the
-            smallest useful place to begin.
+            Share where you are today and what you want help with: social
+            media, your brand, or a look at how you show up online. The free
+            audit is the best place to start.
           </p>
           <a className="button button-primary" href="/free-audit">
             Request a Free Digital Presence Audit
@@ -41,31 +40,31 @@ export default function ContactPage() {
         id="consultation"
         aria-label={
           leadCaptureConfigured
-            ? "Strategy call request form"
-            : "Direct strategy call request"
+            ? "Call request form"
+            : "Direct call request"
         }
       >
         {leadCaptureConfigured ? (
           <LeadForm
             source="contact"
             successHref="/book"
-            successLabel="Choose a strategy-call time"
+            successLabel="Choose a call time"
           />
         ) : (
           <section className="form-unavailable" aria-labelledby="direct-request-title">
             <p className="eyebrow">Direct request // available</p>
-            <h2 id="direct-request-title">Start with a private workflow note.</h2>
+            <h2 id="direct-request-title">Send us a note.</h2>
             <p>
-              The secure online intake is not active yet. Email the workflow,
-              the point where it slows down, and the decision your team must
-              retain. Dreki will arrange the strategy call directly.
+              The secure online intake is not active yet. Email what your
+              business does and what you want help with. Dreki will arrange
+              the call directly.
             </p>
             <div className="button-row">
               <a
                 className="button button-primary"
-                href={`mailto:${contact.email}?subject=Strategy%20call%20request`}
+                href={`mailto:${contact.email}?subject=Call%20request`}
               >
-                Email the Workflow
+                Email Dreki
               </a>
               <a className="button button-secondary" href={contact.phoneHref}>
                 Call {contact.phoneDisplay}

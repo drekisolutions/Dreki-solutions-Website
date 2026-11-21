@@ -5,176 +5,18 @@ export const contact = {
 } as const;
 
 export const navigation = [
-  { href: "/#systems", label: "Solutions" },
   { href: "/social-media-marketing", label: "Social media" },
   { href: "/brand-development", label: "Branding" },
-  { href: "/#work", label: "Our work" },
   { href: "/#journal", label: "Field notes" },
   { href: "/about", label: "About" },
 ] as const;
 
 export const consultationMailto =
-  "mailto:brett@dreki-solutions.ai?subject=Consultation%20and%20Optimization%20Audit%20Request&body=Business%20name%3A%0D%0AWebsite%3A%0D%0AIndustry%3A%0D%0AWorkflow%20to%20optimize%3A%0D%0APreferred%20contact%20method%3A%0D%0A";
-
-export const serviceIndustryServices = [
-  {
-    index: "01",
-    title: "Customer response agents",
-    copy: "Triage inquiries, gather approved context, draft clear replies, and route exceptions to the right person.",
-  },
-  {
-    index: "02",
-    title: "Reputation operations",
-    copy: "Monitor feedback, organize priorities, prepare brand-safe responses, and keep final approval human.",
-  },
-  {
-    index: "03",
-    title: "Content operations",
-    copy: "Turn approved ideas into a reliable content workflow while preserving editorial judgment.",
-  },
-  {
-    index: "04",
-    title: "Intake and scheduling",
-    copy: "Collect the right details, prepare appointments, reduce duplicate entry, and escalate unusual requests.",
-  },
-  {
-    index: "05",
-    title: "Workflow coordination",
-    copy: "Move context across handoffs, reminders, internal systems, and recurring operating checkpoints.",
-  },
-  {
-    index: "06",
-    title: "Administrative agents",
-    copy: "Handle repeatable status checks, record preparation, follow-up queues, and defined back-office tasks.",
-  },
-] as const;
-
-export const aviationServices = [
-  {
-    index: "A1",
-    title: "Charter workflow orchestration",
-    copy: "Design bounded agents around the coordination work that connects trip requests, internal handoffs, and operating records.",
-  },
-  {
-    index: "A2",
-    title: "Trip-readiness coordination",
-    copy: "Prepare checklists, surface missing information, and route exceptions to the accountable team member.",
-  },
-  {
-    index: "A3",
-    title: "Document workflow agents",
-    copy: "Organize recurring document requests, status checks, and review queues without replacing required human oversight.",
-  },
-  {
-    index: "A4",
-    title: "Crew and customer communications",
-    copy: "Prepare consistent, approved communications and maintain context as details change across a trip workflow.",
-  },
-  {
-    index: "A5",
-    title: "Operational handoff design",
-    copy: "Map who owns each decision, what the agent may prepare, and exactly when the workflow must escalate.",
-  },
-  {
-    index: "A6",
-    title: "Specialized aviation agents",
-    copy: "Build narrow agentic services around charter-industry processes, trusted sources, and organization-specific rules.",
-  },
-] as const;
-
-export const serviceProducts = [
-  {
-    index: "S-01",
-    title: "Margin Hawk",
-    focus: "Supplier invoice reconciliation",
-    status: "In Development",
-    copy: "MarginHawk ingests supplier invoices, reconciles every line against the contractor’s price agreements and rolling price history, flags discrepancies, and drafts the dispute email. The owner approves; the agent never disputes autonomously.",
-  },
-  {
-    index: "S-02",
-    title: "Second Swing",
-    focus: "Estimate follow-up and rehash",
-    status: "In Development",
-    copy: "SecondSwing imports open and aged estimates and runs a persistent, owner-voiced SMS/email agent that answers questions, handles objections within hard guardrails, and books the job. “Rehash” mode re-attacks estimates 30–365 days old.",
-  },
-  {
-    index: "S-03",
-    title: "License Retention",
-    focus: "Compliance renewals and CE tracking",
-    status: "In Development",
-    copy: "Maintains the full compliance inventory and executes renewals: pre-fills forms, tracks CE requirements, prepares filing packets, and submits where portals allow—with the owner approving signatures and payments. Launch hard-capped at 2 states.",
-  },
-  {
-    index: "S-04",
-    title: "Visibility IQ",
-    focus: "AI assistant visibility and bookability",
-    status: "In Development",
-    copy: "More consumers are using AI to search for local trade contractors, and those assistants do not use the same search criteria. Visibility IQ solves this with (1) visibility measurement across assistants, (2) done-for-you agent-readiness fixes, and (3) a bookability endpoint—at local-business prices, plus a white-label tier for agencies.",
-  },
-  {
-    index: "S-05",
-    title: "Bifrost",
-    focus: "Branded MCP server delivery",
-    status: "In Development",
-    copy: "Bifrost is an in-development MCP-server-as-a-service concept for designing, building, hosting, securing, monitoring, and maintaining a vendor’s branded MCP server. Its intended operating shape includes streamable HTTP, OAuth with audience binding, edge delivery, and a connector installation path; scope and timing remain subject to validation.",
-  },
-  {
-    index: "S-06",
-    title: "Asgard",
-    focus: "Owner oversight and audit trails",
-    status: "In Development",
-    copy: "Asgard is the owner’s console: inventory and spend, plain-English activity digests, flagged-conversation review, and exportable audit trails—“the performance review your AI employees never get.”",
-  },
-] as const;
-
-export const portfolioProjects = [
-  {
-    index: "P-01",
-    title: "Project Demo 01",
-    focus: "Service operations",
-    status: "Demo slot",
-    copy: "Reserved for a customer-response or service-operations demonstration with approved project context.",
-  },
-  {
-    index: "P-02",
-    title: "Project Demo 02",
-    focus: "Workflow coordination",
-    status: "Demo slot",
-    copy: "Reserved for an agentic workflow demonstration covering handoffs, checkpoints, and human escalation.",
-  },
-  {
-    index: "P-03",
-    title: "Project Demo 03",
-    focus: "Intake and scheduling",
-    status: "Demo slot",
-    copy: "Reserved for an intake, preparation, or scheduling project once the demonstration is approved for display.",
-  },
-  {
-    index: "P-04",
-    title: "Project Demo 04",
-    focus: "Content and reputation",
-    status: "Demo slot",
-    copy: "Reserved for a content or reputation-operations demonstration with clear agent boundaries and approvals.",
-  },
-  {
-    index: "P-05",
-    title: "Project Demo 05",
-    focus: "Aviation operations",
-    status: "Demo slot",
-    copy: "Reserved for a specialized aviation workflow demonstration built around accountable human decisions.",
-  },
-  {
-    index: "P-06",
-    title: "Project Demo 06",
-    focus: "Custom agent system",
-    status: "Demo slot",
-    copy: "Reserved for a custom system demonstration that shows the operating problem, agent role, and human controls.",
-  },
-] as const;
+  "mailto:brett@dreki-solutions.ai?subject=Call%20request&body=Business%20name%3A%0D%0AWebsite%3A%0D%0AWhat%20you%20want%20help%20with%3A%0D%0APreferred%20contact%20method%3A%0D%0A";
 
 export const processSteps = [
-  { index: "01", title: "Audit", copy: "Map the workflow, the friction, and the decisions that must stay human." },
-  { index: "02", title: "Design", copy: "Define the agent's job, trusted sources, boundaries, and escalation path." },
-  { index: "03", title: "Deploy", copy: "Introduce the system through visible checkpoints and controlled responsibility." },
-  { index: "04", title: "Optimize", copy: "Review the work, improve the instructions, and adapt as operations change." },
+  { index: "01", title: "Audit", copy: "Review your website, social accounts, and Google Business Profile, and report what to fix first." },
+  { index: "02", title: "Plan", copy: "Agree on the brand direction or the month's content calendar before any work starts." },
+  { index: "03", title: "Produce", copy: "Create the brand assets or the month's posts and videos for your approval." },
+  { index: "04", title: "Publish", copy: "Post on schedule once you approve. Nothing goes out without your say." },
 ] as const;

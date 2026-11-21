@@ -12,16 +12,16 @@ export const metadata: Metadata = metadataFromRegistry("/about");
 
 const principles = [
   {
-    title: "Service before software",
-    copy: "Start with the people, responsibility, and operating reality before choosing the technology.",
+    title: "Start with the audit",
+    copy: "We look at how customers find you today before we recommend anything.",
   },
   {
-    title: "Boundaries by design",
-    copy: "Define what an agent may prepare, what it may never decide, and when a person must take over.",
+    title: "Nothing posts without you",
+    copy: "You approve the content calendar before anything goes out.",
   },
   {
-    title: "Evidence before expansion",
-    copy: "Review real exceptions and operating results before widening an agent’s responsibility.",
+    title: "Plain terms",
+    copy: "Clear deliverables and plain language. No jargon and no surprises.",
   },
 ] as const;
 
@@ -41,20 +41,20 @@ export default function AboutPage() {
         </div>
         <div className="about-hero__copy">
           <p className="eyebrow">Dreki Solutions LLC</p>
-          <h1 id="about-title">Discipline for the work behind the work.</h1>
+          <h1 id="about-title">Good work deserves to be found.</h1>
           <p>
-            U.S. Army veteran Brett Moser founded Dreki Solutions to remove the
-            repeatable operational work that keeps capable teams from focusing on
-            customers, craft, judgment, and mission.
+            U.S. Army veteran Brett Moser founded Dreki Solutions to help
+            owner-led small businesses get found, look the part, and stay in
+            front of customers.
           </p>
           <p>
             Dreki Solutions LLC is an SBA-certified Service-Disabled Veteran-Owned
             Small Business (SDVOSB).
           </p>
           <p>
-            Dreki builds agentic software with explicit human ownership. The system
-            prepares, coordinates, and escalates; the team retains authority over
-            relationships, exceptions, strategy, and final approvals.
+            Dreki does three things: social media marketing, brand development,
+            and a free digital presence audit. You approve the work before it
+            goes out.
           </p>
           <a className="button button-primary" href="/free-audit">
             Start with a free audit
@@ -64,9 +64,9 @@ export default function AboutPage() {
 
       <LaunchSection
         id="about-principles"
-        eyebrow="Operating principles"
-        title="Accountability stays visible."
-        intro="Useful automation is not a mystery box. It has a narrow job, trusted inputs, reviewable outputs, known stop conditions, and a person responsible for the decision."
+        eyebrow="How we work"
+        title="You stay in charge."
+        intro="You know your business. We do the marketing work and bring it to you for approval."
       >
         <div className="feature-grid feature-grid--three">
           {principles.map((principle, index) => (
@@ -80,37 +80,11 @@ export default function AboutPage() {
       </LaunchSection>
 
       <LaunchSection
-        id="about-human-model"
-        eyebrow="Human-accountability model"
-        title="Software prepares. People remain answerable."
-        intro="Dreki separates the repeatable preparation from the consequential decision so teams can gain leverage without pretending responsibility disappeared."
-        className="launch-section--contrast"
-      >
-        <div className="launch-before-after">
-          <article>
-            <span>Agent responsibility</span>
-            <h3>Prepare, check, organize, and escalate.</h3>
-            <p>
-              An agent works from approved sources, follows the defined path, produces
-              a reviewable output, and stops when the situation crosses its boundary.
-            </p>
-          </article>
-          <article>
-            <span>Human responsibility</span>
-            <h3>Judge, approve, resolve, and remain accountable.</h3>
-            <p>
-              People own relationships, policy, exceptions, commercial commitments,
-              safety, compliance, and any other decision that requires human authority.
-            </p>
-          </article>
-        </div>
-      </LaunchSection>
-
-      <LaunchSection
         id="about-process"
         eyebrow="How Dreki works"
-        title="A deliberate path from friction to system."
-        intro="The work begins with operating reality and expands only through explicit approval."
+        title="From a first look to a steady presence."
+        intro="Every engagement starts with the free digital presence audit."
+        className="launch-section--contrast"
       >
         <LaunchWorkflow label="Dreki delivery process" steps={processSteps} />
       </LaunchSection>

@@ -27,7 +27,7 @@ export default function PrivacyPage() {
             <p>
               When the online inquiry form is active, we collect the information
               you choose to submit, including your name, work email, company,
-              industry, area of interest, workflow description, timeline,
+              industry, area of interest, your message, timeline,
               optional phone number, and consent choices. We may also process
               the source page, limited campaign parameters in the page address,
               and your IP address as submission context and for abuse

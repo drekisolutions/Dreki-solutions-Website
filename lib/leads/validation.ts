@@ -40,9 +40,9 @@ const industryValues = new Set<string>(
 );
 const areaOfInterestValues = new Set<string>(
   [
-    "customer_response",
-    "intake_scheduling",
-    "workflow_coordination",
+    "social_media_marketing",
+    "brand_development",
+    "digital_presence_audit",
     "not_sure",
   ],
 );

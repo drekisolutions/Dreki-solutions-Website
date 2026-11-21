@@ -28,48 +28,6 @@ const routeExpectations = [
     socialImage: true,
   },
   {
-    path: "/agents",
-    title: "AI Agents for Service Operations | Dreki Solutions",
-    h1: "Give the repeatable work a clear owner.",
-    indexable: true,
-    socialImage: true,
-  },
-  {
-    path: "/agents/customer-response",
-    title: "Customer Response Agent | Dreki Solutions",
-    h1: "Customer Response Agent",
-    indexable: true,
-    socialImage: true,
-  },
-  {
-    path: "/agents/intake-and-scheduling",
-    title: "Intake and Scheduling Agent | Dreki Solutions",
-    h1: "Intake and Scheduling Agent",
-    indexable: true,
-    socialImage: true,
-  },
-  {
-    path: "/agents/workflow-coordination",
-    title: "Workflow Coordination Agent | Dreki Solutions",
-    h1: "Workflow Coordination Agent",
-    indexable: true,
-    socialImage: true,
-  },
-  {
-    path: "/industries",
-    title: "Agentic Systems by Industry | Dreki Solutions",
-    h1: "Build around the way the work actually moves.",
-    indexable: true,
-    socialImage: true,
-  },
-  {
-    path: "/industries/service-businesses",
-    title: "AI Agents for Service Businesses | Dreki Solutions",
-    h1: "Keep the customer journey moving while your team does the work.",
-    indexable: true,
-    socialImage: true,
-  },
-  {
     path: "/social-media-marketing",
     title: "Social Media Marketing for Small Business | Dreki Solutions",
     h1: "Social media marketing for small businesses",
@@ -84,58 +42,30 @@ const routeExpectations = [
     socialImage: true,
   },
   {
-    path: "/services",
-    title: "Custom Agentic Software Services | Dreki Solutions",
-    h1: "Turn one recurring workflow into a controlled system.",
-    indexable: true,
-    socialImage: true,
-  },
-  {
-    path: "/products",
-    title: "Agentic Software Product Registry | Dreki Solutions",
-    h1: "See exactly where each product stands.",
-    indexable: true,
-    socialImage: true,
-  },
-  {
-    path: "/portfolio",
-    title: "Client Projects and Dreki Products | Dreki Solutions",
-    h1: "Built to do real work.",
-    indexable: true,
-    socialImage: true,
-  },
-  {
     path: "/about",
     title: "About | Dreki Solutions",
-    h1: "Discipline for the work behind the work.",
-    indexable: true,
-    socialImage: true,
-  },
-  {
-    path: "/engagements",
-    title: "Agentic Software Engagements | Dreki Solutions",
-    h1: "Scope the workflow before pricing the system.",
+    h1: "Good work deserves to be found.",
     indexable: true,
     socialImage: true,
   },
   {
     path: "/contact",
     title: "Contact | Dreki Solutions",
-    h1: "Bring one workflow worth improving.",
+    h1: "Tell us about your business.",
     indexable: true,
     socialImage: true,
   },
   {
     path: "/book",
-    title: "Book a Strategy Call | Dreki Solutions",
-    h1: "Bring one workflow worth improving.",
+    title: "Book a Call | Dreki Solutions",
+    h1: "Talk through your marketing.",
     indexable: true,
     socialImage: true,
   },
   {
     path: "/thank-you",
     title: "Thank You | Dreki Solutions",
-    h1: "Thank you for sharing the workflow.",
+    h1: "Thank you for reaching out.",
     indexable: false,
     socialImage: false,
   },
@@ -148,7 +78,23 @@ const routeExpectations = [
   },
 ];
 
-const primaryNavigation = ["/#systems", "/#work", "/#journal", "/about"];
+const primaryNavigation = [
+  "/social-media-marketing",
+  "/brand-development",
+  "/#journal",
+  "/about",
+];
+
+const retiredRoutes = [
+  "/agents",
+  "/agents/customer-response",
+  "/industries",
+  "/industries/service-businesses",
+  "/services",
+  "/products",
+  "/portfolio",
+  "/engagements",
+];
 
 const forbiddenPublicClaims = [
   "guaranteed results",
@@ -281,6 +227,7 @@ async function fetchBuilt(path) {
     { waitUntil() {}, passThroughOnException() {} },
   );
   const result = {
+    location: response.headers.get("location"),
     status: response.status,
     contentType: response.headers.get("content-type") ?? "",
     body: await response.text(),
@@ -326,6 +273,14 @@ test("server-renders every published route with one specific H1 and canonical UR
       wordCount >= 120,
       `${expected.path} needs meaningful server-rendered copy; found ${wordCount} words`,
     );
+  }
+});
+
+test("redirects retired agent, industry, product, and portfolio routes to the homepage", async () => {
+  for (const path of retiredRoutes) {
+    const { status, location } = await fetchBuilt(path);
+    assert.ok([301, 308].includes(status), `${path} returned ${status}`);
+    assert.equal(new URL(location, "http://localhost").pathname, "/");
   }
 });
 
@@ -426,164 +381,17 @@ test("renders exact contact details and preserves the complete governed lead for
     assert.match(markup, /\bname="contactWebsite"[^>]*\btabindex="-1"/i);
   } else {
     assert.match(text, /The secure online intake is not active yet\./i);
-    assert.match(text, /Dreki will arrange the strategy call directly\./i);
+    assert.match(text, /Dreki will arrange the call directly\./i);
     assert.ok(
       hrefs.includes(
-        "mailto:brett@dreki-solutions.ai?subject=Strategy%20call%20request",
+        "mailto:brett@dreki-solutions.ai?subject=Call%20request",
       ),
       "unconfigured lead capture must retain a direct request path",
     );
   }
 });
 
-test("distinguishes client projects from Dreki products and preserves approved destinations", async () => {
-  const markup = visibleMarkup((await fetchBuilt("/portfolio")).body);
-  const cards = articleBlocksWithClass(markup, "forge-project-card");
-  assert.equal(cards.length, 5);
-  for (const title of ["Old Dog Sauce & Spice", "Sea Wolf Cove"]) {
-    const card = cards.find((candidate) =>
-      textContent(candidate).includes(title),
-    );
-    assert.ok(card, `missing ${title}`);
-    assert.match(textContent(card), /Client project/);
-  }
-  for (const url of [
-    "https://roofbid.dreki-solutions.ai",
-    "https://www.hookandclip.com",
-    "https://deskhand-foreman.vercel.app/deskhand",
-  ]) {
-    const link = tagsNamed(markup, "a")
-      .map(attributesFor)
-      .find((a) => a.get("href") === url);
-    assert.ok(link, `missing approved link ${url}`);
-    assert.equal(link.get("target"), "_blank");
-    assert.match(link.get("rel"), /noopener/);
-  }
-  assert.match(textContent(markup), /View offer sheet/);
-});
-test("publishes only service-business products with a truthful status on every card", async () => {
-  const markup = visibleMarkup((await fetchBuilt("/products")).body);
-  const cards = articleBlocksWithClass(markup, "launch-product-card");
-  const expectedProducts = new Map([
-    ["Margin Hawk", "In Development"],
-    ["Second Swing", "In Development"],
-    ["License Retention", "In Development"],
-    ["Visibility IQ", "In Development"],
-    ["Bifrost", "In Development"],
-    ["Asgard", "In Development"],
-  ]);
-
-  assert.equal(cards.length, expectedProducts.size);
-  for (const [title, status] of expectedProducts) {
-    const card = cards.find((candidate) =>
-      textContent(candidate).includes(title),
-    );
-    assert.ok(card, `missing product card for ${title}`);
-    assert.match(textContent(card), new RegExp(`\\b${status}\\b`, "i"));
-  }
-
-  const text = textContent(markup);
-  assert.match(
-    text,
-    /Not generally available\. Capability and timing may change\./i,
-  );
-  assert.match(
-    text,
-    /There is no public checkout or one-size-fits-all product price/i,
-  );
-  assert.doesNotMatch(text, /\bBuy now\b|\bAdd to cart\b/i);
-  assert.doesNotMatch(
-    text,
-    /Aviation products|Valkyrie 135|Skyfar|Declare Ready|Squawk Sheet AD|Trend Sentinel|Rotor Log/i,
-  );
-});
-
-test("ships Guardian Circuit as a progressive Three.js enhancement with a complete fallback", async () => {
-  const [component, client, runtime, stages, styles] = await Promise.all([
-    readFile(
-      new URL(
-        "../app/components/guardian-circuit/GuardianCircuit.tsx",
-        import.meta.url,
-      ),
-      "utf8",
-    ),
-    readFile(
-      new URL(
-        "../app/components/guardian-circuit/GuardianCircuitClient.tsx",
-        import.meta.url,
-      ),
-      "utf8",
-    ),
-    readFile(
-      new URL(
-        "../app/components/guardian-circuit/guardianCircuitRuntime.ts",
-        import.meta.url,
-      ),
-      "utf8",
-    ),
-    readFile(
-      new URL("../app/components/guardian-circuit/stages.ts", import.meta.url),
-      "utf8",
-    ),
-    readFile(
-      new URL(
-        "../app/components/guardian-circuit/guardian-circuit.module.css",
-        import.meta.url,
-      ),
-      "utf8",
-    ),
-  ]);
-  const source = `${component}\n${client}\n${runtime}\n${stages}\n${styles}`;
-
-  assert.match(client, /await import\(["']three["']\)/);
-  assert.match(client, /getContext\(["']webgl2["']/);
-  assert.doesNotMatch(client, /import\s+[^(\n]+\s+from\s+["']three["']/);
-
-  for (const safeguard of [
-    "prefers-reduced-motion: reduce",
-    "pointer: coarse",
-    "saveData",
-    "document.visibilityState",
-    "IntersectionObserver",
-    "webglcontextlost",
-    "failIfMajorPerformanceCaveat",
-    'powerPreference: "low-power"',
-  ]) {
-    assert.match(
-      source,
-      new RegExp(safeguard.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
-      `Guardian Circuit is missing ${safeguard}`,
-    );
-  }
-
-  for (const runtimeControl of [
-    "MAX_BUFFER_PIXELS",
-    "MAX_DPR",
-    "window.devicePixelRatio",
-    "ResizeObserver",
-    "cancelAnimationFrame",
-    "disposeScene(scene)",
-    "renderer.renderLists.dispose()",
-    "renderer.dispose()",
-    "renderer.forceContextLoss()",
-  ]) {
-    assert.match(
-      runtime,
-      new RegExp(runtimeControl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
-      `Guardian Circuit runtime is missing ${runtimeControl}`,
-    );
-  }
-
-  assert.match(
-    component,
-    /<GuardianCircuitClient stages=\{guardianCircuitStages\}/,
-  );
-  assert.match(component, /className=\{styles\.fallback\}/);
-  assert.match(styles, /\.client\[data-state="ready"\] \+ \.fallback/);
-  assert.doesNotMatch(component, /<svg\b/i);
-});
-
-test("renders the connected trades experience, real audit fields, and honest unpublished articles", async () => {
+test("renders the three services, real audit fields, and honest unpublished articles", async () => {
   const markup = visibleMarkup((await fetchBuilt("/")).body);
   const text = textContent(markup);
   for (const service of [
@@ -592,14 +400,16 @@ test("renders the connected trades experience, real audit fields, and honest unp
     "Digital presence audit",
   ])
     assert.ok(text.includes(service));
-  for (const workflow of [
+  for (const retired of [
     "Missed-call follow-up",
-    "Lead intake",
-    "Scheduling",
-    "Estimates",
-    "Invoicing",
+    "Selected work",
+    "Try the inquiry demo",
   ])
-    assert.ok(text.includes(workflow));
+    assert.equal(
+      text.toLowerCase().includes(retired.toLowerCase()),
+      false,
+      `retired homepage section returned: ${retired}`,
+    );
   assert.match(markup, /dreki-network-mark\.webp/);
   for (const name of [
     "firstName",

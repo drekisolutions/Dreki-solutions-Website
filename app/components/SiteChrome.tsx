@@ -209,7 +209,7 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
           </div>
 
           <nav className="footer-nav" aria-label="Footer navigation">
-            <p>Capabilities</p>
+            <p>Services</p>
             {navigation.map((item) => (
               <PageTurnLink href={item.href} key={item.href}>
                 {item.label}
@@ -220,7 +220,6 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
           <nav className="footer-nav" aria-label="Company navigation">
             <p>Company</p>
             <PageTurnLink href="/about">About</PageTurnLink>
-            <PageTurnLink href="/engagements">Engagements</PageTurnLink>
             <PageTurnLink href="/contact">Contact</PageTurnLink>
             <PageTurnLink href="/free-audit">
               Free Digital Presence Audit

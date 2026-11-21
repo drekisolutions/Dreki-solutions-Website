@@ -10,7 +10,7 @@ import "./forge-theme.css";
 
 const defaultTitle = "Dreki Solutions | Social Media Marketing and Branding for Small Businesses";
 const defaultDescription =
-  "Dreki Solutions helps owner-led small businesses with social media marketing, brand development, and a free digital presence audit, and builds automation for trades and service businesses.";
+  "Dreki Solutions helps owner-led small businesses with social media marketing, brand development, and a free digital presence audit.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Dreki Solutions LLC", url: siteConfig.siteUrl }],
   creator: "Dreki Solutions LLC",
   publisher: "Dreki Solutions LLC",
-  category: "Business automation",
+  category: "Marketing",
   icons: {
     icon: "/favicon.png",
     shortcut: "/favicon.png",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Dreki Solutions governed agent control path",
+        alt: "Dreki Solutions",
       },
     ],
   },

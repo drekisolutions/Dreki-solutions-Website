@@ -12,16 +12,16 @@ export const metadata: Metadata = metadataFromRegistry("/book");
 
 const preparation = [
   {
-    title: "The workflow",
-    copy: "Choose one recurring response, intake, scheduling, or coordination process.",
+    title: "Your business",
+    copy: "What you sell, who you serve, and where you work.",
   },
   {
-    title: "The friction",
-    copy: "Explain where work waits, context gets lost, or an accountable person is interrupted.",
+    title: "Your presence",
+    copy: "Your website, social accounts, and Google Business Profile, as they are today.",
   },
   {
-    title: "The boundary",
-    copy: "Identify decisions and exceptions that must remain with your team.",
+    title: "Your goal",
+    copy: "What you want more of: calls, visits, bookings, or orders.",
   },
 ] as const;
 
@@ -29,18 +29,18 @@ export default function BookPage() {
   return (
     <main className="page-main launch-page" id="main-content">
       <LaunchHero
-        eyebrow="Strategy call"
-        title="Bring one workflow worth improving."
-        lede="Use the strategy call to examine the current operating path, the decisions people must retain, and whether a bounded agent is a practical fit."
+        eyebrow="Book a call"
+        title="Talk through your marketing."
+        lede="Use the call to go over your goals and whether social media marketing or brand development is a fit for your business."
         primaryHref="/contact#consultation"
-        primaryLabel="Request a Strategy Call"
-        secondaryHref="/engagements"
-        secondaryLabel="Review Engagements"
+        primaryLabel="Request a Call"
+        secondaryHref="/free-audit"
+        secondaryLabel="Start with a Free Audit"
       >
         <div className="launch-signal-panel">
           <span>Call focus</span>
-          <strong>Workflow before software</strong>
-          <p>Fit, boundaries, and a scoped next step.</p>
+          <strong>Your business first</strong>
+          <p>Fit, priorities, and a clear next step.</p>
         </div>
       </LaunchHero>
 
@@ -49,12 +49,12 @@ export default function BookPage() {
         eyebrow="Scheduling"
         title={
           siteConfig.meetingUrl
-            ? "Choose a strategy-call time."
+            ? "Choose a call time."
             : "Online scheduling is being connected."
         }
         intro={
           siteConfig.meetingUrl
-            ? "Use Dreki’s HubSpot scheduling page to choose an available time. A short workflow brief helps make the conversation useful."
+            ? "Use Dreki’s HubSpot scheduling page to choose an available time. A short note about your business helps make the conversation useful."
             : "Dreki is preparing a HubSpot scheduling page, but no public booking link is active yet. Use the inquiry path below and a time will be arranged directly."
         }
       >
@@ -77,7 +77,7 @@ export default function BookPage() {
               </a>
             ) : (
               <PageTurnLink className="button button-primary" href="/contact#consultation">
-                Send a Workflow Brief
+                Send a Note
               </PageTurnLink>
             )}
             <a className="button button-secondary" href={consultationMailto}>
@@ -96,7 +96,7 @@ export default function BookPage() {
         id="call-preparation"
         eyebrow="Prepare"
         title="Three useful things to bring."
-        intro="You do not need a technical specification. A concrete operating example is more useful than a list of desired features."
+        intro="You do not need a marketing plan. A plain description of your business is enough."
         className="launch-section--contrast"
       >
         <div className="feature-grid feature-grid--three">
@@ -114,13 +114,13 @@ export default function BookPage() {
         id="call-outcome"
         eyebrow="Expected outcome"
         title="Leave with a clearer next decision."
-        intro="The call may lead to a workflow audit, a scoped custom build, a request for better source material, or a conclusion that the workflow is not a good automation fit."
+        intro="The call may lead to a free audit, a social media plan, brand development work, or a conclusion that Dreki is not the right fit."
       >
         <div className="boundary-note launch-boundary-note">
           <strong>No automatic proposal</strong>
           <p>
-            Dreki prepares a scoped estimate only after the workflow, access, human
-            authority, and delivery responsibility are understood.
+            Dreki recommends paid work only after understanding your business.
+            Any paid work is a separate decision.
           </p>
         </div>
       </LaunchSection>

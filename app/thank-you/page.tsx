@@ -14,16 +14,16 @@ export default function ThankYouPage() {
     <main className="page-main launch-page" id="main-content">
       <LaunchHero
         eyebrow="Inquiry received"
-        title="Thank you for sharing the workflow."
-        lede="Dreki will review the operating problem, the requested next step, and the contact details provided with the inquiry."
-        primaryHref="/agents"
-        primaryLabel="Explore Featured Agents"
+        title="Thank you for reaching out."
+        lede="Dreki will review your message and the contact details you provided."
+        primaryHref="/free-audit"
+        primaryLabel="Request a Free Audit"
         secondaryHref="/"
         secondaryLabel="Return Home"
       >
         <div className="launch-signal-panel">
           <span>What happens next</span>
-          <strong>Fit review</strong>
+          <strong>A reply from Dreki</strong>
           <p>No meeting is booked until a time is confirmed.</p>
         </div>
       </LaunchHero>
@@ -37,22 +37,22 @@ export default function ThankYouPage() {
           <li>
             <span>01</span>
             <h3>Review</h3>
-            <p>The workflow and stated friction are checked for initial fit.</p>
+            <p>Your message and business details are reviewed.</p>
           </li>
           <li>
             <span>02</span>
             <h3>Clarify</h3>
-            <p>Dreki may ask for the missing context needed to understand the boundary.</p>
+            <p>Dreki may ask a question or two to understand what you need.</p>
           </li>
           <li>
             <span>03</span>
             <h3>Arrange</h3>
-            <p>If a strategy call is appropriate, Dreki will coordinate a time directly.</p>
+            <p>If a call makes sense, Dreki will coordinate a time directly.</p>
           </li>
           <li>
             <span>04</span>
-            <h3>Scope</h3>
-            <p>A scoped estimate follows only after the workflow and responsibilities are clear.</p>
+            <h3>Recommend</h3>
+            <p>You get a recommendation only after your business and goals are clear.</p>
           </li>
         </ol>
         <p className="launch-fallback-copy">
@@ -66,19 +66,19 @@ export default function ThankYouPage() {
           title="While you wait"
           links={[
             {
-              href: "/portfolio",
-              label: "Internal demonstrations",
-              description: "See how Dreki exposes workflow controls.",
+              href: "/social-media-marketing",
+              label: "Social media marketing",
+              description: "See what you get each month and what it costs.",
             },
             {
-              href: "/industries/service-businesses",
-              label: "Service businesses",
-              description: "Review the launch industry path.",
+              href: "/brand-development",
+              label: "Brand development",
+              description: "See what is included and how long it takes.",
             },
             {
-              href: "/engagements",
-              label: "Engagements",
-              description: "Understand the path from fit to scope.",
+              href: "/free-audit",
+              label: "Free digital presence audit",
+              description: "A free review of how customers find you online.",
             },
           ]}
         />

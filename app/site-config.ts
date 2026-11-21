@@ -28,7 +28,7 @@ export const siteConfig = {
   siteUrl: normalizeSiteUrl(
     process.env.SITE_URL ?? process.env.NEXT_PUBLIC_SITE_URL,
   ),
-  primaryAudience: "Trades and service businesses",
+  primaryAudience: "Owner-led small businesses",
   primaryAction: {
     label: "Start with a free audit",
     href: "/free-audit",

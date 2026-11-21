@@ -27,7 +27,25 @@ const securityHeaders = [
   },
 ];
 
+const retiredRoutes = [
+  "/agents",
+  "/agents/:path*",
+  "/industries",
+  "/industries/:path*",
+  "/services",
+  "/products",
+  "/portfolio",
+  "/engagements",
+];
+
 const nextConfig: NextConfig = {
+  async redirects() {
+    return retiredRoutes.map((source) => ({
+      source,
+      destination: "/",
+      permanent: true,
+    }));
+  },
   async headers() {
     return [
       {

@@ -23,7 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority:
         entry.route === "/"
           ? 1
-          : entry.pageType === "agent" || entry.pageType === "conversion"
+          : entry.pageType === "service" || entry.pageType === "conversion"
             ? 0.9
             : 0.8,
     }));

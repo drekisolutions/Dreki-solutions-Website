@@ -134,7 +134,7 @@ export default function NewsletterPopup() {
               Fresh ideas for people who build things.
             </p>
             <p className="newsie-copy">
-              Automation, better workflows, and field notes for the trades.
+              Marketing, branding, and field notes for small business owners.
               Delivered to your inbox.
             </p>
             <form onSubmit={subscribe}>

@@ -15,7 +15,7 @@ function validPayload(overrides = {}) {
     email: " Avery.Morgan@Example.com ",
     company: " Northstar Services ",
     industry: "professional_services",
-    areaOfInterest: "workflow_coordination",
+    areaOfInterest: "social_media_marketing",
     workflowChallenge: "Our intake handoffs create slow customer follow-up.",
     timeline: "one_to_three_months",
     phone: "",

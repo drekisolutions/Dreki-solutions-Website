@@ -14,9 +14,9 @@ export const INDUSTRY_OPTIONS = [
 ] as const;
 
 export const AREA_OF_INTEREST_OPTIONS = [
-  { value: "customer_response", label: "Customer response agents" },
-  { value: "intake_scheduling", label: "Intake and scheduling agents" },
-  { value: "workflow_coordination", label: "Workflow coordination agents" },
+  { value: "social_media_marketing", label: "Social media marketing" },
+  { value: "brand_development", label: "Brand development" },
+  { value: "digital_presence_audit", label: "Free digital presence audit" },
   { value: "not_sure", label: "Not sure yet" },
 ] as const;
 

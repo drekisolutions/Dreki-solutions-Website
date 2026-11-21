@@ -1,12 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState, type ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 import {
-  AnimatePresence,
   MotionConfig,
   motion,
-  useMotionValue,
   useReducedMotion,
   useScroll,
   useSpring,
@@ -17,34 +15,20 @@ import {
   ArrowLeft,
   ArrowRight,
   ArrowUpRight,
-  CalendarDays,
   Check,
-  ChevronRight,
-  FileCheck2,
-  FileText,
-  Inbox,
   Megaphone,
   Palette,
-  PhoneCall,
   SearchCheck,
   Wrench,
 } from "lucide-react";
 import AuditForm from "../../free-audit/AuditForm";
-import {
-  journalTopics,
-  projects,
-  services,
-  workflows,
-  type JournalArticle,
-} from "./content";
-import InquiryDemo from "./InquiryDemo";
+import { journalTopics, services, type JournalArticle } from "./content";
 import NewsletterPopup from "../blog/NewsletterPopup";
 import { useDragCarousel } from "./useDragCarousel";
 import "./trades.css";
 
 // Quarter stiffness and half damping preserve the spring shape at half speed.
 const spring = { type: "spring" as const, stiffness: 45, damping: 12 };
-const icons = [PhoneCall, Inbox, CalendarDays, FileText, FileCheck2];
 const serviceIcons = [Megaphone, Palette, SearchCheck];
 const networkPoints = [
   [115, 123],
@@ -227,7 +211,7 @@ function Services() {
     >
       <div className="forge-section-heading">
         <div>
-          <p className="forge-kicker">WHAT WE DO</p>
+          <p className="forge-kicker">01 / WHAT WE DO</p>
           <h2 id="services-title">
             Three ways we help{" "}
             <span className="forge-foil">small businesses get found.</span>
@@ -263,302 +247,12 @@ function Services() {
   );
 }
 
-function Systems() {
-  const [active, setActive] = useState(0);
-  const flow = workflows[active];
-  const Icon = icons[active];
-  return (
-    <section
-      className="forge-section forge-systems"
-      id="systems"
-      aria-labelledby="systems-title"
-    >
-      <div className="forge-section-heading">
-        <div>
-          <p className="forge-kicker">01 / THE CONNECTED BUSINESS</p>
-          <h2 id="systems-title">
-            Good at your trade.
-            <br />
-            <span className="forge-muted">Buried in everything else?</span>
-          </h2>
-        </div>
-        <p>
-          The tools should work together.
-          <br />
-          So you can get back to the work you do best.
-        </p>
-      </div>
-      <div className="forge-system-layout">
-        <div
-          className="forge-workflow-tabs"
-          role="tablist"
-          aria-label="Automation workflows"
-          aria-orientation="vertical"
-        >
-          {workflows.map((item, i) => {
-            const TabIcon = icons[i];
-            return (
-              <motion.button
-                key={item.title}
-                type="button"
-                role="tab"
-                id={`workflow-tab-${i}`}
-                aria-selected={active === i}
-                aria-controls="workflow-panel"
-                tabIndex={active === i ? 0 : -1}
-                whileHover={{ x: 3 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => setActive(i)}
-                onKeyDown={(event) => {
-                  let next = i;
-                  if (event.key === "ArrowDown") next = (i + 1) % 5;
-                  else if (event.key === "ArrowUp") next = (i + 4) % 5;
-                  else if (event.key === "Home") next = 0;
-                  else if (event.key === "End") next = 4;
-                  else return;
-                  event.preventDefault();
-                  setActive(next);
-                  document.getElementById(`workflow-tab-${next}`)?.focus();
-                }}
-                className={active === i ? "is-active" : ""}
-              >
-                {active === i && (
-                  <motion.span
-                    className="forge-tab-highlight"
-                    layoutId="workflow-highlight"
-                    transition={spring}
-                  />
-                )}
-                <span className="forge-tab-number">0{i + 1}</span>
-                <TabIcon size={18} />
-                <span>{item.title}</span>
-                <ChevronRight size={16} />
-              </motion.button>
-            );
-          })}
-        </div>
-        <div
-          role="tabpanel"
-          id="workflow-panel"
-          aria-labelledby={`workflow-tab-${active}`}
-          tabIndex={0}
-          className="forge-workflow-panel"
-        >
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={active}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.36 }}
-            >
-              <div className="forge-flow-icon">
-                <Icon size={28} />
-              </div>
-              <span className="forge-small-label">
-                WORKFLOW / 0{active + 1}
-              </span>
-              <h3>{flow.label}</h3>
-              <p>{flow.copy}</p>
-              <div className="forge-flow-steps">
-                {flow.steps.map((step, i) => (
-                  <div key={step}>
-                    <span>{i === 2 ? <Check size={14} /> : `0${i + 1}`}</span>
-                    <p>{step}</p>
-                    {i < 2 && <ArrowRight size={14} />}
-                  </div>
-                ))}
-              </div>
-              <small className="forge-demo-label">
-                Illustrative workflow · Scope and connected tools are agreed before a build.
-              </small>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const projectImages: Record<string, string> = {
-  content: "old-dog-product",
-  print: "sea-wolf",
-  roof: "roofbid",
-  clip: "hook-and-clip",
-  desk: "foreman",
-};
 const journalImages = {
   call: "blog-call",
   flow: "blog-flow",
   grid: "blog-grid",
   paper: "blog-paper",
 };
-
-function ProjectArt({ visual, name }: { visual: string; name: string }) {
-  return (
-    <div className={`forge-project-art forge-card-photo forge-art-${visual}`} aria-hidden="true">
-      <Image
-        src={`/images/cards/${projectImages[visual]}.webp`}
-        alt=""
-        fill
-        sizes="(max-width: 700px) 85vw, (max-width: 1100px) 50vw, 400px"
-        draggable={false}
-      />
-      <span className="forge-art-caption">
-        {name} / {visual === "content" ? "product photography" : "concept imagery"}
-      </span>
-    </div>
-  );
-}
-
-function SpotlightCard({ children }: { children: ReactNode }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const background = useTransform(
-    () =>
-      `radial-gradient(400px circle at ${x.get()}px ${y.get()}px, rgba(216,177,90,.10), transparent 75%)`,
-  );
-  return (
-    <motion.article
-      className="forge-project-card"
-      onPointerMove={(e) => {
-        const r = e.currentTarget.getBoundingClientRect();
-        x.set(e.clientX - r.left);
-        y.set(e.clientY - r.top);
-      }}
-      whileHover={{ y: -4 }}
-      transition={spring}
-    >
-      <motion.div className="forge-card-spotlight" style={{ background }} />
-      {children}
-    </motion.article>
-  );
-}
-
-export function Portfolio({ standalone = false }: { standalone?: boolean }) {
-  const [filter, setFilter] = useState("all");
-  const { track, move, handlers } = useDragCarousel(filter);
-  return (
-    <section
-      className="forge-section forge-portfolio"
-      id="work"
-      aria-labelledby="work-title"
-    >
-      <div className="forge-section-heading">
-        <div>
-          <p className="forge-kicker">02 / SELECTED WORK</p>
-          {standalone ? (
-            <h1 id="work-title">
-              Built to do <span className="forge-foil">real work.</span>
-            </h1>
-          ) : (
-            <h2 id="work-title">
-              Built to do <span className="forge-foil">real work.</span>
-            </h2>
-          )}
-        </div>
-        <p>
-          Client projects. Our own products.
-          <br />
-          Explore what was built and what is still planned.
-        </p>
-      </div>
-      <div className="forge-portfolio-controls">
-        <div
-          className="forge-filter-group"
-          role="group"
-          aria-label="Filter portfolio"
-        >
-          {[
-            ["all", "All work"],
-            ["client", "Client projects"],
-            ["dreki", "Dreki products"],
-          ].map(([key, label]) => (
-            <motion.button
-              key={key}
-              type="button"
-              aria-pressed={filter === key}
-              onClick={() => setFilter(key)}
-              whileHover={{ y: -1 }}
-              whileTap={{ scale: 0.96 }}
-            >
-              {filter === key && (
-                <motion.span layoutId="portfolio-filter" transition={spring} />
-              )}
-              {label}
-            </motion.button>
-          ))}
-        </div>
-        <div className="forge-carousel-controls">
-          <button
-            type="button"
-            aria-label="Previous projects"
-            onClick={() => move(-1)}
-          >
-            <ArrowLeft size={20} />
-          </button>
-          <button
-            type="button"
-            aria-label="Next projects"
-            onClick={() => move(1)}
-          >
-            <ArrowRight size={20} />
-          </button>
-        </div>
-      </div>
-      <div
-        className="forge-project-grid forge-project-track"
-        key={filter}
-        ref={track}
-        tabIndex={0}
-        role="region"
-        aria-label="Portfolio carousel. Loops continuously. Click and hold to drag, or use the arrow keys."
-        {...handlers}
-      >
-        {projects
-          .filter((p) => filter === "all" || p.kind === filter)
-          .map((p) => (
-            <SpotlightCard key={p.name}>
-              <ProjectArt visual={p.visual} name={p.name} />
-              <div className="forge-project-info">
-                <div className="forge-project-meta">
-                  <span>{p.category}</span>
-                  <span>/{p.number}</span>
-                </div>
-                <h3>{p.name}</h3>
-                <p>{p.description}</p>
-                <div className="forge-project-tags">
-                  {p.tags.map((tag) => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                </div>
-                {p.href && (
-                  <motion.a
-                    href={p.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="forge-project-link"
-                    whileHover={{ x: 2 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    {p.cta}
-                    <ArrowUpRight size={17} />
-                    <span className="forge-sr-only"> (opens in a new tab)</span>
-                  </motion.a>
-                )}
-              </div>
-            </SpotlightCard>
-          ))}
-      </div>
-      <div className="forge-journal-bottom">
-        <span>CLIENT PROJECTS / DREKI PRODUCTS</span>
-        <span>
-          HOLD &amp; DRAG TO EXPLORE <ArrowRight size={13} />
-        </span>
-      </div>
-    </section>
-  );
-}
 
 function Journal({ articles }: { articles: JournalArticle[] }) {
   const { track, move, handlers } = useDragCarousel(JSON.stringify(articles));
@@ -570,7 +264,7 @@ function Journal({ articles }: { articles: JournalArticle[] }) {
     >
       <div className="forge-section-heading">
         <div>
-          <p className="forge-kicker">03 / FROM THE WORKBENCH</p>
+          <p className="forge-kicker">02 / FROM THE WORKBENCH</p>
           <h2 id="journal-title">
             Ideas worth <span className="forge-foil">putting to work.</span>
           </h2>
@@ -593,7 +287,7 @@ function Journal({ articles }: { articles: JournalArticle[] }) {
         </div>
       </div>
       <p className="forge-journal-intro">
-        Practical notes on automation and running a trade business.
+        Practical notes on marketing, branding, and being found online.
         {!articles.some((topic) => topic.href) &&
           " First articles coming soon."}
       </p>
@@ -660,7 +354,7 @@ function HangingAudit() {
       aria-labelledby="audit-section-title"
     >
       <div className="forge-audit-copy">
-        <p className="forge-kicker">04 / LET’S FIND YOUR NEXT MOVE</p>
+        <p className="forge-kicker">03 / LET’S FIND YOUR NEXT MOVE</p>
         <h2 id="audit-section-title">
           Less busywork.
           <br />
@@ -732,27 +426,6 @@ export default function TradesHome({
         <Hero />
         <Reveal>
           <Services />
-        </Reveal>
-        <InquiryDemo />
-        <div className="forge-trades-strip">
-          <span>FOR THE PEOPLE WHO KEEP THINGS RUNNING</span>
-          <div>
-            <span>ROOFING</span>
-            <i />
-            <span>HVAC</span>
-            <i />
-            <span>PLUMBING</span>
-            <i />
-            <span>ELECTRICAL</span>
-            <i />
-            <span>THE SKILLED TRADES</span>
-          </div>
-        </div>
-        <Reveal>
-          <Systems />
-        </Reveal>
-        <Reveal>
-          <Portfolio />
         </Reveal>
         <Reveal>
           <Journal articles={articles} />

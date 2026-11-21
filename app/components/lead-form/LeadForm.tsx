@@ -214,10 +214,10 @@ export default function LeadForm({
           role="status"
         >
           <span className={styles.statusCode}>Request received // 200</span>
-          <h2 id="lead-success-title">Your workflow brief is on its way.</h2>
+          <h2 id="lead-success-title">Your message is on its way.</h2>
           <p>
-            The next step is a short strategy call to identify the smallest
-            useful place to begin.
+            The next step is a short call to talk through your business and
+            the best place to begin.
           </p>
         </div>
         <div className={styles.successActions}>
@@ -319,7 +319,7 @@ export default function LeadForm({
             </span>
             <select name="areaOfInterest" defaultValue="" required>
               <option value="" disabled>
-                Select an agent workflow
+                Select a service
               </option>
               {AREA_OF_INTEREST_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -347,11 +347,11 @@ export default function LeadForm({
 
           <label className={`${styles.field} ${styles.wide}`}>
             <span>
-              Primary workflow challenge <span aria-hidden="true">*</span>
+              What do you need help with? <span aria-hidden="true">*</span>
             </span>
             <span className={styles.hint} id="workflow-challenge-hint">
-              Describe the repetitive work, missed handoff, or customer delay
-              that costs the most time.
+              Tell us about your business and what you want more of: calls,
+              visits, bookings, or orders.
             </span>
             <textarea
               name="workflowChallenge"
