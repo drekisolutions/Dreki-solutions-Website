@@ -89,7 +89,7 @@ export default function AuditForm() {
                 </select></label>
               </div>
               <div className={styles.honeypot} aria-hidden="true">
-                <label>Leave this empty<input name="website" tabIndex={-1} autoComplete="off" /></label>
+                <label>Leave this empty<input name="website" type="url" tabIndex={-1} autoComplete="url" /></label>
               </div>
               <label className={styles.consent}>
                 <input type="checkbox" name="smsConsent" />

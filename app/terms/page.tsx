@@ -6,7 +6,7 @@ export const metadata: Metadata = metadataFromRegistry("/terms");
 
 export default function TermsPage() {
   return (
-    <main className="page-main legal-page" id="main-content">
+    <main className="page-main legal-page" id="main">
       <section className="page-section legal-section" aria-labelledby="terms-title">
         <article className="legal-document">
           <p className="eyebrow">Dreki Solutions LLC</p>

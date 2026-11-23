@@ -5,7 +5,7 @@ export const metadata: Metadata = metadataFromRegistry("/privacy");
 
 export default function PrivacyPage() {
   return (
-    <main className="page-main legal-page" id="main-content">
+    <main className="page-main legal-page" id="main">
       <section
         className="page-section legal-section"
         aria-labelledby="privacy-title"

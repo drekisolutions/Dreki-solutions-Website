@@ -5,6 +5,8 @@ export const MARKETING_CONSENT =
   "I agree to receive occasional product and service updates from Dreki Solutions. I can unsubscribe at any time.";
 
 export const INDUSTRY_OPTIONS = [
+  { value: "food", label: "Food" },
+  { value: "retail", label: "Retail" },
   { value: "home_services", label: "Home services" },
   { value: "professional_services", label: "Professional services" },
   { value: "personal_services", label: "Personal services" },

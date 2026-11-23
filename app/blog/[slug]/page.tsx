@@ -29,7 +29,7 @@ export default async function BlogArticle({ params }: Props) {
   const post = await publishedPost(slug);
   if (!post) notFound();
   return (
-    <main id="main-content" className="blog-article">
+    <main id="main" className="blog-article">
       <Link className="blog-back" href="/#journal">
         ← Field notes
       </Link>

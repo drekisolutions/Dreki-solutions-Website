@@ -27,7 +27,7 @@ const preparation = [
 
 export default function BookPage() {
   return (
-    <main className="page-main launch-page" id="main-content">
+    <main className="page-main launch-page" id="main">
       <LaunchHero
         eyebrow="Book a call"
         title="Talk through your marketing."
@@ -50,22 +50,15 @@ export default function BookPage() {
         title={
           siteConfig.meetingUrl
             ? "Choose a call time."
-            : "Online scheduling is being connected."
+            : "Request a time."
         }
         intro={
           siteConfig.meetingUrl
-            ? "Use Dreki’s HubSpot scheduling page to choose an available time. A short note about your business helps make the conversation useful."
-            : "Dreki is preparing a HubSpot scheduling page, but no public booking link is active yet. Use the inquiry path below and a time will be arranged directly."
+            ? "Choose an available time. A short note about your business helps make the conversation useful."
+            : "Send a note and Dreki will arrange a time."
         }
       >
         <div className="launch-scheduler" aria-live="polite">
-          <div className="launch-scheduler__status">
-            <span aria-hidden="true" />
-            <p>
-              <strong>Scheduler status:</strong>{" "}
-              {siteConfig.meetingUrl ? "available" : "configuration in progress"}
-            </p>
-          </div>
           <div className="launch-scheduler__actions">
             {siteConfig.meetingUrl ? (
               <a
@@ -73,7 +66,7 @@ export default function BookPage() {
                 href={siteConfig.meetingUrl}
                 rel="noreferrer"
               >
-                Open HubSpot Scheduling
+                Choose a time
               </a>
             ) : (
               <PageTurnLink className="button button-primary" href="/contact#consultation">
@@ -86,8 +79,8 @@ export default function BookPage() {
           </div>
           <p className="launch-scheduler__note">
             {siteConfig.meetingUrl
-              ? "A meeting is booked only after HubSpot displays its confirmation."
-              : "No meeting is considered booked until Dreki confirms the time."}
+              ? "A meeting is booked only after you see a confirmation."
+              : "No meeting is booked until Dreki confirms the time."}
           </p>
         </div>
       </LaunchSection>

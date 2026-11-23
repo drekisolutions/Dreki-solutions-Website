@@ -30,6 +30,8 @@ type UnknownRecord = Record<string, unknown>;
 
 const industryValues = new Set<string>(
   [
+    "food",
+    "retail",
     "home_services",
     "professional_services",
     "personal_services",

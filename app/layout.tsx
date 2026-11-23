@@ -60,13 +60,28 @@ export const viewport: Viewport = {
 
 const structuredData = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  name: siteConfig.legalName,
-  url: absoluteUrl("/"),
-  logo: absoluteUrl("/brand/dreki-icon-1024.webp"),
-  email: "brett@dreki-solutions.ai",
-  telephone: "+1-517-215-7573",
-  founder: { "@type": "Person", name: "Brett Moser" },
+  "@graph": [
+    {
+      "@type": "Organization",
+      name: siteConfig.legalName,
+      url: absoluteUrl("/"),
+      logo: absoluteUrl("/brand/dreki-icon-1024.webp"),
+      email: "brett@dreki-solutions.ai",
+      telephone: "+1-517-215-7573",
+      founder: { "@type": "Person", name: "Brett Moser" },
+    },
+    {
+      "@type": "Service",
+      name: "Social media marketing",
+      serviceType: "Social media marketing",
+      areaServed: "US",
+      provider: {
+        "@type": "Organization",
+        name: siteConfig.legalName,
+        email: "brett@dreki-solutions.ai",
+      },
+    },
+  ],
 };
 
 const serializedStructuredData = JSON.stringify(structuredData).replace(

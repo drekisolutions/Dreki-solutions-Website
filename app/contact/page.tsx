@@ -10,7 +10,7 @@ export default function ContactPage() {
   const leadCaptureConfigured = isLeadCaptureConfigured();
 
   return (
-    <main className="page-main launch-page" id="main-content">
+    <main className="page-main launch-page" id="main">
       <section className="contact-hero" aria-labelledby="contact-title">
         <div>
           <p className="eyebrow">Get in touch</p>
@@ -28,10 +28,6 @@ export default function ContactPage() {
           <span>Direct contact</span>
           <a href={`mailto:${contact.email}`}>{contact.email}</a>
           <a href={contact.phoneHref}>{contact.phoneDisplay}</a>
-          <p>
-            Online delivery will activate when the approved HubSpot and
-            verification settings are present. Direct email remains available.
-          </p>
         </address>
       </section>
 
@@ -52,12 +48,11 @@ export default function ContactPage() {
           />
         ) : (
           <section className="form-unavailable" aria-labelledby="direct-request-title">
-            <p className="eyebrow">Direct request // available</p>
+            <p className="eyebrow">Direct request</p>
             <h2 id="direct-request-title">Send us a note.</h2>
             <p>
-              The secure online intake is not active yet. Email what your
-              business does and what you want help with. Dreki will arrange
-              the call directly.
+              Email what your business does and what you want help with.
+              Dreki will arrange the call directly.
             </p>
             <div className="button-row">
               <a

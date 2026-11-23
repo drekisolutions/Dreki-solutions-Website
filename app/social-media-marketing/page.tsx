@@ -6,7 +6,7 @@ export const metadata: Metadata = metadataFromRegistry("/social-media-marketing"
 
 export default function SocialMediaMarketingPage() {
   return (
-    <main className="page-main legal-page" id="main-content">
+    <main className="page-main legal-page" id="main">
       <section
         className="page-section legal-section"
         aria-labelledby="social-media-title"
@@ -43,8 +43,7 @@ export default function SocialMediaMarketingPage() {
             <p>
               You work with Brett. There is no account manager. We plan and
               produce the posts. You approve the calendar. Automation posts
-              them after you approve. Nothing goes out without your say. You
-              spend less time making the posts.
+              them after you approve. Nothing goes out without your say.
             </p>
           </section>
 

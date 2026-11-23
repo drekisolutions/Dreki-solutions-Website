@@ -50,7 +50,7 @@ export const contentRegistry = [
     audience: "Business owners",
     primaryIntent: "Request a free digital presence business audit",
     relatedPages: ["/contact", "/social-media-marketing"],
-    updatedDate: "2026-11-20",
+    updatedDate: "2026-11-23",
     structuredDataEligibility: ["breadcrumb"],
     socialImage: "/og.png",
   },
@@ -66,7 +66,7 @@ export const contentRegistry = [
     audience: "Owner-led small businesses",
     primaryIntent: "Start with a free audit",
     relatedPages: ["/free-audit", "/social-media-marketing", "/brand-development"],
-    updatedDate: "2026-11-08",
+    updatedDate: "2026-11-23",
     structuredDataEligibility: ["organization", "service"],
     socialImage: "/og.png",
   },
@@ -82,7 +82,7 @@ export const contentRegistry = [
     audience: "Owner-led small businesses",
     primaryIntent: "Start with a free audit",
     relatedPages: ["/free-audit", "/brand-development"],
-    updatedDate: "2026-11-20",
+    updatedDate: "2026-11-23",
     structuredDataEligibility: ["breadcrumb"],
     socialImage: "/og.png",
   },
@@ -98,7 +98,7 @@ export const contentRegistry = [
     audience: "Owner-led small businesses",
     primaryIntent: "Start with a free audit",
     relatedPages: ["/free-audit", "/social-media-marketing"],
-    updatedDate: "2026-11-20",
+    updatedDate: "2026-11-23",
     structuredDataEligibility: ["breadcrumb"],
     socialImage: "/og.png",
   },
@@ -114,7 +114,7 @@ export const contentRegistry = [
     audience: "Prospective clients and partners",
     primaryIntent: "Understand who Dreki is and how it works",
     relatedPages: ["/social-media-marketing", "/brand-development", "/book"],
-    updatedDate,
+    updatedDate: "2026-11-23",
     structuredDataEligibility: ["organization"],
     socialImage: "/og.png",
   },
@@ -130,7 +130,7 @@ export const contentRegistry = [
     audience: "Prospective clients and partners",
     primaryIntent: "Submit an inquiry",
     relatedPages: ["/book", "/free-audit", "/privacy"],
-    updatedDate,
+    updatedDate: "2026-11-23",
     structuredDataEligibility: ["none"],
     socialImage: "/og.png",
   },
@@ -146,7 +146,7 @@ export const contentRegistry = [
     audience: "Owner-led small businesses",
     primaryIntent: "Request a call",
     relatedPages: ["/contact", "/free-audit", "/privacy"],
-    updatedDate,
+    updatedDate: "2026-11-23",
     structuredDataEligibility: ["none"],
     socialImage: "/og.png",
   },
@@ -217,11 +217,15 @@ export function metadataFromRegistry(route: RegistryRoute): Metadata {
   const image = entry.socialImage
     ? [{ url: entry.socialImage, alt: `${entry.title}. Dreki Solutions` }]
     : undefined;
+  const socialTitle =
+    entry.route === "/"
+      ? "Social Media Marketing for Small Businesses | Dreki"
+      : `${entry.title} | Dreki Solutions`;
 
   return {
     title:
       entry.route === "/"
-        ? { absolute: `${entry.title} | Dreki Solutions` }
+        ? { absolute: socialTitle }
         : entry.title,
     description: entry.description,
     alternates: { canonical: entry.route },
@@ -232,13 +236,13 @@ export function metadataFromRegistry(route: RegistryRoute): Metadata {
     openGraph: {
       type: "website",
       siteName: "Dreki Solutions",
-      title: entry.title,
+      title: socialTitle,
       description: entry.description,
       url: entry.route,
       images: image,
     },
     twitter: {
-      title: entry.title,
+      title: socialTitle,
       description: entry.description,
       images: entry.socialImage ? [entry.socialImage] : undefined,
     },

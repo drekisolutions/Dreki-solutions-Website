@@ -2,6 +2,10 @@ import test from "node:test";
 import assert from "node:assert/strict";
 
 import {
+  AREA_OF_INTEREST_OPTIONS,
+  INDUSTRY_OPTIONS,
+} from "../lib/leads/content.ts";
+import {
   MINIMUM_SUBMISSION_TIME_MS,
   validateLeadPayload,
 } from "../lib/leads/validation.ts";
@@ -30,6 +34,29 @@ function validPayload(overrides = {}) {
     ...overrides,
   };
 }
+
+test("lists food and retail before home services and keeps agent products out", () => {
+  assert.deepEqual(
+    INDUSTRY_OPTIONS.slice(0, 3).map((option) => option.value),
+    ["food", "retail", "home_services"],
+  );
+  const offered = [
+    ...INDUSTRY_OPTIONS.map((option) => `${option.value} ${option.label}`),
+    ...AREA_OF_INTEREST_OPTIONS.map((option) => `${option.value} ${option.label}`),
+  ].join(" ").toLowerCase();
+  for (const retired of [
+    "customer response",
+    "intake and scheduling",
+    "workflow coordination",
+    "deskhand",
+    "foreman",
+  ]) {
+    assert.equal(offered.includes(retired), false, retired);
+  }
+  for (const industry of ["food", "retail", "home_services"]) {
+    assert.equal(validateLeadPayload(validPayload({ industry }), { now }).ok, true);
+  }
+});
 
 test("normalizes an accepted lead and keeps bounded attribution", () => {
   const result = validateLeadPayload(validPayload(), { now });

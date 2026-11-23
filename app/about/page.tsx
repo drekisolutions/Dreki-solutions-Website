@@ -27,7 +27,7 @@ const principles = [
 
 export default function AboutPage() {
   return (
-    <main className="page-main launch-page" id="main-content">
+    <main className="page-main launch-page" id="main">
       <section className="about-hero launch-about-hero" aria-labelledby="about-title">
         <div className="about-portrait" aria-hidden="true">
           <Image

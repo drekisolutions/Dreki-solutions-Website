@@ -416,7 +416,7 @@ export default function TradesHome({
 }) {
   return (
     <MotionConfig reducedMotion="user" transition={{ duration: 0.6 }}>
-      <main className="forge-home" id="main-content">
+      <main className="forge-home" id="main">
         <Hero />
         <Reveal>
           <Services />

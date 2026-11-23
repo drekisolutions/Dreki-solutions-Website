@@ -5,7 +5,7 @@ export const metadata: Metadata = metadataFromRegistry("/brand-development");
 
 export default function BrandDevelopmentPage() {
   return (
-    <main className="page-main legal-page" id="main-content">
+    <main className="page-main legal-page" id="main">
       <section
         className="page-section legal-section"
         aria-labelledby="brand-development-title"
@@ -15,8 +15,8 @@ export default function BrandDevelopmentPage() {
           <h1 id="brand-development-title">Brand development for small businesses</h1>
           <p>
             We build a brand for the company and a personal brand for you, the
-            owner. A project takes about 1 to 2 weeks. We work online, wherever
-            your business is. This work is separate from the monthly social plan.
+            owner. We work online, wherever your business is. This work is
+            separate from the monthly social plan.
           </p>
 
           <section aria-labelledby="brand-included-title">
@@ -36,11 +36,6 @@ export default function BrandDevelopmentPage() {
               Brand work is quoted privately. It is not part of the monthly
               social plan, and it is not priced on this site.
             </p>
-          </section>
-
-          <section aria-labelledby="brand-time-title">
-            <h2 id="brand-time-title">How long does it take?</h2>
-            <p>About 1 to 2 weeks.</p>
           </section>
 
           <section aria-labelledby="brand-start-title">

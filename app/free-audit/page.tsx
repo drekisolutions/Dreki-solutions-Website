@@ -7,7 +7,7 @@ export const metadata: Metadata = metadataFromRegistry("/free-audit");
 
 export default function FreeAuditPage() {
   return (
-    <main className={`page-main ${styles.page}`} id="main-content">
+    <main className={`page-main ${styles.page}`} id="main">
       <div className={styles.layout}>
         <section className={styles.intro} aria-labelledby="audit-title">
           <p className="eyebrow">Step 1. The way in.</p>

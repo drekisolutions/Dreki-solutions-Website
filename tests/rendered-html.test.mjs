@@ -22,7 +22,7 @@ const routeExpectations = [
   },
   {
     path: "/",
-    title: "Social Media Marketing and Branding for Small Businesses | Dreki Solutions",
+    title: "Social Media Marketing for Small Businesses | Dreki",
     h1: "More customers find you.",
     indexable: true,
     socialImage: true,
@@ -308,6 +308,94 @@ test("redirects retired agent, industry, product, and portfolio routes to the ho
   }
 });
 
+test("offers a skip link on every page and keeps the owner editor out of the footer", async () => {
+  for (const expected of routeExpectations) {
+    const { body } = await fetchBuilt(expected.path);
+    const markup = visibleMarkup(body);
+    const skipLink =
+      markup.match(/<a\b[^>]*href="#main"[^>]*>[\s\S]*?<\/a>/i)?.[0] ?? "";
+    assert.equal(textContent(skipLink), "Skip to content", expected.path);
+    assert.match(body, /<main\b[^>]*\bid="main"/i, expected.path);
+    assert.equal(
+      tagsNamed(markup, "a").some(
+        (tag) => attributesFor(tag).get("href") === "/admin/blog",
+      ),
+      false,
+      `${expected.path} still links to the owner editor`,
+    );
+  }
+});
+
+test("publishes branded social titles, a US service, and dated sitemap entries", async () => {
+  for (const expected of routeExpectations.filter((route) => route.socialImage)) {
+    const html = (await fetchBuilt(expected.path)).body;
+    const socialTitle = tagsNamed(html, "meta")
+      .map(attributesFor)
+      .find((attributes) => attributes.get("property") === "og:title")
+      ?.get("content");
+    assert.equal(
+      socialTitle,
+      expected.path === "/"
+        ? "Social Media Marketing for Small Businesses | Dreki"
+        : `${expected.title.replace(/ \| Dreki Solutions$/, "")} | Dreki Solutions`,
+    );
+  }
+
+  const home = (await fetchBuilt("/")).body;
+  const jsonLd = home.match(
+    /<script type="application\/ld\+json">([\s\S]*?)<\/script>/i,
+  )?.[1];
+  assert.ok(jsonLd);
+  const data = JSON.parse(jsonLd);
+  const service = data["@graph"].find((item) => item["@type"] === "Service");
+  const organization = data["@graph"].find(
+    (item) => item["@type"] === "Organization",
+  );
+  assert.equal(service.name, "Social media marketing");
+  assert.equal(service.areaServed, "US");
+  assert.equal(service.provider.email, "brett@dreki-solutions.ai");
+  assert.equal(organization.email, "brett@dreki-solutions.ai");
+  assert.equal("offers" in service, false);
+  assert.equal(JSON.stringify(service).includes("price"), false);
+
+  const sitemap = (await fetchBuilt("/sitemap.xml")).body;
+  for (const path of [
+    "/",
+    "/about",
+    "/contact",
+    "/book",
+    "/free-audit",
+    "/social-media-marketing",
+    "/brand-development",
+  ]) {
+    const loc = canonicalFor(path).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    assert.match(
+      sitemap,
+      new RegExp(`<loc>${loc}</loc>\\s*<lastmod>2026-11-23`),
+    );
+  }
+
+  const audit = visibleMarkup((await fetchBuilt("/free-audit")).body);
+  const website = tagsNamed(audit, "input")
+    .map(attributesFor)
+    .find((attributes) => attributes.get("name") === "website");
+  assert.equal(website.get("type"), "url");
+  assert.equal(website.get("autocomplete"), "url");
+
+  const brand = textContent(
+    visibleMarkup((await fetchBuilt("/brand-development")).body),
+  );
+  assert.equal(brand.includes("1 to 2 weeks"), false);
+  const social = textContent(
+    visibleMarkup((await fetchBuilt("/social-media-marketing")).body),
+  );
+  assert.equal(social.includes("You spend less time making the posts."), false);
+  for (const path of ["/contact", "/book"]) {
+    const text = textContent(visibleMarkup((await fetchBuilt(path)).body));
+    assert.equal(/hubspot|crm/i.test(text), false, path);
+  }
+});
+
 test("keeps primary navigation focused and makes the free audit the main action", async () => {
   for (const expected of routeExpectations) {
     const markup = visibleMarkup((await fetchBuilt(expected.path)).body);
@@ -404,7 +492,7 @@ test("renders exact contact details and preserves the complete governed lead for
     assert.deepEqual(renderedFieldNames, expectedFieldNames);
     assert.match(markup, /\bname="contactWebsite"[^>]*\btabindex="-1"/i);
   } else {
-    assert.match(text, /The secure online intake is not active yet\./i);
+    assert.doesNotMatch(text, /HubSpot|CRM|not active yet/i);
     assert.match(text, /Dreki will arrange the call directly\./i);
     assert.ok(
       hrefs.includes(

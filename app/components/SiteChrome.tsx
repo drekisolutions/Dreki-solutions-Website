@@ -78,8 +78,8 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
   if (pathname.startsWith("/admin"))
     return (
       <>
-        <a className="skip-link" href="#main-content">
-          Skip to editor
+        <a className="skip-link" href="#main">
+          Skip to content
         </a>
         <div className="editor-motion-bar"><ForgeMotionControl /></div>
         {children}
@@ -88,8 +88,8 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <a className="skip-link" href="#main-content">
-        Skip to main content
+      <a className="skip-link" href="#main">
+        Skip to content
       </a>
 
       <header className="site-header" aria-label="Primary">
@@ -235,7 +235,6 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
             >
               Newsletter
             </PageTurnLink>
-            <PageTurnLink href="/admin/blog">Owner editor</PageTurnLink>
           </nav>
 
           <div className="footer-contact">

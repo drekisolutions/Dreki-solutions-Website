@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 export default function BlogEditorPage() {
   return (
-    <main id="main-content">
+    <main id="main">
       <BlogEditor localPreview={localEditor()} />
     </main>
   );

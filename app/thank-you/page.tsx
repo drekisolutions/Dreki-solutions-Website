@@ -11,7 +11,7 @@ export const metadata: Metadata = metadataFromRegistry("/thank-you");
 
 export default function ThankYouPage() {
   return (
-    <main className="page-main launch-page" id="main-content">
+    <main className="page-main launch-page" id="main">
       <LaunchHero
         eyebrow="Inquiry received"
         title="Thank you for reaching out."
